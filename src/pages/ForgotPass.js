@@ -1,0 +1,28 @@
+import React from 'react'
+
+function ForgotPass() {
+    return (
+    
+        <div className="bg-gray-100 p-6 w-full h-screen">
+          <div className="max-w-md mx-auto bg-white p-4 md:p-8 rounded shadow-lg text-sm">
+          <form>
+          <label htmlFor="retrieve" className="block text-sm font-medium text-gray-700">Enter your email</label>
+                <input
+                  type="email"
+                  id="retrieve"
+                  name="retrieve"
+                  className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring focus:ring-amber-950"
+                  required
+                />
+          <button 
+                id='retrieveCode'
+                 className="w-full bg-lime-800 text-white p-3 rounded mt-2 hover:bg-amber-950 transition duration-300">
+                  Send Verification Code  
+                </button>
+                </form>
+        </div>
+    </div>
+  )
+}
+
+export default ForgotPass

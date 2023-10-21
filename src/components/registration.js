@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 
 function Registration() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -17,19 +18,16 @@ function Registration() {
             <h2 className="text-2xl font-semibold text-center mb-6">Create An Account</h2>
             <form>
             <div className="mb-4">
-                <label htmlFor="cellphone_num" className="block text-sm font-medium text-gray-700">Cellphone Number</label>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Enter your Email</label>
                 <input
-                  type="cellphone_num"
-                  id="cellphone_num"
-                  name="cellphone_num"
+                  type="email"
+                  id="email"
+                  name="email"
                   className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring focus:ring-amber-950"
                   required
                 />
-                <button 
                 
-                type="submit" className="w-full bg-lime-800 text-white p-3 rounded hover:bg-amber-950 transition duration-300">
-                  Send SMS code
-                </button>
+               
               </div>
               <div className="mb-4">
                 <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
@@ -210,8 +208,12 @@ function Registration() {
                 <button type="submit" className="w-full bg-lime-800 text-white p-3 rounded hover:bg-amber-950 transition duration-300">
                   Register
                 </button>
+                
               </div>
             </form>
+            <p className="text-center text-gray-500 ml-6">
+          Already have an account? <Link to="/login" className="text-blue-500 hover:underline">LogIn</Link>
+        </p>
           </div>
         </div>
       );

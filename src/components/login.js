@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom';
 
-function LoginPage() {
+function Login() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,9 +15,9 @@ function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-lg w-96">
-      <img src="./img/milktealogo.png" alt="" className=" lg:h-12 md:h-20 flex items-center justify-center" />
-        <h2 className="text-2xl font-bold mb-4">Login</h2>
+      <div className="bg-white p-2  rounded shadow-lg w-96">
+      <img src="./img/milktealogo.png" alt="" className=" flex items-center justify-center" />
+        <h2 className="text-2xl font-bold mb-4 text-center">LogIn</h2>
         <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label htmlFor="user" className="block text-gray-700 text-sm font-semibold">
@@ -43,16 +44,22 @@ function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <p className="text-center text-gray-500 -ml-14">
+            <Link to="/forgotpassword" className="block mt-4 mr-20 -ml-20 text-blue-500 hover:underline">Forgot Password?</Link> <br></br>
+          Don't have an account? <Link to="/registration" className="text-blue-500 hover:underline">Register</Link> 
+         
+        </p>
           </div>
           <div className="mb-4">
-            <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-700">
+            <button type="submit" className="w-full bg-lime-900 text-white p-2 rounded hover:bg-amber-950 transition duration-300">
               Log In
             </button>
           </div>
         </form>
       </div>
+      
     </div>
   );
 }
 
-export default LoginPage;
+export default Login;

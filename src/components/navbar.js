@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 function Navbar() {
   return (
     <nav className="bg-amber-950 p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <img src="./img/milktealogo.png" alt="" className="h-20 lg:h-12 md:h-30 sm:h-8" />
+        <img src="./img/milktealogo.png" alt="" className="h-20 lg:h-12 md:h-8 sm:h-30" />
         <p className="text-white absolute ml-14 text-lg">Fortea</p>
         <div className="lg:hidden">
           {/* Mobile menu button */}
@@ -19,11 +20,13 @@ function Navbar() {
           </button>
         </div>
         <ul className="hidden md:flex space-x-10 mr-10 ">
-          <li><a href="#" className=" text-white hover:text-orange-200 transition-colors ">Home</a></li>
-          <li><a href="#" className="text-white hover:text-orange-200 transition-colors ">Menu</a></li>
-          <li><a href="#" className="text-white hover:text-orange-200 transition-colors hover:scale-100">About</a></li>
-          <li><a href="#" className="text-white hover:text-orange-200 transition-colors scale-100">Contact</a></li>
-        </ul>
+          <li><Link to="/"className="text-white hover:text-orange-200 transition-colors">Home</Link></li>
+          <li><Link to="/"className="text-white hover:text-orange-200 transition-colors">Menu</Link></li>
+          <li><Link to="/"className="text-white hover:text-orange-200 transition-colors">About</Link></li>
+          <button type="menu" className="w-48 bg-lime-800 text-white rounded hover:bg-amber-950 transition duration-300 whitespace-nowrap">
+                   <Link to="/login">LogIn / Register</Link>
+                   </button>
+          </ul>
       </div>
       {/* Mobile menu */}
       <div className="lg:hidden md:hidden">
