@@ -1,24 +1,63 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 function Registration() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
+  const [userData, setUserData] = useState({
+    Email: "",
+    Pnumber: "",
+    Uname: "",
+    Fname: "",
+    Mname: "",
+    Lname: "",
+    Municipality: "",
+    Brgy: "",
+    Street_N_House: "",
+    Password: "",
+    code: "",
+    verified: false,
+  });
 
-  function togglePasswordVisibility() {
-    setIsPasswordVisible((prevState) => !prevState);
-  }
-  function togglePasswordVisibility2() {
-    setIsPasswordVisible2((prevState) => !prevState);
-  }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    
+    
 
+    if(name === "Pnumber"){
+      if(/^\d*$/.test(value)) {
+        return setUserData((prev) => {return{...prev, [name] : value}});
+      } 
+      else {
+        alert("Invalid Input!");
+      }
+    } else {
+       return setUserData((prev) => {return{...prev, [name] : value}});
+
+  };
+    }
+
+    
+
+  const registerHandler = (e) => {
+    e.preventDefault();
+
+    axios
+      .post("/account/create", userData)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
+
+
+  
   return (
     <div className="bg-gray-100 p-6">
       <div className="max-w-md mx-auto bg-white p-8 rounded shadow-lg text-sm">
         <h2 className="text-2xl font-semibold text-center mb-6">
           Create An Account
         </h2>
-        <form>
+        <form onSubmit={registerHandler}>
           {/* Email */}
           <div className="mb-4">
             <label
@@ -29,10 +68,12 @@ function Registration() {
             </label>
             <input
               type="email"
-              id="email"
-              name="email"
+              id="Email"
+              name="Email"
               className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring focus:ring-amber-950"
               required
+              onChange={handleChange}
+              value={userData.Email}
             />
           </div>
           {/* Phone Number */}
@@ -44,11 +85,14 @@ function Registration() {
               Phone Number
             </label>
             <input
-              type="email"
-              id="email"
-              name="email"
+              type="text"
+              id="Pnumber"
+              name="Pnumber"
               className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring focus:ring-amber-950"
               required
+              maxLength="12"
+              onChange={handleChange}
+              value={userData.Pnumber}
             />
           </div>
           {/* Username */}
@@ -61,10 +105,13 @@ function Registration() {
             </label>
             <input
               type="text"
-              id="username"
-              name="username"
+              id="Uname"
+              name="Uname"
               className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring focus:ring-amber-950"
               required
+              maxLength="10"
+              onChange={handleChange}
+              value={userData.Uname}
             />
           </div>
           {/* First Name */}
@@ -77,10 +124,13 @@ function Registration() {
             </label>
             <input
               type="text"
-              id="firstname"
-              name="firstname"
+              id="Fname"
+              name="Fname"
               className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring focus:ring-amber-950"
               required
+              maxLength="20"
+              onChange={handleChange}
+              value={userData.Fname}
             />
           </div>
 
@@ -94,10 +144,13 @@ function Registration() {
             </label>
             <input
               type="text"
-              id="lastname"
-              name="lastname"
+              id="Mname"
+              name="Mname"
               className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring focus:ring-amber-950"
               required
+              maxLength="20"
+              onChange={handleChange}
+              value={userData.Mname}
             />
           </div>
 
@@ -111,10 +164,13 @@ function Registration() {
             </label>
             <input
               type="text"
-              id="lastname"
-              name="lastname"
+              id="Lname"
+              name="Lname"
               className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring focus:ring-amber-950"
               required
+              maxLength="10"
+              onChange={handleChange}
+              value={userData.Lname}
             />
           </div>
 
@@ -128,11 +184,14 @@ function Registration() {
             </label>
             <input
               type="text"
-              id="municipality"
-              name="municipality"
+              id="Municipality"
+              name="Municipality"
               className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring focus:ring-amber-950"
               placeholder="E.g., Magdalena"
               required
+              maxLength="20"
+              onChange={handleChange}
+              value={userData.Municipality}
             />
           </div>
 
@@ -146,11 +205,14 @@ function Registration() {
             </label>
             <input
               type="text"
-              id="municipality"
-              name="municipality"
+              id="Brgy"
+              name="Brgy"
               className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring focus:ring-amber-950"
               placeholder="E.g., Duhat"
               required
+              maxLength="25"
+              onChange={handleChange}
+              value={userData.Brgy}
             />
             {/* Street & House# */}
             <label
@@ -161,11 +223,14 @@ function Registration() {
             </label>
             <input
               type="text"
-              id="municipality"
-              name="municipality"
+              id="Street_N_House"
+              name="Street_N_House"
               className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring focus:ring-amber-950"
               placeholder="E.g., Sitio San Miguel 04-067"
               required
+              maxLength="30"
+              onChange={handleChange}
+              value={userData.Street_N_House}
             />
           </div>
 
@@ -179,14 +244,20 @@ function Registration() {
             </label>
             <input
               type={isPasswordVisible ? "text" : "password"}
-              id="password"
-              name="password"
+              id="Password"
+              name="Password"
               className="mt-1 p-2 w-full border  border-gray-300 rounded focus:outline-none focus:ring focus:ring-amber-950"
               required
+              minLength="7"
+              onChange={handleChange}
+              value={userData.Password}
             />
             <button
               className="absolute mt-6 inset-y-0 right-0 flex items-center text-gray-600"
-              onClick={togglePasswordVisibility}
+              onClick={(e) => {
+                e.preventDefault();
+                setIsPasswordVisible((prev) => !prev);
+              }}
             >
               {isPasswordVisible ? (
                 <svg
@@ -243,7 +314,10 @@ function Registration() {
             />
             <button
               className="absolute mt-6 inset-y-0 right-0 flex items-center text-gray-600"
-              onClick={togglePasswordVisibility2}
+              onClick={(e) => {
+                e.preventDefault();
+                setIsPasswordVisible2((prev) => !prev);
+              }}
             >
               {isPasswordVisible2 ? (
                 <svg
