@@ -22,8 +22,6 @@ function Registration() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     
-    
-
     if(name === "Pnumber"){
       if(/^\d*$/.test(value)) {
         return setUserData((prev) => {return{...prev, [name] : value}});
