@@ -2,27 +2,22 @@ const mongoose = require('mongoose');
 
 //databse schema
 const AccountSchema= new mongoose.Schema({
-    
-            username :{
-                type:String,
-                required: [true, 'input some data'],
-                maxLenght : 20,
-            },
-            fname : {
-                type:String,
-                required: [true, 'input some data'],
-                maxLenght : 20,
-            },
-            mname : {
-                type:String,
-                required: [true, 'input some data'],
-                maxLenght : 20,
-            },
-            lname : {
-                type:String,
-                required: [true, 'input some data'],
-                maxLenght : 20,
-            },
+
+        Email : {type : String, required : true, unique : true},
+        Pnumber : {type : String, required : true, unique : true},
+        Uname : {type : String, required : true, unique : true},
+        Fname : {type : String, required : true},
+        Mname : {type : String, required : true},
+        Lname : {type : String, required : true},
+
+        Address : {
+            Municipality : {type : String, required : true},
+            Brgy : {type : String, required: true},
+            Street_N_House : {type : String, required : true}
+        },
+
+        code  : {type : String, required : true}, 
+        verified : {type : Boolean, default : false},
   
 
 });

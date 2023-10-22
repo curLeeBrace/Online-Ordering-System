@@ -1,4 +1,3 @@
-const path = require('path');
 const accountSchema = require('../database/schema/AccountSchema');
 
 
