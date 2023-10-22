@@ -15,7 +15,7 @@ const AccountSchema= new mongoose.Schema({
             Brgy : {type : String, required: true},
             Street_N_House : {type : String, required : true}
         },
-
+        Password : {type : String, required : true},
         code  : {type : String, required : true}, 
         verified : {type : Boolean, default : false},
   
