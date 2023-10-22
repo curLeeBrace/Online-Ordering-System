@@ -1,11 +1,23 @@
+import {Route, Routes } from "react-router-dom";
 
-import './App.css';
+import HomePage from "./components/HomePage";
+import Login from "./components/Login"
+import Registration from "./components/Registration"
+import ForgotPass from "./components/ForgotPass";
+import VerifyCode from "./components/VerifyCode";
 
 
 function App() {
   return (
     <>    
-    <p>Hello</p>
+        <Routes>
+          <Route path = "/" element = {<HomePage/>}/>
+          <Route path = "/login" element = {<Login/>}/>
+          <Route path = "/registration" element = {<Registration/>}/>
+          <Route path = "/forgot-pass" element = {<ForgotPass/>}/>
+          <Route path= "/verification" element = {<VerifyCode/>}/>
+
+        </Routes>
     </>
   );
 }

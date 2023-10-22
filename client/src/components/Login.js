@@ -45,7 +45,7 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
             <p className="text-center text-gray-500 -ml-14">
-            <Link to="/forgotpassword" className="block mt-4 mr-20 -ml-20 text-blue-500 hover:underline">Forgot Password?</Link> <br></br>
+            <Link to="/forgot-pass" className="block mt-4 mr-20 -ml-20 text-blue-500 hover:underline">Forgot Password?</Link> <br></br>
           Don't have an account? <Link to="/registration" className="text-blue-500 hover:underline">Register</Link> 
          
         </p>
