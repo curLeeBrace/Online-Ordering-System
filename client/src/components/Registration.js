@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useDebugValue, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 function Registration() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
+  const [enableBtn, setEnable] = useState(true);
+  const [confirmPass, setConfirmPass] = useState("");
   const [userData, setUserData] = useState({
     Email: "",
     Pnumber: "",
@@ -21,34 +23,80 @@ function Registration() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
-    if(name === "Pnumber"){
-      if(/^\d*$/.test(value)) {
-        return setUserData((prev) => {return{...prev, [name] : value}});
-      } 
-      else {
+    const numberPattern = /^\d*$/;
+    const alphabetPattern = /^[a-zA-Z]*$/
+    //validate Phone Number
+    if (name === "Pnumber") {
+
+      if (numberPattern.test(value)) {
+          setUserData((prev) => {
+          return { ...prev, [name]: value };
+        });
+      } else {
         alert("Invalid Input!");
       }
-    } else {
-       return setUserData((prev) => {return{...prev, [name] : value}});
-
-  };
+    } 
+    //Validate Fname, Mname, Lname, Municipality to not contains numbers
+    else if(name === "Fname" || name === "Mname" || name === "Lname" || name == "Municipality"){
+        if (alphabetPattern.test(value)) {
+          setUserData((prev) => {
+            return { ...prev, [name]: value };
+          });
+        } else {
+          alert("Invalid Input!");
+        }
+    } 
+    else {
+      if(name === "ConfirmPass") {
+        setConfirmPass(value);
+        
+      }
+      setUserData((prev) => {
+        return { ...prev, [name]: value };
+      });
     }
-
     
+     
+    
+  };
+ 
 
   const registerHandler = (e) => {
     e.preventDefault();
+    const email_pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/; // "valid email example : test@gmail.com"
+    const password_pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/; // text with numbers and other special characters
 
-    axios
-      .post("/account/create", userData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    if (userData.Email.match(email_pattern)) {
+      userData.Pnumber = "0" + userData.Pnumber;
+      if (userData.Password.match(password_pattern)) {
+          
+            //send request to server
+            if(userData.Password === confirmPass) {
+              setEnable(false);
+              axios
+              .post("/account/create", userData)
+              .then((res) => {
+                console.log(res);
+                setEnable(true);
+              })
+              .catch((err) => console.log(err));
+
+            } else {
+              alert("Password does not match!");
+            }
+       
+      } 
+      else {
+        alert("Please put some capital letters and numbers for strong password!");
+      }
+    } else {
+      alert("Not Valid!");
+    }
+
+    console.log("Register!");
+
   };
 
-
-
-  
   return (
     <div className="bg-gray-100 p-6">
       <div className="max-w-md mx-auto bg-white p-8 rounded shadow-lg text-sm">
@@ -88,7 +136,8 @@ function Registration() {
               name="Pnumber"
               className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring focus:ring-amber-950"
               required
-              maxLength="12"
+              maxLength="10"
+              minLength="10"
               onChange={handleChange}
               value={userData.Pnumber}
             />
@@ -306,7 +355,9 @@ function Registration() {
             <input
               type={isPasswordVisible2 ? "text" : "password"}
               id="confirm_pass"
-              name="confirm_pass"
+              name="ConfirmPass"
+              onChange={handleChange}
+              value={confirmPass}
               className="mt-1 p-2 w-full border  border-gray-300 rounded focus:outline-none focus:ring focus:ring-amber-950"
               required
             />
@@ -355,14 +406,17 @@ function Registration() {
               )}
             </button>
           </div>
-
+          {/* Register */}
           <div className="mb-4">
+            {
+              enableBtn ?
             <button
               type="submit"
               className="w-full bg-lime-800 text-white p-3 rounded hover:bg-amber-950 transition duration-300"
             >
               Register
-            </button>
+            </button> : 'Loading...'
+          }
           </div>
         </form>
         <p className="text-center text-gray-500 ml-6">
