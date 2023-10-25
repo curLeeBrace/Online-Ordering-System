@@ -9,8 +9,8 @@ const verifyEmail = async (email, code) => {
             port : 465,
             secure : true,
             auth : {
-                user : "leeandreimain@gmail.com",
-                pass : "sedk jadk tpjk mike ",
+                user : process.env.EMAIL,
+                pass : process.env.PASS,
             },
             tls : {
                 rejectUnauthorized : true
@@ -19,7 +19,7 @@ const verifyEmail = async (email, code) => {
 
         //send email
         let info = await transporter.sendMail({
-            from : "leeandreimain@gmail.com",
+            from : process.env.EMAIL,
             to : email,
             subject : "Account Verification",
             text : "Welcome",
