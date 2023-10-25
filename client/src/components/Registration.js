@@ -1,9 +1,10 @@
-import React, { useDebugValue, useState } from "react";
+import React, { useDebugValue, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 function Registration() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
+
   const [enableBtn, setEnable] = useState(true);
   const [confirmPass, setConfirmPass] = useState("");
   const [userData, setUserData] = useState({
@@ -17,14 +18,15 @@ function Registration() {
     Brgy: "",
     Street_N_House: "",
     Password: "",
-    code: "",
+    code: "000000",
     verified: false,
   });
 
+  // Handle user Input
   const handleChange = (e) => {
     const { name, value } = e.target;
     const numberPattern = /^\d*$/;
-    const alphabetPattern = /^[a-zA-Z]*$/
+    const alphabetPattern = /^([a-zA-Z\s]*)$/
     //validate Phone Number
     if (name === "Pnumber") {
 
@@ -37,7 +39,7 @@ function Registration() {
       }
     } 
     //Validate Fname, Mname, Lname, Municipality to not contains numbers
-    else if(name === "Fname" || name === "Mname" || name === "Lname" || name == "Municipality"){
+    else if(name === "Fname" || name === "Mname" || name === "Lname" || name === "Municipality"){
         if (alphabetPattern.test(value)) {
           setUserData((prev) => {
             return { ...prev, [name]: value };
@@ -46,21 +48,20 @@ function Registration() {
           alert("Invalid Input!");
         }
     } 
-    else {
-      if(name === "ConfirmPass") {
-        setConfirmPass(value);
-        
-      }
+    else if(name !== "ConfirmPass"){
+      
       setUserData((prev) => {
         return { ...prev, [name]: value };
       });
+    } else {
+      setConfirmPass(value);
     }
-    
-     
-    
+   
   };
- 
+    
+      
 
+  // Handle onsubmit buttton or register button
   const registerHandler = (e) => {
     e.preventDefault();
     const email_pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/; // "valid email example : test@gmail.com"
@@ -72,12 +73,19 @@ function Registration() {
           
             //send request to server
             if(userData.Password === confirmPass) {
-              setEnable(false);
+              // setEnable(false);
               axios
-              .post("/account/create", userData)
+              .post("http://localhost:3001/api/account/create", userData)
               .then((res) => {
-                console.log(res);
-                setEnable(true);
+                // console.log(res);
+                if(res.data.sucsess === true){
+                  alert("Redirecting to Email Confirmation");
+                  //useNavigate
+                } 
+                else{
+                  alert(res.data.notiff);
+                }
+              
               })
               .catch((err) => console.log(err));
 
@@ -93,7 +101,7 @@ function Registration() {
       alert("Not Valid!");
     }
 
-    console.log("Register!");
+    // console.log("Register!");
 
   };
 

@@ -9,12 +9,9 @@ const AccountSchema= new mongoose.Schema({
         Fname : {type : String, required : true},
         Mname : {type : String, required : true},
         Lname : {type : String, required : true},
-
-        Address : {
-            Municipality : {type : String, required : true},
-            Brgy : {type : String, required: true},
-            Street_N_House : {type : String, required : true}
-        },
+        Municipality : {type : String, required : true},
+        Brgy : {type : String, required: true},
+        Street_N_House : {type : String, required : true},
         Password : {type : String, required : true},
         code  : {type : String, required : true}, 
         verified : {type : Boolean, default : false},

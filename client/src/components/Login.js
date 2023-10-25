@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function Login() {
   const [user, setUser] = useState("");
@@ -9,8 +10,16 @@ function Login() {
     e.preventDefault();
     // You can add your login logic here, e.g., make an API request to authenticate.
 
-    console.log("User: " + user);
-    console.log("Password: " + password);
+    // console.log("User: " + user);
+    // console.log("Password: " + password);
+
+    // try {
+    //   axios.post('/', {sample : "asd"})
+    //   .then(res => console.log(res))
+    //   .catch(err => console.log(err))
+    // } catch (error) {
+    //   // console.log(error);
+    // }
   };
 
   return (

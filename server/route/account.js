@@ -6,4 +6,5 @@ const {createAccount} = require('../controller/account');
 
 router.post('/create', createAccount);
 
+
 module.exports = router;
