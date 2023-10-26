@@ -1,17 +1,21 @@
 const AccountSchema = require("../database/schema/AccountSchema");
 const verifyEmail = require("../utils");
+let returnNotiff = { notiff: null };
+const minm = 100000; 
+const maxm = 999999; 
 
 const createAccount = async (req, res) => {
-  let returnNotiff = { notiff: null };
+
   try {
+    let codeGenerator = Math.floor(Math .random() * (maxm - minm + 1)) + minm;
     const {
       Email: clientEmail,
       Pnumber: clientPhoneNum,
       Uname: clientUsername,
      
     } = req.body;
-    // req.body.code = "123456789";
-    // await AccountSchema.create(req.body);
+      req.body.code = codeGenerator.toString();
+  
     const accountData = await AccountSchema.findOne({
       $or : [{Email : clientEmail}, {Pnumber : clientPhoneNum}, {Uname : clientUsername}]
     }).exec(); //search if email is existing
@@ -35,8 +39,8 @@ const createAccount = async (req, res) => {
       }
     } 
     else {
-      // await AccountSchema.create(req.body); // inserData to database
-      verifyEmail(clientEmail, "12345");
+      await AccountSchema.create(req.body); // inserData to database
+      verifyEmail(clientEmail, codeGenerator.toString());
       return res.status(200).json({ sucsess: true });
     }
 
