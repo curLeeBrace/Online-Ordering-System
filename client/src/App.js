@@ -5,6 +5,7 @@ import Login from "./components/Login"
 import Registration from "./components/Registration"
 import ForgotPass from "./components/ForgotPass";
 import VerifyCode from "./components/VerifyCode";
+import UpdatePass from "./components/UpdatePass";
 
 
 function App() {
@@ -14,8 +15,9 @@ function App() {
           <Route path = "/" element = {<HomePage/>}/>
           <Route path = "/login" element = {<Login/>}/>
           <Route path = "/registration" element = {<Registration/>}/>
-          <Route path = "/forgot-pass" element = {<ForgotPass/>}/>
           <Route path= "/verification" element = {<VerifyCode/>}/>
+          <Route path = "/forgot-pass" element = {<ForgotPass/>}/>
+          <Route path = "/newPass" element = {<UpdatePass/>}/>
 
         </Routes>
     </>

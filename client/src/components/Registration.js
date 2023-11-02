@@ -1,10 +1,13 @@
-import React, { useDebugValue, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, {useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { api } from "../hooks/configAxios";
+import { setCookie, getCookie } from "../hooks/cookiesHandler";
 function Registration() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
-
+  const navigate = useNavigate();
+  const location = useLocation();
   const [enableBtn, setEnable] = useState(true);
   const [confirmPass, setConfirmPass] = useState("");
   const [userData, setUserData] = useState({
@@ -21,9 +24,21 @@ function Registration() {
     code: "000000",
     verified: false,
   });
-
+  // dont acess registration if state is null the userType is null
+  useEffect(()=>{
+    const cookieVerifyEmail = "emailVerification";
+    const getEmail = getCookie(cookieVerifyEmail);
+    if(location.state === null) {
+      navigate("/login");
+    }
+    if(getEmail){
+      navigate("/verification");
+    }
+    
+  },[])
   // Handle user Input
   const handleChange = (e) => {
+ 
     const { name, value } = e.target;
     const numberPattern = /^\d*$/;
     const alphabetPattern = /^([a-zA-Z\s]*)$/
@@ -64,6 +79,7 @@ function Registration() {
   // Handle onsubmit buttton or register button
   const registerHandler = (e) => {
     e.preventDefault();
+    const cookieVerifyEmail = "emailVerification";
     const email_pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/; // "valid email example : test@gmail.com"
     const password_pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/; // text with numbers and other special characters
 
@@ -73,17 +89,23 @@ function Registration() {
           
             //send request to server
             if(userData.Password === confirmPass) {
-              // setEnable(false);
-              axios
-              .post("http://localhost:3001/api/account/create", userData)
+              setEnable(false);
+              api
+              .post(`/account/create/${location.state.userType}`, userData)
               .then((res) => {
                 // console.log(res);
                 if(res.data.sucsess === true){
                   alert("Redirecting to Email Confirmation");
+                  //setCookie
+                  setCookie(cookieVerifyEmail, userData.Email);
+                  
+
                   //useNavigate
+                  navigate("/verification");
                 } 
                 else{
                   alert(res.data.notiff);
+                  setEnable(true);
                 }
               
               })

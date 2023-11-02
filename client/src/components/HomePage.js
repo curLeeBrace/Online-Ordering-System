@@ -1,8 +1,26 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { getCookie } from '../hooks/cookiesHandler';
+import { useNavigate } from 'react-router-dom';
+
 
 function HomePage() {
+  const navigate = useNavigate();
+  // const ck_forFP_verification = "verification-forgotPass";
+  const ck_forE_verification = "verification-forEmail";
+  //check verificaiton cookie if available... if true proceed to verification Page
+  useEffect(()=>{
+    //const forgotPassVerification = getCookie(ck_forFP_verification);
+    const emailVerification = getCookie(ck_forE_verification);
+
+    if(emailVerification){
+      navigate('/verification');
+    }
+
+
+  },[])
   return (
     <div>
     <Navbar />
