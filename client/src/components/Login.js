@@ -23,8 +23,8 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-2  rounded shadow-lg w-96">
+    <div className="flex items-center justify-center h-min bg-gray-200">
+      <div className="bg-white p-4 rounded-lg shadow-lg w-96">
       <img src="./img/milktealogo.png" alt="" className=" flex items-center justify-center" />
         <h2 className="text-2xl font-bold mb-4 text-center">LogIn</h2>
         <form onSubmit={handleLogin}>
@@ -48,7 +48,7 @@ function Login() {
             <input
               type="password"
               id="password"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded mb-2"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

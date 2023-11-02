@@ -6,6 +6,13 @@ import Registration from "./components/Registration"
 import ForgotPass from "./components/ForgotPass";
 import VerifyCode from "./components/VerifyCode";
 import UpdatePass from "./components/UpdatePass";
+import Navbar from "./components/Navbar";
+import Menu from "./components/Menu";
+import AdminPage from "./components/AdminPage";
+import Accounts from "./components/Accounts";
+import RiderAccounts from "./components/RiderAccounts";
+import SalesHistory from "./components/SalesHistory";
+import AddProducts from "./components/AddProducts";
 
 
 function App() {
@@ -18,6 +25,15 @@ function App() {
           <Route path= "/verification" element = {<VerifyCode/>}/>
           <Route path = "/forgot-pass" element = {<ForgotPass/>}/>
           <Route path = "/newPass" element = {<UpdatePass/>}/>
+          {/**figs Route */}
+          <Route path= "/navbar" element = {<Navbar/>}/>
+          <Route path= "/menu" element = {<Menu/>}/>
+          <Route path= "/admin" element = {<AdminPage/>}/>
+          <Route path= "/accounts" element = {<Accounts/>}/>
+          <Route path= "/rider" element = {<RiderAccounts/>}/>
+          <Route path= "/sales" element = {<SalesHistory/>}/>
+          <Route path= "/products" element = {<AddProducts/>}/>
+        
 
         </Routes>
     </>
