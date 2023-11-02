@@ -52,10 +52,9 @@ function Registration() {
 
   
   return (
-    <div className="bg-gray-100 p-6">
+    <div className="h-full bg-gray-200 p-6  ">
       <div className="max-w-md mx-auto bg-white p-8 rounded shadow-lg text-sm">
-        <h2 className="text-2xl font-semibold text-center mb-6">
-          Create An Account
+        <h2 className="text-xl font-semibold text-center mb-6">Create An Account
         </h2>
         <form onSubmit={registerHandler}>
           {/* Email */}

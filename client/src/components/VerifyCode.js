@@ -3,7 +3,7 @@ import React from 'react'
 function VerifyCode() {
   return (
     
-        <div className="bg-gray-100 p-6 w-full h-screen">
+        <div className="h-full bg-gray-200 p-6 w-full h-screen">
           <div className="max-w-md mx-auto bg-white p-4 md:p-8 rounded shadow-lg text-sm">
           <form>
           <label htmlFor="code" className="block text-sm font-medium text-gray-700">Enter the verification code</label>
