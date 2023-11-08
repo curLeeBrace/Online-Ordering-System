@@ -1,29 +1,72 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { api } from "../customHooks/configAxios";
+import { useAuth } from "../customHooks/context/auth";
+import { getCookie, setCookie } from "../customHooks/cookiesHandler";
+import { useNavigate } from "react-router-dom";
+
+
 
 function Login() {
-  const [user, setUser] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
+  const navigate = useNavigate();
+  const accessToken = getCookie("accessToken");
+  let auth = useAuth();
+  
+  useEffect(()=>{
+    if(accessToken !== undefined) {
+      // console.log(accessToken);
+      login(accessToken);
+    }
+ 
+  }, []);
+   
+
+  
 
   const handleLogin = (e) => {
     e.preventDefault();
     // You can add your login logic here, e.g., make an API request to authenticate.
+    login(accessToken);
+  }
 
-    // console.log("User: " + user);
-    // console.log("Password: " + password);
+  
+  const login = () => {
+   
+   api.post('/account/login', { 
+      user : {
+        email : email,
+        password : password
+      } 
+     
+    },
+    {
+      headers : {
+        'Authorization': `Bearer ${accessToken}`
+      }
+    })
+    .then(res => {
+      const {account, token, userType, clientName} = res.data;
+      
+      if(account === "valid"){
+        setCookie("accessToken", token, {SameSite : "Strict"});
+         //setClientData
+        if(userType === "customer") {
 
-    // try {
-    //   axios.post('/', {sample : "asd"})
-    //   .then(res => console.log(res))
-    //   .catch(err => console.log(err))
-    // } catch (error) {
-    //   // console.log(error);
-    // }
-  };
+          auth.login(clientName);
+          navigate("/", {replace : true});
+        }
+      }
+    })
+    .catch(err => {alert("Invalid Credentials!"); console.log(err)})
+  }
 
   return (
+   
     <div className="flex items-center justify-center h-min bg-gray-200">
+      
       <div className="bg-white p-4 rounded-lg shadow-lg w-96">
       <img src="./img/milktealogo.png" alt="" className=" flex items-center justify-center" />
         <h2 className="text-2xl font-bold mb-4 text-center">LogIn</h2>
@@ -37,8 +80,8 @@ function Login() {
               id="user"
               className="w-full p-2 border rounded"
               placeholder="Username"
-              value={user}
-              onChange={(e) => setUser  (e.target.value)}
+              value={email}
+              onChange={(e) => setEmail (e.target.value)}
             />
           </div>
           <div className="mb-4">
@@ -54,7 +97,7 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
             />
             <p className="text-center text-gray-500 -ml-14">
-            <Link to="/forgot-pass" replace = "true" className="block mt-4 mr-20 -ml-20 text-blue-500 hover:underline">Forgot Password?</Link> <br></br>
+            <Link to="/forgot-pass" className="block mt-4 mr-20 -ml-20 text-blue-500 hover:underline">Forgot Password?</Link> <br></br>
           Don't have an account? <Link to="/registration" state = {{userType : "customer"}} className="text-blue-500 hover:underline">Register</Link> 
          
         </p>

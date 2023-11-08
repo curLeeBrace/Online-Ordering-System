@@ -1,8 +1,8 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { api } from "../hooks/configAxios";
-import { setCookie, getCookie } from "../hooks/cookiesHandler";
+import { api } from "../customHooks/configAxios";
+import { setCookie, getCookie } from "../customHooks/cookiesHandler";
 function Registration() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
@@ -24,57 +24,58 @@ function Registration() {
     code: "000000",
     verified: false,
   });
-  // dont acess registration if state is null the userType is null
-  useEffect(()=>{
+  // dont acess registration if state is null the "userType" is null
+  useEffect(() => {
     const cookieVerifyEmail = "emailVerification";
     const getEmail = getCookie(cookieVerifyEmail);
-    if(location.state === null) {
+    if (location.state === null) {
       navigate("/login");
     }
-    if(getEmail){
+    if (getEmail) {
       navigate("/verification");
     }
-    
-  },[])
+  }, []);
+
+
+
+  
   // Handle user Input
   const handleChange = (e) => {
- 
     const { name, value } = e.target;
     const numberPattern = /^\d*$/;
-    const alphabetPattern = /^([a-zA-Z\s]*)$/
+    const alphabetPattern = /^([a-zA-Z\s]*)$/;
     //validate Phone Number
     if (name === "Pnumber") {
-
       if (numberPattern.test(value)) {
-          setUserData((prev) => {
+        setUserData((prev) => {
           return { ...prev, [name]: value };
         });
       } else {
         alert("Invalid Input!");
       }
-    } 
+    }
     //Validate Fname, Mname, Lname, Municipality to not contains numbers
-    else if(name === "Fname" || name === "Mname" || name === "Lname" || name === "Municipality"){
-        if (alphabetPattern.test(value)) {
-          setUserData((prev) => {
-            return { ...prev, [name]: value };
-          });
-        } else {
-          alert("Invalid Input!");
-        }
-    } 
-    else if(name !== "ConfirmPass"){
-      
+    else if (
+      name === "Fname" ||
+      name === "Mname" ||
+      name === "Lname" ||
+      name === "Municipality"
+    ) {
+      if (alphabetPattern.test(value)) {
+        setUserData((prev) => {
+          return { ...prev, [name]: value };
+        });
+      } else {
+        alert("Invalid Input!");
+      }
+    } else if (name !== "ConfirmPass") {
       setUserData((prev) => {
         return { ...prev, [name]: value };
       });
     } else {
       setConfirmPass(value);
     }
-   
   };
-    
-      
 
   // Handle onsubmit buttton or register button
   const registerHandler = (e) => {
@@ -86,51 +87,46 @@ function Registration() {
     if (userData.Email.match(email_pattern)) {
       userData.Pnumber = "0" + userData.Pnumber;
       if (userData.Password.match(password_pattern)) {
-          
-            //send request to server
-            if(userData.Password === confirmPass) {
-              setEnable(false);
-              api
-              .post(`/account/create/${location.state.userType}`, userData)
-              .then((res) => {
-                // console.log(res);
-                if(res.data.sucsess === true){
-                  alert("Redirecting to Email Confirmation");
-                  //setCookie
-                  setCookie(cookieVerifyEmail, userData.Email);
-                  
+        //send request to server
+        if (userData.Password === confirmPass) {
+          setEnable(false);
+          api
+            .post(`/account/create/${location.state.userType}`, userData)
+            .then((res) => {
+              // console.log(res);
+              if (res.data.sucsess === true) {
+                alert("Redirecting to Email Confirmation");
+                //setCookie
+                setCookie(cookieVerifyEmail, userData.Email);
 
-                  //useNavigate
-                  navigate("/verification");
-                } 
-                else{
-                  alert(res.data.notiff);
-                  setEnable(true);
-                }
-              
-              })
-              .catch((err) => console.log(err));
-
-            } else {
-              alert("Password does not match!");
-            }
-       
-      } 
-      else {
-        alert("Please put some capital letters and numbers for strong password!");
+                //useNavigate
+                navigate("/verification");
+              } else {
+                alert(res.data.notiff);
+                setEnable(true);
+              }
+            })
+            .catch((err) => console.log(err));
+        } else {
+          alert("Password does not match!");
+        }
+      } else {
+        alert(
+          "Please put some capital letters and numbers for strong password!"
+        );
       }
     } else {
       alert("Not Valid!");
     }
 
     // console.log("Register!");
-
   };
 
   return (
     <div className="h-full bg-gray-200 p-6  ">
       <div className="max-w-md mx-auto bg-white p-8 rounded shadow-lg text-sm">
-        <h2 className="text-xl font-semibold text-center mb-6">Create An Account
+        <h2 className="text-xl font-semibold text-center mb-6">
+          Create An Account
         </h2>
         <form onSubmit={registerHandler}>
           {/* Email */}
@@ -437,15 +433,16 @@ function Registration() {
           </div>
           {/* Register */}
           <div className="mb-4">
-            {
-              enableBtn ?
-            <button
-              type="submit"
-              className="w-full bg-lime-800 text-white p-3 rounded hover:bg-amber-950 transition duration-300"
-            >
-              Register
-            </button> : 'Loading...'
-          }
+            {enableBtn ? (
+              <button
+                type="submit"
+                className="w-full bg-lime-800 text-white p-3 rounded hover:bg-amber-950 transition duration-300"
+              >
+                Register
+              </button>
+            ) : (
+              "Loading..."
+            )}
           </div>
         </form>
         <p className="text-center text-gray-500 ml-6">

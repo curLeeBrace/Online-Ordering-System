@@ -1,10 +1,10 @@
 import React from 'react';
-import AdminNavbar from './AdminNavbar';
+
 
 const table = () => {
   return (
     <div>
-        <AdminNavbar />
+        {/* <AdminNavbar /> */}
     <div className="container mx-auto p-4 h-screen bg-gray-200">
         
       <div className="overflow-x-auto border-amber-900">

@@ -8,6 +8,8 @@ require('dotenv').config();
 
 const connectDB = require('./database/connection');
 const account = require('./route/account');
+const client = require('./route/client');
+const product = require('./route/admin/product');
 
 app.use(express.urlencoded({extended:false}))
 app.use(express.json());
@@ -20,21 +22,9 @@ app.use(cors({
 
 
 app.use('/api/account', account);
+app.use('/api/client', client);
+app.use('/api/product', product)
 
-//testing setup cookie
-// app.post('/api/setCookie', (req, res) => {
-
-//     res.cookie('email', `${req.body.email}`);//set cookie
-//     res.cookie('verification', true);//set cookie
-//     res.json({setCoockie : true});
-// })
-
-// app.post('/api/account/create/:type', (req, res)=>{
-    
-//     let {type} = req.params;
-//     console.log(type);
-//     res.json({succses : true});
-// })
 
 const start = async () =>{ 
     try {

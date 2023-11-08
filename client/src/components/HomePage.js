@@ -1,30 +1,37 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
+import React, { useState } from 'react'
+import Navbar from './Navbar'
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { getCookie } from '../hooks/cookiesHandler';
+import { getCookie } from '../customHooks/cookiesHandler';
 import { useNavigate } from 'react-router-dom';
-
 import { UilLocationPinAlt } from '@iconscout/react-unicons'
+import { useAuth } from '../customHooks/context/auth';
+import { useFetchUsername } from '../customHooks/useEffect/myUseFetchEffect'; 
+const ck_forE_verification = "verification-forEmail";
+
 
 function HomePage() {
   const navigate = useNavigate();
-  // const ck_forFP_verification = "verification-forgotPass";
-  const ck_forE_verification = "verification-forEmail";
+  // const [username, setUsername] = useState(null);
+  const auth = useAuth();
+  const {username} = auth;
+
   //check verificaiton cookie if available... if true proceed to verification Page
   useEffect(()=>{
-    //const forgotPassVerification = getCookie(ck_forFP_verification);
     const emailVerification = getCookie(ck_forE_verification);
 
     if(emailVerification){
       navigate('/verification');
     }
 
-
   },[])
+
+  //getClientData
+  useFetchUsername(username, auth.setClientDatas);
+
   return (
     <div className='h-screen w-screen bg-gray-200'>
-    <Navbar />
+    <Navbar user = {{username : username}}/>
     <div className=" mt-8 ml-10 md:ml-20 sm:ml-10 mr-6 sm:px-0 md:mt-28">
         <h1 className="text-3xl font-semibold text-gray-800 whitespace-normal">Welcome to<br></br> Our Online Milk Tea Shop</h1>
         <h2 className="text-lg text-gray-600 mt-4">Satisfy your cravings with our delightful selection of milk teas!</h2>
@@ -51,7 +58,7 @@ function HomePage() {
       </div>
       
 
-      
+
     </div>
 
   )

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { isNum } from "../Auth/verifyInput";
-import { getCookie , removeCookie} from "../hooks/cookiesHandler";
-import { api } from "../hooks/configAxios";
+import { isNum } from "../customHooks/verifyInput"; 
+import { getCookie, removeCookie } from "../customHooks/cookiesHandler"; 
+import { api } from "../customHooks/configAxios";
 
 
-function VerifyCode({}) {
+function VerifyCode() {
   const location = useLocation();
 
   const navigate = useNavigate();

@@ -1,9 +1,9 @@
 import React from 'react'
-import AdminNavbar from './AdminNavbar';
+
 function RiderAccounts() {
     return (
         <div>
-            <AdminNavbar />
+            
         <div className="container mx-auto p-4 h-screen bg-gray-200">
             
           <div className="overflow-x-auto">

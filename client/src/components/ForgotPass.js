@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { isNum, confirmEmail } from "../Auth/verifyInput";
+import { isNum, confirmEmail } from "../customHooks/verifyInput";
 import { useState } from "react";
-// import axios from "axios";
-import { getCookie , setCookie} from "../hooks/cookiesHandler";
-import {api} from "../hooks/configAxios";
+
+import { getCookie , setCookie} from "../customHooks/cookiesHandler";
+import {api} from "../customHooks/configAxios";
+import { useVerificationRouteProtection } from "../customHooks/useEffect/myUseRouteEffect";
 function ForgotPass() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ function ForgotPass() {
   const cookieVerification = "verification-forgotPass";
   const cookieSetNewPAss = "setNewPass";
   
-  
+ 
   useEffect(() => {
     const setNewPass = getCookie(cookieSetNewPAss);
     if(setNewPass) {

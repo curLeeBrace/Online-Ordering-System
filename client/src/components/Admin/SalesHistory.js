@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AdminNavbar from './AdminNavbar'
+
 
 const SalesHistory = () => {
   const [selectedOption, setSelectedOption] = useState('Day'); 
@@ -8,7 +8,7 @@ const SalesHistory = () => {
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
-  const salesData = [ //for visualization purposes only haha
+  const salesData = [ //for visualization purposes only haha :) :(
     { date: '2023-10-10', amount: 500 },
     { date: '2023-10-11', amount: 750 },
     { date: '2023-10-12', amount: 600 },
@@ -44,7 +44,7 @@ const SalesHistory = () => {
 
   return (
     <div>
-    <AdminNavbar />
+    {/* <AdminNavbar /> */}
     <div className="p-4 h-full w-full sm:w-full bg-gray-200 mx-auto">
       <div className="mb-4 text-amber-950 mb-4 flex justify-center ">
         

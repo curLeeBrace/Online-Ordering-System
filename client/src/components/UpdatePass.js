@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getCookie , removeCookies} from "../hooks/cookiesHandler";
+import { getCookie , removeCookies} from "../customHooks/cookiesHandler";
 import { useNavigate } from "react-router-dom";
-import { api } from "../hooks/configAxios";
-
+import { api } from "../customHooks/configAxios";
+import { useVerificationRouteProtection } from "../customHooks/useEffect/myUseRouteEffect";
 const UpdatePass = () => {
     const [newPass, setNewPass] = useState('');
     const [reTypePass, setReTypePass] = useState('');
@@ -11,7 +11,10 @@ const UpdatePass = () => {
     const cookieEmail = "email-forgotPass";
     const cookieVerification = "verification-forgotPass";
    
+
+    //useVerificationRouteProtection();
     //check if user can chang her password, check cookies if its true then if false go back to registration 
+    
       useEffect(() => {
       
       const setNewPass = getCookie(cookieSetNewPAss);
@@ -30,6 +33,7 @@ const UpdatePass = () => {
       const email = getCookie(cookieEmail);
       //request of changing password if new pass and confirmpass mathced!
       if(newPass === reTypePass){
+      
         api.post('/account/updatePass', {
           email : email,
           newPass : newPass

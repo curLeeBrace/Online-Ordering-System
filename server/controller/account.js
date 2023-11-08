@@ -1,3 +1,5 @@
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
 const AccountSchema = require("../database/schema/AccountSchema");
 const verifyEmail = require("../utils");
 let returnNotiff = { notiff: null };
@@ -167,10 +169,46 @@ const updatePass = async (req, res) => {
   }
 }
 
+
+
+const login = async (req, res) => {
+  let {user, reqToken, accessToken} = req.body;
+  const {email, password} = user;
+ 
+  console.log(user);
+  try {
+    const accountData = await AccountSchema.findOne({
+      $and : [{Email : email}, {Password : password}]
+    });
+
+    if(accountData != null){
+      if(!reqToken) {
+        accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);   
+      }
+      return res.json({
+          account : "valid", 
+          token : accessToken, 
+          userType : accountData.Type,
+          clientName : accountData.Uname
+    });
+    }
+    return res.json({account : "invalid"});
+  } 
+  catch (error) {
+    console.log(error);
+  }
+
+}
+
+
+
+
+
 module.exports = {
   createAccount,
   verifyAccount,
   requestVerificationCode,
   confirmVerificationCode,
   updatePass,
+  login,
 };
