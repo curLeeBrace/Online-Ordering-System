@@ -13,21 +13,29 @@ function AddProducts() {
   const addHandler = (e) =>{
     e.preventDefault();
     const imageName = flavor + image.type;
-    // alert(imageName.replace("/", "."))
+
     const formData = new FormData();
     formData.append("Flavor", flavor);
-    formData.append("Price", price);
     formData.append("Size", size);
-    formData.append("Image", image, imageName.replace("/", "."));
+    formData.append("Price", parseFloat(price));
+    formData.append("ImageName", imageName.replace("image/", "."));
+    formData.append("Image", image, imageName.replace("image/", "."));
 
     api.post("/product/add", formData, {
-      headers : {"Content-Type" : "multipart/form-data"},
-      
+      headers : {"Content-Type" : "multipart/form-data"},     
+    })
+    .then(res => {
+      const {notif} = res.data;
+      if(res.status === 200){
+        alert(notif)
+      }
     })
     
 
     
   }
+
+ 
   return (
     <div className="h-screen bg-gray-200 mt-0">
       {/* <AdminNavbar /> */}
@@ -89,7 +97,7 @@ function AddProducts() {
               <input 
               type="radio" 
               name="payment" 
-              checked 
+             
               value = "Small"
               onChange={(e) => setSize(e.target.value)}
               />
@@ -100,7 +108,7 @@ function AddProducts() {
               <input 
               type="radio" 
               name="payment" 
-              value = "Small"
+              value = "Medium"
               onChange={(e) => setSize(e.target.value)}
               />
               Medium

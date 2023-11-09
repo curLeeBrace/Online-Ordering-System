@@ -1,5 +1,5 @@
 const AccountSchema = require("../database/schema/AccountSchema");
-const {findData} = require('../myBuiltIn_Func/monggoQuery');
+const {findData} = require('../myBuiltIn_Func/monggoQuery'); // my built in function
 
 
 const getUsername = async(req, res) => {
