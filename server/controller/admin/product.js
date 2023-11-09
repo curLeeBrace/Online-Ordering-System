@@ -1,4 +1,5 @@
 const ProductSchema = require("../../database/schema/ProductSchema");
+
 let notif = "";
 
 const addProduct = async (req, res) => {
@@ -40,33 +41,13 @@ const addProduct = async (req, res) => {
           { $push: { Price: Price } }
         );
 
-        // if(checkElement(product.Price, Price)){
-
-        // }
+        
       } else {
         notif = "Already Had that size!";
       }
 
-      //pagkahaba haba omaiiii potek
-      // checkElement(product.Size, Size)
-      // .then(res => {
-
-      //     //update element in Size array or add new Size
-      //     if(res == true) {
-
-      //         //add size price if price is not existing or there is not same value in DB as client requested to set
-      //         checkElement(product.Price, Price)
-      //         .then(res => {
-      //             //update element in Price array or add new Price
-      //             if(res == true) {
-      //                 ProductSchema.updateOne({Flavor: Flavor},{$push: {Price : Price}});
-      //             }
-      //         })
-      //         .catch(err => console.log(err))
-      //     }
-      // })
-      // .catch(err => console.log(err))
-    } else {
+    } 
+    else {
       notif = "Succsesfully Added! new Flavor";
       await ProductSchema.create({
         Flavor: Flavor,
@@ -82,6 +63,22 @@ const addProduct = async (req, res) => {
   }
 };
 
+
+
+
+const getAllProduct = async (req, res) => {
+  try {
+    
+    const allProduct = await ProductSchema.find({});
+    
+    // console.log(allProduct);
+    res.json(allProduct);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   addProduct,
+  getAllProduct,
 };

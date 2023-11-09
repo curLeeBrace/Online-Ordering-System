@@ -30,6 +30,7 @@ function AddProducts() {
         alert(notif)
       }
     })
+    .catch(err => console.log(err))
     
 
     

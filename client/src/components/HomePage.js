@@ -48,7 +48,7 @@ function HomePage() {
                    </button>
                    <div className='col-span-1 h-100 flex justify-center items-center group'>
                    
-                    <img src="./img/milkte.png" alt="Milk Tea Logo" className="animate-spin-slow -mb-44 sm:mr-10 mt-20 md:h-96 md:w-full md:ml-96 md:-mr-70 md:-pr-96 md:-mt-60 md:pl-96" />
+                    <img src="./img/logo/milkte.png" alt="Milk Tea Logo" className="animate-spin-slow -mb-44 sm:mr-10 mt-20 md:h-96 md:w-full md:ml-96 md:-mr-70 md:-pr-96 md:-mt-60 md:pl-96" />
                    
                    
                    </div>
