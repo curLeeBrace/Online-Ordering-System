@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
-import { api } from "../customHooks/configAxios";
-import { useAuth } from "../customHooks/context/auth";
-import { getCookie, setCookie } from "../customHooks/cookiesHandler";
+import { api } from "../../customHooks/configAxios";
+
+import { getCookie, setCookie } from "../../customHooks/cookiesHandler";
 import { useNavigate } from "react-router-dom";
 
 
@@ -13,7 +13,7 @@ function Login() {
   
   const navigate = useNavigate();
   const accessToken = getCookie("accessToken");
-  let auth = useAuth();
+  
   
   useEffect(()=>{
     if(accessToken !== undefined) {
@@ -32,7 +32,7 @@ function Login() {
     login(accessToken);
   }
 
-  
+  //login function
   const login = () => {
    
    api.post('/account/login', { 
@@ -55,7 +55,7 @@ function Login() {
          //setClientData
         if(userType === "customer") {
 
-          auth.login(clientName);
+          
           navigate("/", {replace : true});
         }
       }
@@ -70,6 +70,7 @@ function Login() {
       <div className="bg-white p-4 rounded-lg shadow-lg w-96">
       <img src="./img/milktealogo.png" alt="" className=" flex items-center justify-center" />
         <h2 className="text-2xl font-bold mb-4 text-center">LogIn</h2>
+        
         <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label htmlFor="user" className="block text-gray-700 text-sm font-semibold">
