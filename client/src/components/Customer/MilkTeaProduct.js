@@ -23,6 +23,17 @@ const MilkTeaProduct = ({ product }) => {
 
   },[qty, pro_size, addsOn])
 
+  const clsoeModal = ()=> {
+
+    setQty(1); 
+    setProSize(null)
+    setPrice(null)
+    setAddsOn(null)
+    setAddPrice(0);
+    setMod(null)
+    setTotal(0); 
+    setModalOpen(false);
+  }
   const placeOrder = (e ) => {
     e.preventDefault();
 
@@ -49,7 +60,7 @@ const MilkTeaProduct = ({ product }) => {
         <div className="fixed inset-0 flex items-center ml-4 mr-4 justify-center z-50 ">
           <div className="bg-white rounded-lg mt-0 shadow-2xl border border-amber-950 p-4 w-full md:w-96">
             <button
-              onClick={()=>{setModalOpen(false); setQty(1); setTotal(0)}}
+              onClick={clsoeModal}
               className="relative top-7 ml-64 md:left-0 md:ml-80 ml-56 font-bold hover:text-gray-700 cursor-pointer"
             >
               <UilMultiply size={20} />
