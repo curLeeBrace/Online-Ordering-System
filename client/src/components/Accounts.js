@@ -2,6 +2,7 @@ import React from 'react';
 import AdminNavbar from './AdminNavbar';
 
 const table = () => {
+  let thClass = 'border-2 border-amber-900 p-2'
   return (
     <div>
         <AdminNavbar />
@@ -12,31 +13,31 @@ const table = () => {
       <table className="min-w-full border border-gray-300 text-sm whitespace-nowrap">
           <thead >
             <tr>
-              <th className="border-2 border-amber-900 p-2">ID</th>
-              <th className="border-2 border-amber-900 p-2">Email</th>
-              <th className="border-2 border-amber-900 p-2">Phone Number</th>
-              <th className="border-2 border-amber-900 p-2">Username</th>
-              <th className="border-2 border-amber-900 p-2">Firstname</th>
-              <th className="border-2 border-amber-900 p-2">Middle Initial</th>
-              <th className="border-2 border-amber-900 p-2">Lastname</th>
-              <th className="border-2 border-amber-900 p-2">Municipality</th>
-              <th className="border-2 border-amber-900 p-2">Brgy</th>
-              <th className="border-2 border-amber-900 p-2">Street & House#</th>
+              <th className={thClass}>ID</th>
+              <th className={thClass}>Email</th>
+              <th className={thClass}>Phone Number</th>
+              <th className={thClass}>Username</th>
+              <th className={thClass}>Firstname</th>
+              <th className={thClass}>Middle Initial</th>
+              <th className={thClass}>Lastname</th>
+              <th className={thClass}>Municipality</th>
+              <th className={thClass}>Brgy</th>
+              <th className={thClass}>Street & House#</th>
               
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td className="border border-amber-900 p-2">1</td>
-              <td className="border border-amber-900 p-2">balite@yahoo.com</td>
-              <td className="border border-amber-900 p-2">092939273164</td>
-              <td className="border border-amber-900 p-2">maudrei14</td>
-              <td className="border border-amber-900 p-2">Lee Andrei</td>
-              <td className="border border-amber-900 p-2">G.</td>
-              <td className="border border-amber-900 p-2">Balite</td>
-              <td className="border border-amber-900 p-2">Pagsanjan</td>
-              <td className="border border-amber-900 p-2">Poblacion 1</td>
-              <td className="border border-amber-900 p-2">04-241 Kanto Tinyo</td>
+              <td className={thClass}>1</td>
+              <td className={thClass}>balite@yahoo.com</td>
+              <td className={thClass}>092939273164</td>
+              <td className={thClass}>maudrei14</td>
+              <td className={thClass}>Lee Andrei</td>
+              <td className={thClass}>G.</td>
+              <td className={thClass}>Balite</td>
+              <td className={thClass}>Pagsanjan</td>
+              <td className={thClass}>Poblacion 1</td>
+              <td className={thClass}>04-241 Kanto Tinyo</td>
             </tr>
            
             

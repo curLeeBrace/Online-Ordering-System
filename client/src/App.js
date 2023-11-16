@@ -1,5 +1,5 @@
 import {Route, Routes } from "react-router-dom";
-
+import React from "react";
 import HomePage from "./components/HomePage";
 import Login from "./components/Login"
 import Registration from "./components/Registration"
@@ -13,13 +13,22 @@ import Accounts from "./components/Accounts";
 import RiderAccounts from "./components/RiderAccounts";
 import SalesHistory from "./components/SalesHistory";
 import AddProducts from "./components/AddProducts";
+import LoadingPage from "./components/LoadingPage";
+import About from "./components/About";
+import Orders from "./components/Orders";
+import AdminOrders from "./components/AdminOrders";
 
+const LazyHomePage = React.lazy(() => import('./components/HomePage'))
 
 function App() {
   return (
     <>    
         <Routes>
-          <Route path = "/" element = {<HomePage/>}/>
+          <Route path = "/" element ={
+            <React.Suspense fallback={<loading />}>
+              <LazyHomePage />
+            </React.Suspense>
+          } />
           <Route path = "/login" element = {<Login/>}/>
           <Route path = "/registration" element = {<Registration/>}/>
           <Route path= "/verification" element = {<VerifyCode/>}/>
@@ -33,6 +42,12 @@ function App() {
           <Route path= "/rider" element = {<RiderAccounts/>}/>
           <Route path= "/sales" element = {<SalesHistory/>}/>
           <Route path= "/products" element = {<AddProducts/>}/>
+          <Route path="/loading" element={<LoadingPage/>} />
+          <Route path="/about" element={<About/>} />
+          <Route path="/orders" element={<Orders/>} />
+          <Route path="/adminorders" element={<AdminOrders/>} />
+          
+         
         
 
         </Routes>

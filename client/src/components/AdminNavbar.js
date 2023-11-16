@@ -1,10 +1,26 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { UilBars, UilMultiply } from '@iconscout/react-unicons';
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  let {pathname} = useLocation()
+  let subpage = pathname.split('/')?.[1]
 
+  function link (type = null){
+    if(subpage === ''){
+      subpage = 'orders'
+    }
+    let classes = 'text-white hover:text-orange-200 mx-6 md:my-0 sm:mb-2 md:hover:scale-150 duration-300'
+    
+
+    if(type === subpage){
+      classes += " text-orange-200 font-bold md:border-b-4 md:border-orange-200 md:text-orange-200 md:scale-12"
+    }
+    
+    return classes;
+
+  }
 
   return (
     <nav className={`p-5 bg-amber-950 shadow md:flex md:items-center md:justify-center`}>
@@ -32,29 +48,34 @@ function Navbar() {
         className={`md:ml-14 md:flex md:items-center z-[1] md:z-auto md:static absolute pb-12 bg-amber-950 w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 
         ${open ? 'top-20' : 'left-[-800px]'} transition-all ease-in duration-500`}
       >
-        <li className="mx-4 md:my-0 sm:mb-2 md:hover:scale-150 duration-300 ">
-          <Link to="/accounts" className="text-white hover:text-orange-200 transition-colors">
+        <li className={link('accounts')}>
+          <Link to="/accounts">
             Accounts
           </Link>
         </li>
-        <li className="mx-4 md:my-0 sm:mb-2 md:hover:scale-150 duration-300 ">
-          <Link to="/rider" className="text-white hover:text-orange-200 transition-colors">
+        <li className={link('rider')}>
+          <Link to="/rider">
             Rider Accounts
           </Link>
         </li>
-        <li className="mx-4 md:my-0 sm:mb-2 md:hover:scale-150 duration-300">
-          <Link to="/sales" className="text-white hover:text-orange-200 transition-colors">
+        <li className={link('sales')}>
+          <Link to="/sales">
             Sales
           </Link>
         </li>
-        <li className="mx-4 md:my-0 sm:mb-2 md:hover:scale-150  duration-300">
-          <Link to="/products" className="text-white hover:text-orange-200 transition-colors">
+        <li className={link('products')}>
+          <Link to="/products">
             Products
           </Link>
         </li>
-        <li className="mx-4 md:my-0 sm:mb-2 md:hover:scale-150  duration-300">
-          <Link to="/inventory" className="text-white hover:text-orange-200 transition-colors">
+        <li className={link('inventory')}>
+          <Link to="/inventory">
             Inventory
+          </Link>
+        </li>
+        <li className={link('adminorders')}>
+          <Link to="/adminorders">
+            Orders
           </Link>
         </li>
 
