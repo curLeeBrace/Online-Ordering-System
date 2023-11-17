@@ -124,9 +124,8 @@ function Registration() {
 
   return (
     <div className="h-full bg-gray-200 p-6  ">
-      <div className="max-w-md mx-auto bg-white p-8 rounded shadow-lg text-sm">
-        <h2 className="text-xl font-semibold text-center mb-6">
-          Create An Account
+      <div className="max-w-md mx-auto bg-white p-8 -mt-4 mb-0 rounded shadow-lg text-sm">
+        <h2 className="text-xl font-semibold text-center mb-4 -mt-4">Create An Account
         </h2>
         <form onSubmit={registerHandler}>
           {/* Email */}
@@ -433,6 +432,7 @@ function Registration() {
           </div>
           {/* Register */}
           <div className="mb-4">
+<<<<<<< HEAD
             {enableBtn ? (
               <button
                 type="submit"
@@ -443,6 +443,17 @@ function Registration() {
             ) : (
               "Loading..."
             )}
+=======
+            {
+              enableBtn ?
+            <button
+              type="submit"
+              className="w-full bg-lime-800 text-white p-3 md:hover:scale-110 rounded-xl hover:bg-white transition duration-300 relative bg-amber-950 isolation-auto z-10 border-lime-500 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-amber-950 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700"
+            >
+              Register
+            </button> : 'Loading...'
+          }
+>>>>>>> figs
           </div>
         </form>
         <p className="text-center text-gray-500 ml-6">
