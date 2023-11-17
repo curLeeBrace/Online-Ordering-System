@@ -432,18 +432,6 @@ function Registration() {
           </div>
           {/* Register */}
           <div className="mb-4">
-<<<<<<< HEAD
-            {enableBtn ? (
-              <button
-                type="submit"
-                className="w-full bg-lime-800 text-white p-3 rounded hover:bg-amber-950 transition duration-300"
-              >
-                Register
-              </button>
-            ) : (
-              "Loading..."
-            )}
-=======
             {
               enableBtn ?
             <button
@@ -453,7 +441,6 @@ function Registration() {
               Register
             </button> : 'Loading...'
           }
->>>>>>> figs
           </div>
         </form>
         <p className="text-center text-gray-500 ml-6">

@@ -66,7 +66,7 @@ function Login() {
   return (
     <div className="flex items-center justify-center h-screen  bg-gray-200">
       <div className="bg-white p-2 rounded-lg shadow-lg w-96 -mt-20 ml-4 mr-4">
-      <img src="./img/milktealogo.png" alt="" className="h-40 mx-auto" />
+      <img src="./img/logo/milktealogo.png" alt="" className="h-40 mx-auto" />
         <h2 className="text-2xl font-bold mb-4 text-center">LogIn</h2>
         
         <form onSubmit={handleLogin}>
