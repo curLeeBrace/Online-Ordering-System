@@ -66,6 +66,15 @@ function Navbar() {
 
           <li className="mx-4 md:my-0 sm:mb-2 md:hover:scale-150  duration-300">
             <Link
+              to="orders"
+              className="text-white hover:text-orange-200 transition-colors"
+            >
+              My-Orders
+            </Link>
+          </li>
+
+          <li className="mx-4 md:my-0 sm:mb-2 md:hover:scale-150  duration-300">
+            <Link
               to="about"
               className="text-white hover:text-orange-200 transition-colors"
             >

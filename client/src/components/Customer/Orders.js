@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from './Navbar';
+
 
 function OrderNavbar({ activeTab, onChangeTab }) {
   return (
@@ -56,7 +56,7 @@ function Orders() {
 
   return (
     <div>
-        <Navbar />
+        
       <OrderNavbar activeTab={activeTab} onChangeTab={handleChangeTab} />
       
       <div className="ml-4 mr-4 sm:flex-col justify-center items-center md:flex-row bg-white mt-4 rounded-lg shadow-2xl sm:text-sm md:text-sm p-4 mb-4 md:w-1/2 lg:w-1/4">

@@ -89,7 +89,7 @@ function AdminNavbar() {
           </Link>
         </li>
         <li className={link('adminorders')}>
-          <Link to="adminorders">
+          <Link to="admin-orders">
             Orders
           </Link>
         </li>

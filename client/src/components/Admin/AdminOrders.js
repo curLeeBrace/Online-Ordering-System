@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AdminNavbar from './AdminNavbar'
+
 import { UilMultiply } from '@iconscout/react-unicons';
 function AdminOrders() {
 
@@ -17,8 +17,7 @@ function AdminOrders() {
     };
   return (
     <div>
-        <AdminNavbar />
-        <div className='bg-gray-200 h-screen bg-gray-200 '>
+      <div className='bg-gray-200 h-screen bg-gray-200 '>
         <div className="overflow-x-auto ml-4 mr-4">
           <h1 className='font-bold text-3xl text-amber-900'>Rider Accounts</h1>
             <table className="min-w-full border border-gray-300 mb-2 text-sm whitespace-nowrap">

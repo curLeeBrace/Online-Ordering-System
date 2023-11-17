@@ -1,11 +1,11 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
+
 import { UilFacebook, UilLocationPinAlt } from '@iconscout/react-unicons'
 
 function About() {
   return (
     <div className='lg:h-screen lg:w-screen sm:w-100 h-100 md:h-screen bg-gray-200'>
-    <Navbar />
+
     <div className=" mt-8 ml-10 md:ml-20 sm:ml-10 mr-6 sm:px-0 md:mt-28">
         <h1 className="text-3xl font-semibold text-gray-800 whitespace-normal">Welcome to Our Online Milk Tea Shop</h1>
         
