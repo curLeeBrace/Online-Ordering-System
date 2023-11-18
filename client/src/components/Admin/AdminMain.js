@@ -3,15 +3,16 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { UilBars, UilMultiply } from "@iconscout/react-unicons";
 import { Outlet } from "react-router-dom";
+
 function AdminNavbar() {
   const [open, setOpen] = useState(false);
 //figs change
   let {pathname} = useLocation()
-  let subpage = pathname.split('/')?.[1]
+  let subpage = pathname.split('/')[2]
 
   function link (type = null){
     if(subpage === ''){
-      subpage = 'orders'
+      subpage = 'accounts'
     }
     let classes = 'text-white hover:text-orange-200 mx-6 md:my-0 sm:mb-2 md:hover:scale-150 duration-300'
     
@@ -88,7 +89,7 @@ function AdminNavbar() {
             Inventory
           </Link>
         </li>
-        <li className={link('adminorders')}>
+        <li className={link('admin-orders')}>
           <Link to="admin-orders">
             Orders
           </Link>

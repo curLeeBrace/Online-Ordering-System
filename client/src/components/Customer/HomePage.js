@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Navbar from './Navbar'
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getCookie } from '../../customHooks/cookiesHandler';
@@ -27,9 +26,9 @@ function HomePage() {
   //useFetchUsername(username, auth.setClientDatas);
 
   return (
-    <div className='lg:h-screen lg:w-screen h-100 bg-gray-200'>
+    <div className='lg:h-screen lg:w-100 h-100 bg-gray-200'>
 
-    <div className=" mx-auto mt-8 ml-10 md:ml-28 sm:ml-10 mr-6 sm:px-0 md:mt-28">
+    <div className=" mx-auto pt-8 ml-10 md:ml-28 sm:ml-10 mr-6 sm:px-0 md:pt-28">
         <h1 className="text-3xl font-semibold text-gray-800 md:whitespace-nowrap whitespace-normal">Welcome to Our Online Milk Tea Shop</h1>
         <h2 className="text-lg text-gray-600 mt-4">Satisfy your cravings with our delightful selection of milk teas!</h2>
         

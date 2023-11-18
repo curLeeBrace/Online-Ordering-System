@@ -38,9 +38,9 @@ function AddProducts() {
 
  
   return (
-    <div className="h-screen bg-gray-200 mt-0">
+    <div className="h-screen bg-gray-200 mt-0 pt-10">
       {/* <AdminNavbar /> */}
-      <div className="bg-white rounded-lg shadow-2xl p-4 w-full md:w-96 mx-auto mt-10">
+      <div className="bg-white rounded-lg shadow-2xl p-4 w-full md:w-96 mx-auto pt-10">
         <h2 className="text-2xl font-semibold mb-4">Add New Flavor/Product</h2>
         
         <form onSubmit={addHandler}>
