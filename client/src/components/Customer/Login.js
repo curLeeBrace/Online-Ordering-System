@@ -48,7 +48,8 @@ function Login() {
       }
     })
     .then(res => {
-      const {account, token, userType, clientName} = res.data;
+      const {account, token, userType} = res.data;
+
       
       if(account === "valid"){
         setCookie("accessToken", token, {SameSite : "Strict"});
@@ -58,9 +59,11 @@ function Login() {
           
           navigate("/", {replace : true});
         }
+      } else {
+        alert("Invalid Credentials!")
       }
     })
-    .catch(err => {alert("Invalid Credentials!"); console.log(err)})
+    .catch(err => {alert("Error Occured!"); console.log(err)})
   }
 
   return (

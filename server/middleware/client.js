@@ -10,7 +10,7 @@ const authenticateToken = (req, res, next) => {
         
         if(err) return res.sendStatus(403);
           
-         req.body.user = user;
+         req.body.user = user; // set user that contains email and password after verifying webToken to req body
          next();
         
       }) 

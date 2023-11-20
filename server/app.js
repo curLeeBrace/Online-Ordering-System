@@ -10,6 +10,7 @@ const connectDB = require('./database/connection');
 const account = require('./route/account');
 const client = require('./route/client');
 const product = require('./route/admin/product');
+const order = require ('./route/customer/orders')
 
 app.use(express.urlencoded({extended:false}))
 app.use(express.json());
@@ -23,7 +24,12 @@ app.use(cors({
 
 app.use('/api/account', account);
 app.use('/api/client', client);
-app.use('/api/product', product)
+app.use('/api/product', product);
+
+app.use('/api/customer', order);
+
+
+
 
 
 const start = async () =>{ 
