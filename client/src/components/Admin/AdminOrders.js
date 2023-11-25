@@ -19,7 +19,7 @@ function AdminOrders() {
     <div>
       <div className='bg-gray-200 h-screen bg-gray-200 '>
         <div className="overflow-x-auto ml-4 mr-4">
-          <h1 className='font-bold text-3xl text-amber-900'>Customer Orders</h1>
+          <h1 className='font-bold text-3xl text-amber-900'>Orders</h1>
             <table className="min-w-full border border-gray-300 mb-2 text-sm whitespace-nowrap">
               <thead >
                 <tr>
@@ -73,10 +73,14 @@ function AdminOrders() {
                   <td className={thClass}>2</td>
                   <td className={thClass}>S</td>
                   <td className={thClass}>50</td>
-                  <td className={thClass}>₱5011212</td>
+                  <td className={thClass}>₱5011212
+              </td>
               
                 </tr>  
+                 
+                
               </tbody>
+             
              
             </table>
             
