@@ -1,43 +1,93 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { UilMultiply } from "@iconscout/react-unicons";
-import Menu from "./Menu";
+import { getCookie } from "../../customHooks/cookiesHandler";
+import { api } from "../../customHooks/configAxios";
 
 const MilkTeaProduct = ({ product }) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [qty, setQty] = useState(1);
-  const [pro_size, setProSize] = useState(null);
-  const [price , setPrice] = useState(0);
-  const [addsOn, setAddsOn] = useState(0);
-  const [addPrice, setAddPrice] = useState(null);
-  const [mod, setMod] = useState(null);
-  const [total, setTotal] = useState(0);
+  const [qty, setQty] = useState(1); // quantity
+  const [pro_size, setProSize] = useState(null); // size
+  const [price, setPrice] = useState(0); // price
+  const [addsOn, setAddsOn] = useState(null);
+  const [addPrice, setAddPrice] = useState(null); // addsOn price
+  const [mod, setMod] = useState(null); // mode of payment
+  const [total, setTotal] = useState(0); // total
+
+  const [enable, setEnable] = useState(true);
 
   // console.log(price);
   //get the total
-  useEffect(()=>{
-    // const addsOnprice = 10 // fixed value, will change in future maybe :)
-    let computeTotal = (qty * price) + addPrice;
+  useEffect(() => {
+    // const addsOnprice = 10 // [fixed value], will change in future maybe :)
+    let totalddPrice = qty * addPrice;
+    let computeTotal = (qty * price) + totalddPrice;
     setTotal(computeTotal);
-    
+  }, [qty, pro_size, addsOn]);
 
-
-  },[qty, pro_size, addsOn])
-
-  const clsoeModal = ()=> {
-
-    setQty(1); 
-    setProSize(null)
-    setPrice(null)
-    setAddsOn(null)
+  const clsoeModal = () => {
+    setQty(1);
+    setProSize(null);
+    setPrice(null);
+    setAddsOn(null);
     setAddPrice(0);
-    setMod(null)
-    setTotal(0); 
+    setMod(null);
+    setTotal(0);
     setModalOpen(false);
-  }
-  const placeOrder = (e ) => {
+  };
+  const placeOrder = (e) => {
     e.preventDefault();
-
-  }
+    const accessToken = getCookie("accessToken");
+    
+    //console.log(date);
+    if (accessToken == null) {
+      alert("Please Login First before you order!");
+    } else {
+      if (pro_size == null || mod == null) {
+            alert("Some details is empty fill up it first");
+      } else {
+        
+        api
+          .post(
+            "/customer/place-order",
+            {
+              MTname: product.Flavor,
+              Size: pro_size,
+              Price: price,
+              AddsOn: addsOn,
+              Qty: qty,
+              Img: product.ImageName,
+              Total: total,
+              MOD: mod,
+              Paid: false,
+              Status: 0,
+              Date: new Date().toLocaleDateString(),
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res.status);
+            const { MOD } = res.data;
+            if (res.status === 200) {
+              if (MOD === "gcash") {
+                const { checkout_url } = res.data;
+                alert("redirecting to gcash Payment!");
+                window.location.href = checkout_url;
+              } else {
+                alert("Order Placed!");
+                setEnable(true); // enable place Order button
+              }
+            } else {
+              alert("Error Occured!");
+            }
+          });
+          setEnable(false);
+      }
+    }
+  };
   return (
     <div className="ml-4 mr-4 sm:flex-col justify-center items-center md:flex-row bg-white mt-4 rounded-lg shadow-2xl sm:text-sm md:text-sm p-4 mb-4 md:w-1/2 lg:w-1/4">
       <img
@@ -49,7 +99,7 @@ const MilkTeaProduct = ({ product }) => {
       <p className="text-gray-600 text-sm">{product.Flavor}</p>
       {/* <p className="text-amber-900 font-bold mt-2">₱{totalPrice.toFixed(2)}</p> */}
       <button
-        onClick={()=>setModalOpen(true)}
+        onClick={() => setModalOpen(true)}
         className="mt-4 bg-lime-800 text-white px-4 py-2 rounded hover:bg-amber-900 focus:outline-none w-full"
       >
         Buy
@@ -73,7 +123,9 @@ const MilkTeaProduct = ({ product }) => {
                 id="quantity"
                 name="quantity"
                 value={qty}
-                onChange={(e)=>{setQty(e.target.value)}}
+                onChange={(e) => {
+                  setQty(e.target.value);
+                }}
                 min="1"
                 className="w-16 p-2 rounded border border-gray-300 focus:outline-none"
               />
@@ -81,18 +133,21 @@ const MilkTeaProduct = ({ product }) => {
             <label className="block font-semibold mt-4">Size:</label>
             <div className="ml-4 space-y-2">
               {product.Size.map((size, index) => {
-                let prices = product.Price.map((price)=> price); // make an array of prices
+                let prices = product.Price.map((price) => price); // make an array of prices
                 return (
-                  <Fragment key = {index}>
+                  <Fragment key={index}>
                     <label>
                       <input
                         type="radio"
                         name="sizes"
-                        value= {`${size}`}
-          
-                        onChange={(e) => {setProSize(e.target.value); setPrice(prices[index])}}
+                        value={`${size}`}
+                        onChange={(e) => {
+                          setProSize(e.target.value);
+                          setPrice(prices[index]);
+                        }}
                       />
-                      {size}{` (₱${prices[index]})`}
+                      {size}
+                      {` (₱${prices[index]})`}
                     </label>
                     <br></br>
                   </Fragment>
@@ -119,7 +174,10 @@ const MilkTeaProduct = ({ product }) => {
                   name="addon"
                   value="Tapioca Pearls"
                   // checked={}
-                  onChange = {(e)=> {setAddsOn(e.target.value); setAddPrice(10)}}
+                  onChange={(e) => {
+                    setAddsOn(e.target.value);
+                    setAddPrice(10);
+                  }}
                 />
                 Tapioca Pearls (+₱10)
               </label>
@@ -128,23 +186,39 @@ const MilkTeaProduct = ({ product }) => {
             <label className="block font-semibold mt-4">Mode of payment:</label>
             <div className="ml-4 space-y-2">
               <label>
-                <input type="radio" name="payment" /> Gcash
+                <input
+                  type="radio"
+                  name="payment"
+                  value="gcash"
+                  onChange={(e) => setMod(e.target.value)}
+                />{" "}
+                Gcash
               </label>
               <br></br>
               <label>
-                <input type="radio" name="payment" /> Cash-on Delivery
+                <input
+                  type="radio"
+                  name="payment"
+                  value="cod"
+                  onChange={(e) => setMod(e.target.value)}
+                />{" "}
+                Cash-on Delivery
               </label>
             </div>
 
             <p className="text-amber-900 font-bold mt-4">
               Total: ₱{` ${total}.00`}
             </p>
-            <button
-              onClick={placeOrder}
-              className="mt-4 bg-lime-800 text-white px-4 py-2 rounded hover:bg-amber-900 focus:outline-none w-full"
-            >
-              Place Order
-            </button>
+            {enable ? (
+              <button
+                onClick={placeOrder}
+                className="mt-4 bg-lime-800 text-white px-4 py-2 rounded hover:bg-amber-900 focus:outline-none w-full"
+              >
+                Place Order
+              </button>
+            ) : (
+              <span>Processing..</span>
+            )}
           </div>
         </div>
       )}

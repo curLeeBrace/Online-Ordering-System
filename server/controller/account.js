@@ -238,21 +238,22 @@ const login = async (req, res) => {
       {$match : {'Account.Email' : email}},
     ]).exec();
   
-  // console.log(accountData[0].Account[0].Password)
+  // console.log(accountData[0].Account[0].Type);
 
     if(accountData != null){
       if(password == accountData[0].Account[0].Password){
        
-        if(!reqToken) {
-          accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);   
-        }
-   
-        return res.json({
-            account : "valid", 
-            token : accessToken, 
-            userType : accountData[0].Account[0].Type,
-            clientName : accountData[0].Uname
-      });
+          if(!reqToken) {
+            accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);   
+          }
+    
+          return res.json({
+              account : "valid", 
+              token : accessToken, 
+              userType : accountData[0].Account[0].Type,
+              clientName : accountData[0].Uname
+        });
+
       }
       return res.json({account : "invalid"});
     }

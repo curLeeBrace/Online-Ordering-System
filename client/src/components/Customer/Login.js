@@ -50,8 +50,8 @@ function Login() {
     .then(res => {
       const {account, token, userType} = res.data;
 
-      
-      if(account === "valid"){
+      console.log(userType)
+      if(account == "valid"){
         setCookie("accessToken", token, {SameSite : "Strict"});
          //setClientData
         if(userType === "customer") {
