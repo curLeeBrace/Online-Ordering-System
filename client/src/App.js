@@ -24,6 +24,10 @@ import AddProducts from "./components/Admin/AddProducts";
 import AdminOrders from "./components/Admin/AdminOrders";
 
 import NotFoundPage from "./components/NotFoundPage";
+import RiderNavbar from "./components/Rider/RiderNavbar";
+import OrderList from "./components/Rider/OrderList";
+import DeliveryList from "./components/Rider/DeliveryList";
+import UploadProof from "./components/Rider/UploadProof";
 
 function App() {
   return (
@@ -31,7 +35,7 @@ function App() {
      
         <Routes>
           <Route path="/" element={<Navbar/>}>
-            <Route index element = {<HomePage/>}/>
+            <Route index element = {<HomePage/>}/>  
             <Route path = "home" element = {<HomePage/>}/> 
             <Route path = "menu" element={<Menu />} />
             <Route path = "orders" element = {<Orders/>}/>
@@ -44,6 +48,7 @@ function App() {
           <Route path="/verification" element={<VerifyCode />} />
           <Route path="/forgot-pass" element={<ForgotPass />} />
           <Route path="/newPass" element={<UpdatePass />} />
+          
           {/**figs Route */}
 
           {/* admin */}
@@ -55,7 +60,15 @@ function App() {
             <Route path="products" element={<AddProducts />} />
             <Route path="admin-orders" element={<AdminOrders/>} />
           </Route>
-         
+
+         {/* rider */}
+         <Route path="/rider" element={<RiderNavbar/>}>
+         <Route index element = {<OrderList/>}/>
+         <Route path="order-list" element={<OrderList />} />
+         <Route path="my-delivery" element={<DeliveryList />} />
+         <Route path="upload-proof" element={<UploadProof />} />
+         </Route>
+
         </Routes>
 
     </>
