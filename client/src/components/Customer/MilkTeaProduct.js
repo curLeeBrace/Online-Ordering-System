@@ -2,7 +2,9 @@ import React, { Fragment, useEffect, useState } from "react";
 import { UilMultiply } from "@iconscout/react-unicons";
 import { getCookie } from "../../customHooks/cookiesHandler";
 import { api } from "../../customHooks/configAxios";
+import {io} from "socket.io-client";
 
+let socket = io("http://localhost:3001/customer"); // connecting in sokcet event...
 const MilkTeaProduct = ({ product }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [qty, setQty] = useState(1); // quantity
@@ -15,9 +17,12 @@ const MilkTeaProduct = ({ product }) => {
 
   const [enable, setEnable] = useState(true);
 
+
   // console.log(price);
   //get the total
   useEffect(() => {
+    
+    
     // const addsOnprice = 10 // [fixed value], will change in future maybe :)
     let totalddPrice = qty * addPrice;
     let computeTotal = (qty * price) + totalddPrice;
@@ -79,6 +84,8 @@ const MilkTeaProduct = ({ product }) => {
               } else {
                 alert("Order Placed!");
                 setEnable(true); // enable place Order button
+               
+                socket.emit('order:place', "order is placed!")//notify server that order is placed
               }
             } else {
               alert("Error Occured!");

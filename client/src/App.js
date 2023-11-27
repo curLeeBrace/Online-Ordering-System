@@ -25,11 +25,18 @@ import AdminOrders from "./components/Admin/AdminOrders";
 
 import NotFoundPage from "./components/NotFoundPage";
 
+
+import { OrderProvider } from "./customHooks/context/order_context";
+
+
+
 function App() {
   return (
     <>
      
         <Routes>
+         
+          
           <Route path="/" element={<Navbar/>}>
             <Route index element = {<HomePage/>}/>
             <Route path = "home" element = {<HomePage/>}/> 
@@ -53,9 +60,9 @@ function App() {
             <Route path="rider" element={<RiderAccounts />} />
             <Route path="sales" element={<SalesHistory />} />
             <Route path="products" element={<AddProducts />} />
-            <Route path="admin-orders" element={<AdminOrders/>} />
+            <Route path="admin-orders" element={<OrderProvider><AdminOrders/></OrderProvider>} />
           </Route>
-         
+         <Route path = "*" element = {<NotFoundPage/>}/>
         </Routes>
 
     </>

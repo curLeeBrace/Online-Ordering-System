@@ -52,7 +52,7 @@ const gcash_webhook = async(req, res) => {
 const saveOrder_toDB = async (body, customerData) => {
    
     let checkout_url = body.COurl;
-    console.log("Checkout URL : ", checkout_url);
+    // console.log("Checkout URL : ", checkout_url);
     const {
         MTname,
         Size,
@@ -181,14 +181,7 @@ const placeOrder = async (req, res) => {
     console.log(error);
   }
 
-  // get the customer data... (will be use soon in fetching customerd Order data in admin side)
-  // const customerData = await UserInfoSchema.aggregate([
-  //     {$lookup : {from : 'addresses', localField : 'AddressID', foreignField : '_id', as : 'Address'}},
-  //     {$lookup : {from : 'accounts', localField : 'AccountID', foreignField : '_id', as : 'Account'}},
-  //     {$match : {'Account.Email' : email}}
-  // ]).exec();
-  // // console.log(customerData)
-  // res.json(customerData);
+  
 };
 //=========================================ORDER CONTROLER=============================================================================//
 
