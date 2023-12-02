@@ -24,6 +24,10 @@ import AddProducts from "./components/Admin/AddProducts";
 import AdminOrders from "./components/Admin/AdminOrders";
 
 import NotFoundPage from "./components/NotFoundPage";
+import RiderNavbar from "./components/Rider/RiderNavbar";
+import OrderList from "./components/Rider/OrderList";
+import DeliveryList from "./components/Rider/DeliveryList";
+import UploadProof from "./components/Rider/UploadProof";
 
 //context custom hooks
 import { OrderProvider } from "./customHooks/context/order_context";
@@ -40,7 +44,7 @@ function App() {
          
           
           <Route path="/" element={<Navbar/>}>
-            <Route index element = {<HomePage/>}/>
+            <Route index element = {<HomePage/>}/>  
             <Route path = "home" element = {<HomePage/>}/> 
             <Route path = "menu" element={<Menu />} />
             <Route path = "orders" element = {<OrderNav/>}/>
@@ -53,6 +57,7 @@ function App() {
           <Route path="/verification" element={<VerifyCode />} />
           <Route path="/forgot-pass" element={<ForgotPass />} />
           <Route path="/newPass" element={<UpdatePass />} />
+          
           {/**figs Route */}
 
           {/* admin */}
@@ -65,6 +70,15 @@ function App() {
             <Route path="admin-orders" element={<OrderProvider><AdminOrders/></OrderProvider>} />
           </Route>
          <Route path = "*" element = {<NotFoundPage/>}/>
+
+         {/* rider */}
+         <Route path="/rider" element={<RiderNavbar/>}>
+            <Route index element = {<OrderList/>}/>
+            <Route path="order-list" element={<OrderList />} />
+            <Route path="my-delivery" element={<DeliveryList />} />
+            <Route path="upload-proof" element={<UploadProof />} />
+         </Route>
+
         </Routes>
 
 

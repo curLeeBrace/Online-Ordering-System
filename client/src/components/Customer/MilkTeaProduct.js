@@ -102,6 +102,7 @@ const MilkTeaProduct = ({ product }) => {
         alt="Milk Tea"
         className="lg:h-full md:w-full md:h-full sm:w-full md:h-60 sm:h-96 object-cover rounded-t-lg justify-center items-center"
       />
+      
       <h2 className=" font-semibold mt-2 mb-2 text-sm">Milk Tea</h2>
       <p className="text-gray-600 text-sm">{product.Flavor}</p>
       {/* <p className="text-amber-900 font-bold mt-2">₱{totalPrice.toFixed(2)}</p> */}
