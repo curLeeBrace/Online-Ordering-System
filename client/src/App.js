@@ -63,10 +63,10 @@ function App() {
 
          {/* rider */}
          <Route path="/rider" element={<RiderNavbar/>}>
-         <Route index element = {<OrderList/>}/>
-         <Route path="order-list" element={<OrderList />} />
-         <Route path="my-delivery" element={<DeliveryList />} />
-         <Route path="upload-proof" element={<UploadProof />} />
+            <Route index element = {<OrderList/>}/>
+            <Route path="order-list" element={<OrderList />} />
+            <Route path="my-delivery" element={<DeliveryList />} />
+            <Route path="upload-proof" element={<UploadProof />} />
          </Route>
 
         </Routes>
