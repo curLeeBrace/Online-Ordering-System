@@ -1,18 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { UilBars, UilMultiply } from '@iconscout/react-unicons';
 import { Outlet } from "react-router-dom";
-import { useFetchUsername } from "../../customHooks/useEffect/myUseFetchEffect";
 import { UilShoppingCartAlt } from '@iconscout/react-unicons'
+import { getCookie , setCookie} from '../../customHooks/cookiesHandler';
 
+import { api } from '../../customHooks/configAxios';
 
 function Navbar() {
+  
   const [open, setOpen] = useState(false);
-  const [username, setUsername] = useState(null);
-  useFetchUsername(username,setUsername);
-
+  // const [username, setUsername] = useState(null);
+  
   let {pathname} = useLocation()
   let subpage = pathname.split('/')?.[1]
+
+    useEffect(() => {
+      const accessToken = getCookie("accessToken");
+      if (accessToken != null) {
+        api
+          .get('/client/getUsername', {
+            headers: {
+              'Authorization': `Bearer ${accessToken}`
+            }
+          })  
+          .then(res => {
+            const { username } = res.data;
+            setCookie("username", username);
+          })
+          .catch(err => console.log(err));
+      }
+    }, []);
+    
 
   function link (type = null){
     if(subpage === ''){
@@ -78,12 +97,12 @@ function Navbar() {
           </Link>
         </li>
 
-        {username == null ? (
+        {getCookie("username") == null ? (
             <button className="w-28 md:my-0 mt-2 bg-lime-900 rounded text-white md:hover:scale-110 rounded-l hover:bg-white transition duration-300 relative bg-amber-950 isolation-auto z-10 border-lime-500 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-lime-900 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700">
               <Link to="/login">LogIn</Link>
             </button>
           ) : (
-            username
+            getCookie("username")
           )}
       </ul>
     </nav>

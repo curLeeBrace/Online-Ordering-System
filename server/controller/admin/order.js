@@ -25,12 +25,13 @@ const getAllCustomers = async () => {
 
 const getAllOrders = async (req, res) => {
   const {orderID} = req.body;
-  console.log("req  ",req.body)
-  console.log("orderID : ", orderID);
+  // console.log("req  ",req.body)
+  // console.log("orderID : ", orderID);
   try {
-    const orders = await OrderSchema.findById(orderID).exec();
-    // console.log(orders)
-    return res.json(orders);
+    const query = await OrderSchema.findById(orderID);
+
+    // console.log(query)
+    return res.json(query);
     
   } catch (error) {
     console.error(error);
@@ -38,14 +39,13 @@ const getAllOrders = async (req, res) => {
 
 }
 
-const confirmOrder = async (req, res) => {
-    const {orderID, index} = req.body;
-    
+const confirmOrder = async (orderID, index) => {
+  
     try {
-        const updateStatus = await OrderSchema.findByIdAndUpdate(orderID, {[`Status.${index}`]: 1});
-        console.log(updateStatus);
+        const updateStatus = await OrderSchema.findByIdAndUpdate(orderID, {[`Status.${index}`]: 1}, {new : true});
+        console.log("Stattus", updateStatus.Status[index]);
         
-        return res.sendStatus(200);
+        return {succsess : true, updatedStatus : updateStatus.Status[index], index : index};
     } catch (error) {
         console.error(error);
     }

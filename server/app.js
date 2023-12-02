@@ -17,8 +17,7 @@ const client = require('./route/client');
 const product = require('./route/admin/product');
 const a_order = require('./route/admin/order');
 const c_order = require ('./route/customer/orders')
-//socket controller
-const {getAllCustomers} = require('./controller/admin/order')
+
 
 app.use(express.urlencoded({extended:false}))
 app.use(express.json());
@@ -39,39 +38,21 @@ app.use('/api/admin', a_order);
 
 
 
-//socket
-io.of("/admin").on("connection", (socket) =>{
+//socket controller
+const a_registerOrderHandler = require ('./socket/admin/orderHandler');
+const c_registerOrderHandler = require('./socket/customer/orderHandler');
+
+const adminConnection = (socket) => {
+    a_registerOrderHandler(io, socket);
+}
+const customerConnection = (socket) => {
+    c_registerOrderHandler(io, socket);
     
-    
-    //get the updated available customers
-    getAllCustomers()
-    .then(data => {
-        socket.emit('order:list', data)
-        console.log("diwow");   
-       
-    })
-    .catch(err => console.log(err))
-   
-  
-})
-
-io.of("/customer").on("connection", (socket) => {
-    //order is place
-    socket.on('order:place', (data)=>{
-        console.log(data);  
-
-        getAllCustomers()
-        .then(data => {
-            io.of("/admin").emit('order:list', data);
-            
-           
-        })
-        .catch(err => console.log(err))  
-    })
-})
+}
 
 
-
+io.of("/admin").on("connection",adminConnection);
+io.of("/customer").on("connection", customerConnection);
 
 
 

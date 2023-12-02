@@ -13,7 +13,7 @@ const authenticateToken = (req, res, next) => {
         } else {
           req.body.reqToken = true;
           req.body.accessToken = token;
-          req.body.user = user;
+          req.body.user = user; //containing email and pass..
           
           next();
         }

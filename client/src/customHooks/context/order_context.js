@@ -16,7 +16,7 @@ export const OrderProvider = ({children}) => {
     return(
         <OrderContext.Provider value = {{orderList, setOrder, resetOrder}}>
 
-            {children}
+            {children}  
 
         </OrderContext.Provider>
     )

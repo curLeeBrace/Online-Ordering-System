@@ -7,8 +7,8 @@ import Navbar from "./components/Customer/Navbar";
 import HomePage from "./components/Customer/HomePage";
 import Login from "./components/Customer/Login";
 import Menu from "./components/Customer/Menu";
-import Orders from "./components/Customer/Orders";
-import About from "./components/Customer/About"
+import OrderNav from "./components/Customer/OrderNav";
+import About from "./components/Customer/About";
 
 import Registration from "./components/Registration";
 import ForgotPass from "./components/ForgotPass";
@@ -25,14 +25,16 @@ import AdminOrders from "./components/Admin/AdminOrders";
 
 import NotFoundPage from "./components/NotFoundPage";
 
-
+//context custom hooks
 import { OrderProvider } from "./customHooks/context/order_context";
+
+
 
 
 
 function App() {
   return (
-    <>
+ 
      
         <Routes>
          
@@ -41,7 +43,7 @@ function App() {
             <Route index element = {<HomePage/>}/>
             <Route path = "home" element = {<HomePage/>}/> 
             <Route path = "menu" element={<Menu />} />
-            <Route path = "orders" element = {<Orders/>}/>
+            <Route path = "orders" element = {<OrderNav/>}/>
             <Route path = "about" element = {<About/>}/>
           </Route>
 
@@ -65,7 +67,7 @@ function App() {
          <Route path = "*" element = {<NotFoundPage/>}/>
         </Routes>
 
-    </>
+
   );
 }
 

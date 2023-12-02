@@ -1,21 +1,55 @@
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../../customHooks/configAxios";
-import { useOrder } from "../../customHooks/context/order_context";
+import { io } from "socket.io-client"
 const OrderList = ({thClass, orderDetails, index}) => {
 
 
+    const [status, setStatus] = useState(0);
+    const sokcet = io("http://localhost:3001/admin");
+   
+    useEffect(()=>{
+      setStatus(orderDetails.Status[index]);
+ 
+    },[])
+
     const confirmOrder = (e) => {
         e.preventDefault();
-        api.post('/admin/confirm-order', {
-            orderID : orderDetails._id,
-            index : index
+
+        sokcet.emit("order:confirmed", orderDetails._id, index, (res)=>{
+          if(res.succsess ){
+            if(res.updatedStatus == 1){
+              alert("Order Confirmed!");
+              setStatus(res.updatedStatus);
+  
+            } // and so on.... add more updated status...
+
+          }
         })
-        .then(res => alert(res.data))
-        .catch(err => console.error(err))
+
+        // api.post('/admin/confirm-order', {
+        //     orderID : orderDetails._id,
+        //     index : index
+        // })
+        // .then(res => {
+        //   const {succsess, updatedStatus} = res.data;
+        //   if(succsess ){
+        //     if(updatedStatus == 1){
+        //       alert("Order Confirmed!");
+        //       setStatus(updatedStatus);
+        //     } // and so on.... add more updated status...
+
+        //   }
+
+      
+          
+        // })
+        // .catch(err => console.error(err))
     }
-    console.log("Index  : ", index);
-    console.log(orderDetails);
+
+
+    console.log("STATUS  : ", status);
+    // console.log(orderDetails);
     return (
      
          <tr>
@@ -27,14 +61,14 @@ const OrderList = ({thClass, orderDetails, index}) => {
           <td className={thClass}>{orderDetails.Total[index]}</td>
           <td className={thClass}>{orderDetails.MOD[index]}</td>
           <td className={thClass}>
-              {orderDetails.Status[index] === 0 ?
+              {status === 0 ?
               <button
                 onClick={confirmOrder}
                 className="mt-4 bg-lime-800 text-white px-4 py-2 rounded hover:bg-amber-900 focus:outline-none w-full"
               >
                 Confirm Order
               </button> 
-              : orderDetails.Status[index] === 1 ? 
+              : status === 1 ? 
                 "Order Confirmed!" : "Out for delivery!"
               }
         

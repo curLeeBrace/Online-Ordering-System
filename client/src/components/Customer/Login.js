@@ -5,7 +5,7 @@ import { api } from "../../customHooks/configAxios";
 import { getCookie, setCookie } from "../../customHooks/cookiesHandler";
 import { useNavigate } from "react-router-dom";
 
-
+import {useAuth} from "../../customHooks/context/auth";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -14,6 +14,7 @@ function Login() {
   const navigate = useNavigate();
   const accessToken = getCookie("accessToken");
   
+  const auth = useAuth();
   
   useEffect(()=>{
     if(accessToken !== undefined) {
@@ -49,8 +50,8 @@ function Login() {
     })
     .then(res => {
       const {account, token, userType} = res.data;
-
-      console.log(userType)
+      
+      // console.log("Client Name : ", clientName);
       if(account == "valid"){
         setCookie("accessToken", token, {SameSite : "Strict"});
          //setClientData

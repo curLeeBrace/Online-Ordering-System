@@ -1,11 +1,12 @@
 const axios = require("axios");
 const UserInfoSchema = require("../../database/schema/User/UserInfoSchema");
+const AccountSchema = require("../../database/schema/User/AccountSchema");
 const OrdersSchema = require("../../database/schema/User/OrdersSchema");
 const { gcashConfig } = require("../gcash/gcashConfig");
 
 
 
-//=========================================ORDER CONTROLER=============================================================================//
+//=========================================SET ORDER CONTROLER=============================================================================//
 const gcash_webhook = async(req, res) => {
     const {checkout_url} = req.body.data.attributes.data.attributes;
     const {email} = req.body.data.attributes.data.attributes.billing;
@@ -183,9 +184,30 @@ const placeOrder = async (req, res) => {
 
   
 };
-//=========================================ORDER CONTROLER=============================================================================//
+//=========================================SET ORDER CONTROLER=============================================================================//
 
+//=========================================GET ORDER CONTROLLER============================================================================//
+//This is for socket event
+const getCustomerOrders = async (username, orderID) => {
+  
+  // console.log(username);
+  try {
 
+        
+    const customerData = await UserInfoSchema.aggregate([
+      {$lookup : {from : 'orders', localField : 'OrderID', foreignField : '_id', as : 'Orders'}},
+      {$unwind : '$Orders'},
+      {$match: {$or : [{"Uname": username }, {'OrderID' : orderID}]} }
+      ]).exec();
+      // console.log(customerData)
+    return customerData[0].Orders;
+  } catch (error) {
+    console.error(error);
+  }
+  
+
+  
+}
 
 
 
@@ -193,4 +215,5 @@ const placeOrder = async (req, res) => {
 module.exports = {
   placeOrder,
   gcash_webhook,
+  getCustomerOrders
 };
