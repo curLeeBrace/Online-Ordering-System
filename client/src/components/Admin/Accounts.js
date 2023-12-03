@@ -6,7 +6,7 @@ const table = () => {
   return (
     <div>
         {/* <AdminNavbar /> */}
-    <div className="container mx-auto p-4 h-screen bg-gray-200">
+    <div className="container mx-auto p-4 h-screen w-100 bg-gray-200">
         
       <div className="overflow-x-auto border-amber-900">
         <h1 className='font-bold text-3xl text-amber-900'>Accounts</h1>
