@@ -28,12 +28,24 @@ function Registration() {
   useEffect(() => {
     const cookieVerifyEmail = "emailVerification";
     const getEmail = getCookie(cookieVerifyEmail);
-    if (location.state === null) {
+    if (location.state.userType === null) {
       navigate("/login");
     }
+
+    console.log("UserTyep is : ", location.state.userType);
+
+
+
+
+
+
+
     if (getEmail) {
       navigate("/verification");
     }
+
+
+
   }, []);
 
 
@@ -85,10 +97,11 @@ function Registration() {
     const password_pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/; // text with numbers and other special characters
 
     if (userData.Email.match(email_pattern)) {
-      userData.Pnumber = "0" + userData.Pnumber;
+      
       if (userData.Password.match(password_pattern)) {
         //send request to server
         if (userData.Password === confirmPass) {
+          
           setEnable(false);
           api
             .post(`/account/create/${location.state.userType}`, userData)
@@ -102,6 +115,7 @@ function Registration() {
                 //useNavigate
                 navigate("/verification");
               } else {
+                
                 alert(res.data.notiff);
                 setEnable(true);
               }

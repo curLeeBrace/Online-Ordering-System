@@ -23,12 +23,12 @@ import SalesHistory from "./components/Admin/SalesHistory";
 import AddProducts from "./components/Admin/AddProducts";
 import AdminOrders from "./components/Admin/AdminOrders";
 
-import NotFoundPage from "./components/NotFoundPage";
 import RiderNavbar from "./components/Rider/RiderNavbar";
 import OrderList from "./components/Rider/OrderList";
 import DeliveryList from "./components/Rider/DeliveryList";
 import UploadProof from "./components/Rider/UploadProof";
 
+import NotFoundPage from "./components/NotFoundPage";
 //context custom hooks
 import { OrderProvider } from "./customHooks/context/order_context";
 
@@ -64,7 +64,7 @@ function App() {
           <Route path="/admin" element={<AdminMain/>}>
             <Route index element = {<Accounts/>}/>
             <Route path="accounts" element={<Accounts />} />
-            <Route path="rider" element={<RiderAccounts />} />
+            <Route path="raider" element={<RiderAccounts />} />
             <Route path="sales" element={<SalesHistory />} />
             <Route path="products" element={<AddProducts />} />
             <Route path="admin-orders" element={<OrderProvider><AdminOrders/></OrderProvider>} />
@@ -72,7 +72,7 @@ function App() {
          <Route path = "*" element = {<NotFoundPage/>}/>
 
          {/* rider */}
-         <Route path="/rider" element={<RiderNavbar/>}>
+         <Route path="/raider" element={<RiderNavbar/>}>
             <Route index element = {<OrderList/>}/>
             <Route path="order-list" element={<OrderList />} />
             <Route path="my-delivery" element={<DeliveryList />} />

@@ -10,7 +10,7 @@ const maxm = 999999;
 let codeGenerator = Math.floor(Math .random() * (maxm - minm + 1)) + minm;
 
 const createAccount = async (req, res) => {
-  const {
+  let {
     Email,
     Pnumber,
     Uname,
@@ -23,6 +23,7 @@ const createAccount = async (req, res) => {
     Password,
   } = req.body;
 
+  Pnumber = "0"+Pnumber;
 
   req.body.code = codeGenerator.toString();
   
@@ -65,26 +66,32 @@ const createAccount = async (req, res) => {
    
 
     //===================Validation==============================
-    if (accountData !== null && userData !== null) {
+    if (accountData !== null) {
       
       const { Email: email, verified : verified } = accountData;
-      const { Pnumber: phoneNum, Uname: username } = userData; 
-
+     
         if(Email === email) {
           
           returnNotiff.notiff = "Email is already in used!";
           return res.json(returnNotiff);
         } 
-        else if (Pnumber === phoneNum) {
-          returnNotiff.notiff = "PhoneNumber is already in used!";
-          return res.json(returnNotiff);
-        } 
-        else if (Uname === username) {
-          returnNotiff.notiff = "Username is already existing!";
-          return res.json(returnNotiff);
-        }
+        
 
-    } 
+    } else if (userData !== null) {
+      const { Pnumber: phoneNum, Uname: username } = userData; 
+
+      if (Pnumber === phoneNum) {
+        returnNotiff.notiff = "PhoneNumber is already in used!";
+        return res.json(returnNotiff);
+      } 
+      else if (Uname === username) {
+        returnNotiff.notiff = "Username is already existing!";
+        return res.json(returnNotiff);
+      }
+
+    }
+    
+    
     else {
      // add userType depends on parametern, either customer or raider 
       const sendEmail = verifyEmail(Email, codeGenerator.toString());
@@ -251,7 +258,8 @@ const login = async (req, res) => {
               account : "valid", 
               token : accessToken, 
               userType : accountData[0].Account[0].Type,
-              clientName : accountData[0].Uname
+              verified : accountData[0].Account[0].verified,
+              email : accountData[0].Account[0].Email
         });
 
       }

@@ -5,7 +5,7 @@ import { getCookie } from '../../customHooks/cookiesHandler';
 import { useNavigate } from 'react-router-dom';
 import { UilLocationPinAlt } from '@iconscout/react-unicons'
 
-import { useFetchUsername } from '../../customHooks/useEffect/myUseFetchEffect'; 
+
 const ck_forE_verification = "verification-forEmail";
 
 
@@ -20,10 +20,15 @@ function HomePage() {
       navigate('/verification');
     }
 
+    if(getCookie("userType") === "raider" && getCookie("userType") !== null){
+      navigate('/login', {replace:true});
+    }
+
+   
+
   },[])
 
-  //getClientData
-  //useFetchUsername(username, auth.setClientDatas);
+ 
 
   return (
     <div className='lg:h-screen lg:w-100 h-100 bg-gray-200'>

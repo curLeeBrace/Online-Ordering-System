@@ -24,7 +24,7 @@ function Menu() {
     <div className="min-h-screen bg-gray-200">
       {/* <Navbar user={{ username: username }} /> */}
       <p className="font-poppins text-3xl md:ml-10 sm:ml-4 pt-2 text-3xl font-semibold text-amber-950 flex justify-center">Menu</p>
-      <div className="flex md:flex-row sm:flex flex-col flex-wrap justify-center items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 flex md:flex-row sm:flex flex-col flex-wrap justify-center items-center">
         
         {products.map((product, index) => {
           return <Fragment key={`${product._id}`}>

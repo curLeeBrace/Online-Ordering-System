@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 //initialize or setup - server
 const app = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer, {cors :{origin : "http://localhost:3000"}})
+const io = new Server(httpServer, {cors :{origin : "*"}})
 
 
 const connectDB = require('./database/connection'); // connection
@@ -23,7 +23,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin : "http://localhost:3000"
+  origin : "*",
 }));
 
 

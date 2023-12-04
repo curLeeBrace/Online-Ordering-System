@@ -5,15 +5,15 @@ function Orders({index, orderDetails}) {
     return (
       <div>
 
-        <div className="ml-4 mr-4 sm:flex-col justify-center items-center md:flex-row bg-white mt-4 rounded-lg shadow-2xl sm:text-sm md:text-sm p-4 mb-4 md:w-1/2 lg:w-1/4">
+        <div className="justify-center items-center md:flex-row bg-white mt-4 rounded-lg shadow-2xl sm:text-sm md:text-sm p-4 mb-4 md:w-full lg:w-full">
         <img
           src = {`./img/products/milktea/${orderDetails.Img[index]}`}
           alt="Milk Tea"
-          className="lg:h-full md:w-full md:h-full sm:w-full md:h-60 sm:h-96 object-cover rounded-t-lg justify-center items-center"
+          className="mx-auto md:w-64 md:h-64 object-contain h-32 rounded-t-lg pt-4 pb-4"
         />
         <h2 className=" font-semibold mt-2 mb-2 text-sm"> MilkTea </h2>
-        <p className="text-gray-600 text-sm">{orderDetails.MTname[index]}</p>
-        <p className=" font-bold mt-2">{orderDetails.Qty[index]}</p>
+        <p className="text-gray-600 text-sm">Flavor: {orderDetails.MTname[index]}</p>
+        <p className=" font-bold mt-2">Quantity: {orderDetails.Qty[index]}</p>
         <p className="text-amber-900 font-bold mt-2">₱ {orderDetails.Total[index]}</p>
         
         {orderDetails.Status[index] == 0

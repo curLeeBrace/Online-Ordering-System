@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { UilBars, UilMultiply } from '@iconscout/react-unicons';
 import { Outlet } from "react-router-dom";
-import { useFetchUsername } from "../../customHooks/useEffect/myUseFetchEffect";
+import { getCookie } from '../../customHooks/cookiesHandler';
+import { useNavigate } from 'react-router-dom';
+// import { useFetchUsername } from "../../customHooks/useEffect/myUseFetchEffect";
 
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-  const [username, setUsername] = useState(null);
-  useFetchUsername(username,setUsername);
+  const navigate = useNavigate();
+  // const [username, setUsername] = useState(null);
+  // useFetchUsername(username,setUsername);
+  useEffect(()=>{
+    const userType = getCookie("userType");
+    console.log(userType);
+    if(userType === "customer" || userType == null){
+      navigate('/login', {replace : true});
+    } 
+    
+  },[])
+  
+
+
 
   let {pathname} = useLocation()
   let subpage = pathname.split('/')[2]

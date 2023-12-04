@@ -59,10 +59,10 @@ function AdminOrders() {
 
           {isOrderDetailsOpen && (
             <div className="fixed inset-0 flex items-center ml-4 mr-4 justify-center z-50 ">
-              <div className="bg-white rounded-lg mt-0 shadow-2xl border border-amber-950 p-4 w-full md:w-auto">
+              <div className="bg-white rounded-lg mt-0 shadow-2xl border border-amber-950 p-4 w-full md:w-auto relative">
                 <button
                   onClick={() => setIsOrderDetailsOpen(false)}
-                  className="relative-auto top-auto ml-64 md:left-0 md:ml-80 ml-56 font-bold hover:text-gray-700 cursor-pointer hover:scale-150"
+                  className="absolute top-0 right-2 font-bold hover:text-gray-700 cursor-pointer"
                 >
                   <UilMultiply size={20} />
                 </button>

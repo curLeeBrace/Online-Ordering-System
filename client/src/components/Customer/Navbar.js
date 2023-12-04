@@ -10,12 +10,13 @@ import { api } from '../../customHooks/configAxios';
 function Navbar() {
   
   const [open, setOpen] = useState(false);
-  // const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState(null);
   
   let {pathname} = useLocation()
   let subpage = pathname.split('/')?.[1]
 
     useEffect(() => {
+      
       const accessToken = getCookie("accessToken");
       if (accessToken != null) {
         api
@@ -25,8 +26,11 @@ function Navbar() {
             }
           })  
           .then(res => {
-            const { username } = res.data;
+            const { username} = res.data;
+
             setCookie("username", username);
+            // setCookie("userType", userType);
+            setUsername(getCookie("username"));
           })
           .catch(err => console.log(err));
       }
@@ -54,7 +58,7 @@ function Navbar() {
     <nav className={`p-5 bg-amber-950 shadow md:flex md:items-center md:justify-between`}>
       <div className="flex justify-between items-center">
         <span className="text-2xl font-[Poppins] cursor-pointer font-semibold text-lime-800">
-          <img src="./img/milktealogo.png" alt="" className="h-10 inline" /> Fortea
+          <img src="./img/logo/milktealogo.png" alt="" className="h-10 inline" /> Fortea
         </span>
         <span>
           <div className="text-3xl absolute -mt-4 right-8 md:hidden hover:-scale-y-100 duration-300 cursor-pointer">
@@ -97,12 +101,12 @@ function Navbar() {
           </Link>
         </li>
 
-        {getCookie("username") == null ? (
+        {username == null ? (
             <button className="w-28 md:my-0 mt-2 bg-lime-900 rounded text-white md:hover:scale-110 rounded-l hover:bg-white transition duration-300 relative bg-amber-950 isolation-auto z-10 border-lime-500 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-lime-900 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700">
               <Link to="/login">LogIn</Link>
             </button>
           ) : (
-            getCookie("username")
+            username
           )}
       </ul>
     </nav>

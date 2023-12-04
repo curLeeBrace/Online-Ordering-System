@@ -18,7 +18,10 @@ const getUsername = async(req, res) => {
         ])
         .exec();
 
-        res.json({username : userInfos[0].Uname});
+        res.json({
+            username : userInfos[0].Uname,
+
+        });
        
         
     } catch (error) {

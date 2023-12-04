@@ -13,7 +13,7 @@ const getAllCustomers = async () => {
 
     const filtered_customerDatas = customerDatas.filter((customerData => {
         
-    return customerData.OrderID !== undefined;
+    return customerData.OrderID !== null;
 
     }))
 
@@ -22,6 +22,10 @@ const getAllCustomers = async () => {
     //possible respnse is object of address and object of orders...
     return filtered_customerDatas;
 }
+
+
+
+
 
 const getAllOrders = async (req, res) => {
   const {orderID} = req.body;

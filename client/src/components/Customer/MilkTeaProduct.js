@@ -100,7 +100,7 @@ const MilkTeaProduct = ({ product }) => {
       <img
         src={`../img/products/milktea/${product.ImageName}`}
         alt="Milk Tea"
-        className="lg:h-full md:w-full md:h-full sm:w-full md:h-60 sm:h-96 object-cover rounded-t-lg justify-center items-center"
+        className="lg:h-full lg:w-full md:w-full md:h-full sm:w-full sm:h-full md:h-full rounded-t-lg "
       />
       
       <h2 className=" font-semibold mt-2 mb-2 text-sm">Milk Tea</h2>

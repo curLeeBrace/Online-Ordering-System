@@ -112,6 +112,8 @@ function OrderNavbar() {
           </button>
         </nav>
       </div>
+      
+      <div className="min-h-fit grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4 ml-4 mr-4 mt-4 mb-4">
       {orders != null
         ? orders.Status.map((status, index) => {
             
@@ -146,6 +148,8 @@ function OrderNavbar() {
 
           })
         : null}
+        </div>
+        
     </div>
   );
 }

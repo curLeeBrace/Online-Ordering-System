@@ -6,20 +6,30 @@ function AddProducts() {
   const [flavor, setFlavor] = useState('');
   const [price, setPrice] = useState('');
   const [size, setSize] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(null);
   
 
   // add new Product
   const addHandler = (e) =>{
     e.preventDefault();
-    const imageName = flavor + image.type;
-
+    
     const formData = new FormData();
     formData.append("Flavor", flavor);
     formData.append("Size", size);
     formData.append("Price", parseFloat(price));
-    formData.append("ImageName", imageName.replace("image/", "."));
-    formData.append("Image", image, imageName.replace("image/", "."));
+    
+    
+
+    if(image != null) {
+      const imageName = flavor + image.type;
+      formData.append("ImageName", imageName.replace("image/", "."));
+      formData.append("Image", image, imageName.replace("image/", "."));
+
+    }
+      
+    
+
+
 
     api.post("/product/add", formData, {
       headers : {"Content-Type" : "multipart/form-data"},     

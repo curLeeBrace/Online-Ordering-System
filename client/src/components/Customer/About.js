@@ -6,7 +6,7 @@ function About() {
   return (
     <div className='lg:h-screen lg:w-screen sm:w-100 h-100 md:h-screen bg-gray-200'>
 
-    <div className=" ml-10 md:ml-20 sm:ml-10 mr-6 sm:px-0 ">
+    <div className="pt-10 ml-10 md:ml-20 sm:ml-10 mr-6 sm:px-0 ">
         <h1 className="text-3xl font-semibold text-gray-800 pt-8 whitespace-normal">Welcome to Our Online Milk Tea Shop</h1>
         
         <h2 className="text-l text-gray-600 mt-4 whitespace-normal mr-10 mb-4">Welcome to Fortea, your destination for delightful milk tea creations. <br></br> We're passionate about serving you the best in every cup.</h2>

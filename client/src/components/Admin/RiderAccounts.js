@@ -1,6 +1,12 @@
 import React from 'react'
-
+import { useNavigate } from 'react-router-dom';
 function RiderAccounts() {
+  const navigate = useNavigate();
+  
+  const addRaider = () => {
+    navigate('/registration',{state : {userType : "raider"}});
+
+  }
     return (
         <div>
             
@@ -46,7 +52,12 @@ function RiderAccounts() {
                 </tr>  
               </tbody>
             </table>
-            <button className="flex items-center justify-center mt-2 bg-amber-900 font-bold text-white px-4 py-2 rounded hover:bg-amber-950 focus:outline-none ml-2">
+            <button 
+                onClick={addRaider}
+                className="flex items-center justify-center mt-2 bg-amber-900 font-bold text-white px-4 py-2 rounded hover:bg-amber-950 focus:outline-none ml-2"
+            
+            
+            >
                 Add Account
               </button>
           </div>

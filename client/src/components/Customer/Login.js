@@ -19,7 +19,7 @@ function Login() {
   useEffect(()=>{
     if(accessToken !== undefined) {
       // console.log(accessToken);
-      login(accessToken);
+      login();
     }
  
   }, []);
@@ -30,7 +30,7 @@ function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
     // You can add your login logic here, e.g., make an API request to authenticate.
-    login(accessToken);
+    login();
   }
 
   //login function
@@ -49,17 +49,32 @@ function Login() {
       }
     })
     .then(res => {
-      const {account, token, userType} = res.data;
+      const {account, token, userType, verified, email} = res.data;
       
       // console.log("Client Name : ", clientName);
-      if(account == "valid"){
-        setCookie("accessToken", token, {SameSite : "Strict"});
-         //setClientData
-        if(userType === "customer") {
+      if(account === "valid"){
 
-          
-          navigate("/", {replace : true});
+        if(verified) { // if account is verified
+          setCookie("accessToken", token, {SameSite : "Strict"});
+          setCookie("userType", userType)  
+          if(userType === "customer") {
+            navigate("/", {replace : true});
+          } else if(userType === "raider"){
+            navigate("/raider", {replace : true});
+          }
+
+        } else { // if account is not verified
+
+          alert("account is not verified!");
+          setCookie("emailVerification", email);
+          navigate("/verification");
+
         }
+
+        
+        //another user type raider or admin...
+
+
       } else {
         alert("Invalid Credentials!")
       }
