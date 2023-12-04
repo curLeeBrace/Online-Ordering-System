@@ -243,12 +243,14 @@ const login = async (req, res) => {
     const accountData = await UserInfoSchema.aggregate([
       {$lookup : { from: 'accounts', localField: 'AccountID', foreignField: '_id', as: 'Account' }},
       {$match : {'Account.Email' : email}},
+      {$unwind : '$Account'},
+   
     ]).exec();
   
   // console.log(accountData[0].Account[0].Type);
-
-    if(accountData != null){
-      if(password == accountData[0].Account[0].Password){
+    console.log(accountData)
+    if(accountData.length > 0){
+      if(password == accountData[0].Account.Password){
        
           if(!reqToken) {
             accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);   
@@ -257,9 +259,9 @@ const login = async (req, res) => {
           return res.json({
               account : "valid", 
               token : accessToken, 
-              userType : accountData[0].Account[0].Type,
-              verified : accountData[0].Account[0].verified,
-              email : accountData[0].Account[0].Email
+              userType : accountData[0].Account.Type,
+              verified : accountData[0].Account.verified,
+              email : accountData[0].Account.Email
         });
 
       }

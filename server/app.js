@@ -17,7 +17,7 @@ const client = require('./route/client');
 const product = require('./route/admin/product');
 const a_order = require('./route/admin/order');
 const c_order = require ('./route/customer/orders')
-
+const raider_acc = require('./route/admin/raider_acc');
 
 app.use(express.urlencoded({extended:false}))
 app.use(express.json());
@@ -35,6 +35,8 @@ app.use('/api/product', product);
 
 app.use('/api/customer', c_order);
 app.use('/api/admin', a_order);
+
+app.use('/api/admin', raider_acc);  
 
 
 

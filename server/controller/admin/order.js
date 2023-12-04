@@ -6,7 +6,8 @@ const getAllCustomers = async () => {
    // get the customer data... (will be use soon in fetching customerd Order data in admin side)
   const customerDatas = await UserInfoSchema.aggregate([
       {$lookup : {from : 'addresses', localField : 'AddressID', foreignField : '_id', as : 'Address'}},
-      {$unwind: '$Address'},]).exec();
+      {$unwind: '$Address'},
+    ]).exec();
 
     //possible aproach to handle or display or pass it to customer order in Admin Interface..
     // store it to the customerData to array if had OrderID,

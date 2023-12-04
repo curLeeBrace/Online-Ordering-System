@@ -64,13 +64,13 @@ function AdminNavbar() {
           open ? "top-20" : "left-[-800px]"
         } transition-all ease-in duration-500`}
         >
-       <li className={link('accounts')}>
+       {/* <li className={link('accounts')}>
           <Link to="accounts">
             Accounts
           </Link>
-        </li>
+        </li> */}
         <li className={link('rider')}>
-          <Link to="rider">
+          <Link to="raider">
             Rider Accounts
           </Link>
         </li>
@@ -84,11 +84,11 @@ function AdminNavbar() {
             Products
           </Link>
         </li>
-        <li className={link('inventory')}>
+        {/* <li className={link('inventory')}>
           <Link to="inventory">
             Inventory
           </Link>
-        </li>
+        </li> */}
         <li className={link('admin-orders')}>
           <Link to="admin-orders">
             Orders

@@ -62,8 +62,8 @@ function App() {
 
           {/* admin */}
           <Route path="/admin" element={<AdminMain/>}>
-            <Route index element = {<Accounts/>}/>
-            <Route path="accounts" element={<Accounts />} />
+            <Route index element = {<OrderProvider><AdminOrders/></OrderProvider>}/>
+            {/* <Route path="accounts" element={<Accounts />} /> */}
             <Route path="raider" element={<RiderAccounts />} />
             <Route path="sales" element={<SalesHistory />} />
             <Route path="products" element={<AddProducts />} />
