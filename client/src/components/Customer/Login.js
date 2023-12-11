@@ -49,14 +49,15 @@ function Login() {
       }
     })
     .then(res => {
-      const {account, token, userType, verified, email} = res.data;
+      const {account, token, userType, verified, email, username} = res.data;
       
       // console.log("Client Name : ", clientName);
       if(account === "valid"){
 
         if(verified) { // if account is verified
           setCookie("accessToken", token, {SameSite : "Strict"});
-          setCookie("userType", userType)  
+          setCookie("userType", userType)
+          setCookie("username", username);
           if(userType === "customer") {
             navigate("/", {replace : true});
           } else if(userType === "raider"){

@@ -20,6 +20,8 @@ const addProduct = async (req, res) => {
     }
   };
 
+
+
   const { Flavor, Size, Price, ImageName } = req.body;
   console.log("req Size = ", Size);
 
@@ -48,13 +50,20 @@ const addProduct = async (req, res) => {
 
     } 
     else {
-      notif = "Succsesfully Added! new Flavor";
-      await ProductSchema.create({
-        Flavor: Flavor,
-        Size: [Size],
-        Price : [Price],
-        ImageName: ImageName,
-      });
+      if(ImageName == null || ImageName == undefined){
+        notif = "Please Add Image First!";
+      } else {
+        
+        notif = "Succsesfully Added! new Flavor";
+        await ProductSchema.create({
+          Flavor: Flavor,
+          Size: [Size],
+          Price : [Price],
+          ImageName: ImageName,
+        });
+      }
+
+   
     }
 
     return res.json({ notif: notif });
@@ -62,6 +71,20 @@ const addProduct = async (req, res) => {
     console.log(error);
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

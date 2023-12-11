@@ -10,7 +10,8 @@ const { gcashConfig } = require("../gcash/gcashConfig");
 const gcash_webhook = async(req, res) => {
     const {checkout_url} = req.body.data.attributes.data.attributes;
     const {email} = req.body.data.attributes.data.attributes.billing;
-    // console.log(req.body.data);
+    const {id : pay_id} = req.body.data.attributes.data.attributes.payments[0];
+    // console.log(req.body.data.attributes.data.attributes.payments[0]);
     //console.log("Email : ", email);
     //console.log("COurl : ", checkout_url);
     let orderID = null;
@@ -29,6 +30,7 @@ const gcash_webhook = async(req, res) => {
     COurls = customerData[0].Orders[0].COurl;
 
     // I will compare checkout_url and COurl and if it not equal increase the index by 1
+    // it will find the correct index to updated as paid and store pay id
     COurls.forEach(COurl => {
         if(COurl !== checkout_url) {
             index++;
@@ -37,7 +39,13 @@ const gcash_webhook = async(req, res) => {
         }
     });
 
-    await OrdersSchema.findByIdAndUpdate(orderID,{$set : {[`Paid.${index}`]: true}});
+    await OrdersSchema.findByIdAndUpdate(orderID,{
+      $set : {
+        [`Paid.${index}`]: true,
+        [`Pay_ID.${index}`] : pay_id
+      }
+    
+    });
 
     return res.sendStatus(200);
 
@@ -53,6 +61,8 @@ const gcash_webhook = async(req, res) => {
 const saveOrder_toDB = async (body, customerData) => {
    
     let checkout_url = body.COurl;
+    const pay_id = body.Pay_ID;
+    //  console.log("pay_id : ", body.pay_id);
     // console.log("Checkout URL : ", checkout_url);
     const {
         MTname,
@@ -67,10 +77,12 @@ const saveOrder_toDB = async (body, customerData) => {
         Status,
         Date,
       } = body;
+
+      
     if (customerData[0].OrderID == undefined || customerData[0].OrderID == null) {
             
         const placeOrder = await OrdersSchema.create(body);
-        //console.log(placeOrder);
+        // console.log(placeOrder);
         
         await UserInfoSchema.updateOne(
           { AccountID: customerData[0].AccountID },
@@ -91,8 +103,9 @@ const saveOrder_toDB = async (body, customerData) => {
             Total: Total,
             MOD: MOD,
             Paid: Paid,
+            Pay_ID : pay_id,
             Status: Status,
-            COurl : checkout_url || null,
+            COurl : checkout_url,
             Date: Date,
           },
         });
@@ -157,14 +170,17 @@ const placeOrder = async (req, res) => {
 
   const options = gcashConfig(address, order, customer);
   try {
+    
     if (MOD === "gcash") {
       // res.json(options);
       axios
         .request(options)
         .then(async function (response) { 
            const {checkout_url} = response.data.data.attributes;
-           //console.log(checkout_url);
+           console.log(response.data.data.attributes);
+           
            req.body['COurl'] = checkout_url; // add checkout attributes to req.body
+           req.body['Pay_ID'] = "empty";
            saveOrder_toDB(req.body, customerData);
 
            return res.json({checkout_url, MOD});
@@ -174,8 +190,11 @@ const placeOrder = async (req, res) => {
           return res.sendStatus(500);
         });
     } else { // MOD is COD -----> :)) 
+       
+        req.body['COurl'] = "";
+        req.body['Pay_ID'] = "empty";
         saveOrder_toDB(req.body, customerData);
-        return res.json({MOD});r
+        return res.json({MOD});
     }
 
   } catch (error) {
@@ -208,12 +227,69 @@ const getCustomerOrders = async (username, orderID) => {
 
   
 }
+const cancelOrder = async (req, res) => {
+    const {order_id, pay_id, index, mod, total_ammount} = req.body;
+    
 
+    const options = {
+      method: 'POST',
+      url: 'https://api.paymongo.com/refunds',
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json',
+        authorization: 'Basic c2tfdGVzdF9SclhFZHJGTVdVN0JxV1ZRdG96cjZvZlE6'
+      },
+      data: {
+        data: {
+          attributes: {
+            amount: Number(total_ammount + "00"),
+            notes: 'I want to cancel',
+            payment_id: pay_id,
+            reason: 'requested_by_customer'
+          }
+        }
+      }
+    };
+
+    try {
+      if(mod === "gcash") {
+        
+          //reuquest a refund
+          axios
+            .request(options)
+            .then(async function (response) {
+              const {status} = response.data.data.attributes;
+              console.log(response.data);
+              //update status to 4 or "cancelled", if status is not failed
+              if(status !== "failed"){ 
+                const updateStatus = await OrdersSchema.findByIdAndUpdate(order_id, {[`Status.${index}`]: 4}, {new : true});
+                console.log("GCASH : ", updateStatus);
+                return res.sendStatus(200);
+              }
+              return res.sendStatus(503);
+            })
+            .catch(function (error) {
+              console.error(error);
+              return res.sendStatus(500);
+            });
+  
+      } else {
+        const updateStatus = await OrdersSchema.findByIdAndUpdate(order_id, {[`Status.${index}`]: 4}, {new : true});
+        console.log("COD : ", updateStatus);
+        return res.sendStatus(200);
+      }
+    } catch (error) {
+      console.error(error);
+      return res.sendStatus(500);
+    }
+
+}
 
 
 
 module.exports = {
   placeOrder,
   gcash_webhook,
-  getCustomerOrders
+  getCustomerOrders,
+  cancelOrder,
 };

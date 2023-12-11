@@ -5,7 +5,7 @@ module.exports = (io, socket) => {
     //event for placing  order 
     const placeOrder = (payload) => {
       
-            // console.log(payload);  // this socket will recieve "place order"!
+            //console.log(payload);  // this socket will recieve "place order"!
     
             getAllCustomers()
             .then(data => {
@@ -33,23 +33,9 @@ module.exports = (io, socket) => {
     }
 
 
-    
-    // const updateOrder = (arg) => {
-    //     console.log("OrderUpdate")
-    //     getCustomerOrders(arg)
-    //     .then(res => {  
-    //         // console.log("response Data", res)
-            
-    //         callback(res);
-
-    //     })
-    //     .catch(err => console.error(err))
-    // }
-
-
     socket.on('order:place', placeOrder);
     socket.on('order:get', getOrder);
-    // socket.emit('order:update', updateOrder);
+   
 
 
 }

@@ -176,6 +176,7 @@ function Registration() {
               required
               maxLength="10"
               minLength="10"
+              defaultValue="0"
               onChange={handleChange}
               value={userData.Pnumber}
             />

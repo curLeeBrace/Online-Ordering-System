@@ -28,7 +28,7 @@ function Navbar() {
           .then(res => {
             const { username} = res.data;
 
-            setCookie("username", username);
+            // setCookie("username", username);
             // setCookie("userType", userType);
             setUsername(getCookie("username"));
           })
@@ -55,10 +55,10 @@ function Navbar() {
 
   return (
     <>
-    <nav className={`p-5 bg-amber-950 shadow md:flex md:items-center md:justify-between`}>
+    <nav className={`p-2 bg-amber-950 shadow md:flex md:items-center md:justify-between`}>
       <div className="flex justify-between items-center">
         <span className="text-2xl font-[Poppins] cursor-pointer font-semibold text-lime-800">
-          <img src="./img/logo/milktealogo.png" alt="" className="h-10 inline" /> Fortea
+          <img src="./img/logo/morislogo.png" alt="" className="pl-4 h-14 inline" /> Fortea
         </span>
         <span>
           <div className="text-3xl absolute -mt-4 right-8 md:hidden hover:-scale-y-100 duration-300 cursor-pointer">

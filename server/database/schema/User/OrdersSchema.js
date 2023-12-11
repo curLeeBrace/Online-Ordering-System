@@ -12,9 +12,10 @@ const OrdersShema = new mongoose.Schema({
     Img : [{type : String, required : true}],
     MOD : [{type : String, required : true}],
     Paid : [{type : Boolean, required : true}],
+    Pay_ID : [{type : String, required : true}],
     Status : [{type : Number, required : true}],
-    COurl : [{type : String, default : " "}],
-    Date : [{type : Date, required : true}] 
+    COurl : [{type : String, }],
+    Date : [{type : String, required : true}] 
 
 });
 

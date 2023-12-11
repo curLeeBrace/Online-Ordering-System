@@ -62,7 +62,7 @@ function AdminOrders() {
               <div className="bg-white rounded-lg mt-0 shadow-2xl border border-amber-950 p-4 w-full md:w-auto relative">
                 <button
                   onClick={() => setIsOrderDetailsOpen(false)}
-                  className="absolute top-0 right-2 font-bold hover:text-gray-700 cursor-pointer"
+                  className=" absolute top-2 right-2 font-bold hover:text-gray-700 cursor-pointer hover:scale-150"
                 >
                   <UilMultiply size={20} />
                 </button>

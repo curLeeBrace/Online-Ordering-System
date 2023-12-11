@@ -5,7 +5,8 @@ const router = express.Router();
 const {
     placeOrder,
     gcash_webhook,
-    getCustomerOrders
+    getCustomerOrders,
+    cancelOrder,
 } = require('../../controller/customer/orders');
 
 //middleware
@@ -17,6 +18,7 @@ const  {
 router.post('/place-order', authenticateToken, placeOrder);
 router.post('/gcash_webhook', gcash_webhook);
 router.post('/get-customer-order', getCustomerOrders);
+router.post('/cancel-order', cancelOrder);
 
 module.exports = router;
 

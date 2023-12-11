@@ -3,6 +3,7 @@ import { UilMultiply } from "@iconscout/react-unicons";
 import { getCookie } from "../../customHooks/cookiesHandler";
 import { api } from "../../customHooks/configAxios";
 import {io} from "socket.io-client";
+import format from 'date-fns/format';
 
 let socket = io("http://localhost:3001/customer"); // connecting in sokcet event...
 const MilkTeaProduct = ({ product }) => {
@@ -65,7 +66,7 @@ const MilkTeaProduct = ({ product }) => {
               MOD: mod,
               Paid: false,
               Status: 0,
-              Date: new Date().toLocaleDateString(),
+              Date: format(new Date(), "MMMM dd yyyy"),
             },
             {
               headers: {

@@ -57,7 +57,7 @@ const createAccount = async (req, res) => {
   try {
     
     
-    // willl fixe this structure later
+    // willl fixe this structure later -- di na na fix ampotek HAHAHHAHHAH
     const accountData = await AccountSchema.findOne({Email : Email}).exec(); //search if email is existing
 
     const userData = await UserInfoSchema.findOne({
@@ -261,7 +261,8 @@ const login = async (req, res) => {
               token : accessToken, 
               userType : accountData[0].Account.Type,
               verified : accountData[0].Account.verified,
-              email : accountData[0].Account.Email
+              email : accountData[0].Account.Email,
+              username : accountData[0].Uname,
         });
 
       }

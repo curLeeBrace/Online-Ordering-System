@@ -33,6 +33,9 @@ const CustomerInfo = ({thClass, customerData, setIsOrderDetailsOpen}) => {
 
     }
 
+
+    
+
     return (
     <>
       <tr>

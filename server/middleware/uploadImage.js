@@ -9,12 +9,16 @@ const multer = require('multer');
 const storage = multer.diskStorage({
   
     destination: function (req, file, cb) {
+   
+
+        cb(null, '../client/public/img/products/milktea');
       
-      cb(null, '../client/public/img/products/milktea')
     },
     filename: function (req, file, cb) {
+      
 
-      cb(null, file.originalname)
+        cb(null, file.originalname)
+     
     },
   
   })

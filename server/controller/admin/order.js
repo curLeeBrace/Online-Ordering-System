@@ -14,7 +14,7 @@ const getAllCustomers = async () => {
 
     const filtered_customerDatas = customerDatas.filter((customerData => {
         
-    return customerData.OrderID !== null;
+    return customerData.OrderID !== null && customerData.OrderID !== undefined;
 
     }))
 

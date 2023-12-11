@@ -1,4 +1,5 @@
- import React, { useState } from "react";
+import React, { useState } from "react";
+import { UilMultiply } from '@iconscout/react-unicons';
 import { isNum } from "../../customHooks/verifyInput";
 import { api } from "../../customHooks/configAxios";
 
@@ -6,8 +7,20 @@ function AddProducts() {
   const [flavor, setFlavor] = useState('');
   const [price, setPrice] = useState('');
   const [size, setSize] = useState('');
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState();
+
+  let thClass = 'border-2 border-amber-900 p-2'
+  const [isOrderDetailsOpen, setIsOrderDetailsOpen] = useState(false);
   
+  const openOrderDetails = () => {
+    setIsOrderDetailsOpen(true);
+    // You can fetch the order details here based on the selected order
+    // For simplicity, let's assume order details are available in state
+  };
+
+  const closeOrderDetails = () => {
+    setIsOrderDetailsOpen(false);
+  };
 
   // add new Product
   const addHandler = (e) =>{
@@ -20,16 +33,13 @@ function AddProducts() {
     
     
 
-    if(image != null) {
+    if(image !== null || image !== undefined) {
       const imageName = flavor + image.type;
       formData.append("ImageName", imageName.replace("image/", "."));
       formData.append("Image", image, imageName.replace("image/", "."));
 
     }
       
-    
-
-
 
     api.post("/product/add", formData, {
       headers : {"Content-Type" : "multipart/form-data"},     
@@ -51,6 +61,7 @@ function AddProducts() {
     <div className="h-screen bg-gray-200 mt-0 pt-10">
       {/* <AdminNavbar /> */}
       <div className="bg-white rounded-lg shadow-2xl p-4 w-full md:w-96 mx-auto pt-10">
+      
         <h2 className="text-2xl font-semibold mb-4">Add New Flavor/Product</h2>
         
         <form onSubmit={addHandler}>
@@ -69,6 +80,7 @@ function AddProducts() {
 
 
           {/* Falvor */}
+          
           <div className="mb-4">
             <label
               htmlFor="description"
@@ -140,12 +152,64 @@ function AddProducts() {
           </div>
           <button
             type="submit"
-            className="bg-lime-800 text-white px-4 py-2 rounded hover:bg-amber-900 focus:outline-none"
+            className="bg-lime-800 text-white px-4 py-2 rounded hover:bg-amber-900 focus:outline-none mb-4"
           >
             Add Product
+            
           </button>
+          
         </form>
+        <button
+            type=""
+            onClick={openOrderDetails}
+            className="bg-lime-800 text-white px-4 py-2 rounded hover:bg-amber-900 focus:outline-none"
+          >
+            See Products
+          </button>
+        
       </div>
+      {isOrderDetailsOpen && (
+        <div className="fixed inset-0 flex items-center ml-4 mr-4 justify-center z-50 ">
+          <div className="bg-white rounded-lg mt-0 shadow-2xl border border-amber-950 p-4 w-full md:w-auto">
+            <button
+              onClick={closeOrderDetails}
+              className="relative-auto top-auto ml-64 md:left-0 md:ml-80 ml-56 font-bold hover:text-gray-700 cursor-pointer hover:scale-150"
+            >
+              <UilMultiply size={20}/>
+            </button>
+            <table className="min-w-full border border-gray-300 mb-2 text-sm whitespace-nowrap">
+              <thead className='mb-2'>
+                <tr>
+                  <th className={thClass}>Product</th>
+                  <th className={thClass}>Flavor</th>
+                  <th className={thClass}>Action</th>
+               
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                <td className={thClass}>Milktea</td>
+                  <td className={thClass}>Tarantado</td>
+                 
+                  
+              <td className={thClass}><button
+              
+              className="mt-4 bg-red-800 text-white px-4 py-2 rounded hover:bg-amber-900 focus:outline-none w-full"
+            >
+              Delete
+            </button></td>
+              
+                </tr>  
+                 
+                
+              </tbody>
+             
+             
+            </table>
+            
+          </div>
+        </div>
+      )}
     </div>
   );
 }

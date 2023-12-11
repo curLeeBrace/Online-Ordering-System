@@ -27,24 +27,6 @@ const OrderList = ({thClass, orderDetails, index}) => {
           }
         })
 
-        // api.post('/admin/confirm-order', {
-        //     orderID : orderDetails._id,
-        //     index : index
-        // })
-        // .then(res => {
-        //   const {succsess, updatedStatus} = res.data;
-        //   if(succsess ){
-        //     if(updatedStatus == 1){
-        //       alert("Order Confirmed!");
-        //       setStatus(updatedStatus);
-        //     } // and so on.... add more updated status...
-
-        //   }
-
-      
-          
-        // })
-        // .catch(err => console.error(err))
     }
 
 
