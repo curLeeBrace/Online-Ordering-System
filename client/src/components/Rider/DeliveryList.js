@@ -14,6 +14,7 @@ function DeliveryList() {
 
   const [customerDatas, setCustomerDatas] = useState(null);
   const [orders, setOrders] = useState(null);
+  const [image, setImage] = useState();
 
 
   useEffect(()=> {
@@ -25,6 +26,19 @@ function DeliveryList() {
     .catch(err => console.error(err));
   }, [])
 
+
+  const uploadProofHandler = (e) => {
+    e.preventDefault();
+    alert(image.name);
+    console.log(image.name);
+    
+    // const formData = new FormData();
+    // formData.append("OrderID", orders.Orders.OrderID);
+    // formData.append("MajorIndex", orders.MajorIndex);
+
+
+
+  }
 
 
   return (
@@ -56,6 +70,7 @@ function DeliveryList() {
                           className="bg-lime-900 font-bold text-white px-2 py-0 ml-0 mt-0 rounded hover:bg-lime-700 focus:outline-none"
                           onClick={()=> {
                             setOrders(customerDatas.Orders[index]);
+                            console.log(customerDatas.Orders[index])
                             setIsOrderDetailsOpen(true);
                           }}
                         >
@@ -128,11 +143,11 @@ function DeliveryList() {
                 }
               </tbody>
             </table>
-            <form action="/action_page.php">
-              <label for="img">Select image:</label>
-              <input type="file" id="img" name="proof" accept="image/*"/>
-                <input className = "border-2 border-green-900 p-2 text-sm " type = "submit" value ="upload"/>
-              {/* <input className = {hClass} type="submit" value = "upload"/> */}
+            <form onSubmit = {uploadProofHandler}>
+              <label for="img">Proof of Delivery: </label>
+              <input type="file" id="img" name="proof" accept="image/*" required onChange={(e)=>{setImage(e.target.files[0])}}/>
+              <input className = "border-2 border-green-900 p-2 text-sm " type = "submit" value ="upload"/>
+              
             </form>
           </div>
         </div>

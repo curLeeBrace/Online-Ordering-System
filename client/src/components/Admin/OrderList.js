@@ -51,7 +51,19 @@ const OrderList = ({thClass, orderDetails, index}) => {
                 Confirm Order
               </button> 
               : status === 1 ? 
-                "Order Confirmed!" : "Out for delivery!"
+                "Order Confirmed!" 
+              : status === 2 ? 
+                "Out for delivery!"
+              : <>
+                  <a href = "http://facebook.com">View Proof </a>
+                  <button  
+                    className="mt-4 bg-lime-800 text-white px-4 py-2 rounded hover:bg-amber-900 focus:inline-none w-100%"
+                   >
+                      Complete
+                  </button> 
+                </>
+              
+
               }
         
           </td>
