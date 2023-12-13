@@ -8,7 +8,7 @@ const DeliveriesSchema = new mongoose.Schema({
     RaiderUname : {type : String, required : true},
     MajorIndex : [[{type : Number, required : true}]],
     MyDelivery : [{type : ObjectId, required : true}], //userId
-    Proof_ofDelivery : [{type : String, required : true}]
+    // Proof_ofDelivery : [{type : String, required : true}]
 
 })
 

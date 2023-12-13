@@ -6,14 +6,15 @@ import {getCookie} from "../../customHooks/cookiesHandler";
 
 function DeliveryList() {
   let thClass = "border-2 border-amber-900 p-2 text-sm";
-  let pCLass = "p-2 text-sm";
-  let hClass = "p-2 font-bold text-sm";
+  // let pCLass = "p-2 text-sm";
+  // let hClass = "p-2 font-bold text-sm";
 
   const [isOrderDetailsOpen, setIsOrderDetailsOpen] = useState(false);
  
 
   const [customerDatas, setCustomerDatas] = useState(null);
   const [orders, setOrders] = useState(null);
+  const [userID, setUserID] = useState(null)
   const [image, setImage] = useState();
 
 
@@ -29,15 +30,29 @@ function DeliveryList() {
 
   const uploadProofHandler = (e) => {
     e.preventDefault();
-    alert(image.name);
-    console.log(image.name);
+    // alert(image.name);
     
-    // const formData = new FormData();
-    // formData.append("OrderID", orders.Orders.OrderID);
-    // formData.append("MajorIndex", orders.MajorIndex);
+    const formData = new FormData();
+    formData.append("raider_username", getCookie("username"));
+    formData.append("OrderID", orders.Orders.OrderID);
+    formData.append("MajorIndex", [orders.MajorIndex]);
+    formData.append("Image", image);
+    formData.append("ImageName", image.name)
+    formData.append("userInfoID", userID)
+  
+    api.post("/raider/upload-proof", formData, {
+      headers : {"Content-Type" : "multipart/form-data"},     
+    })
+    .then(res => {
+      if(res.status === 200){
+        alert('Uploaded Sucsessfully!');
+        window.location.href = window.location.href;
 
-
-
+      } else {
+        alert('Something Wrong!')
+      }
+    })
+    .catch(err => console.error(err))
   }
 
 
@@ -49,7 +64,7 @@ function DeliveryList() {
           <table className="min-w-full border border-gray-300 mb-2 text-sm whitespace-nowrap">
             <thead>
               <tr>
-                <th className={thClass}>Order ID</th>
+                <th className={thClass}>Customer ID</th>
                 <th className={thClass}>Full Name</th>
                 <th className={thClass}>Address</th>
                 <th className={thClass}>Orders</th>
@@ -68,9 +83,10 @@ function DeliveryList() {
                       <td className={thClass}>
                         <button
                           className="bg-lime-900 font-bold text-white px-2 py-0 ml-0 mt-0 rounded hover:bg-lime-700 focus:outline-none"
-                          onClick={()=> {
+                          onClick={(e)=> {
                             setOrders(customerDatas.Orders[index]);
                             console.log(customerDatas.Orders[index])
+                            setUserID(customerDatas.UserInfo[index]._id);
                             setIsOrderDetailsOpen(true);
                           }}
                         >
@@ -146,7 +162,7 @@ function DeliveryList() {
             <form onSubmit = {uploadProofHandler}>
               <label for="img">Proof of Delivery: </label>
               <input type="file" id="img" name="proof" accept="image/*" required onChange={(e)=>{setImage(e.target.files[0])}}/>
-              <input className = "border-2 border-green-900 p-2 text-sm " type = "submit" value ="upload"/>
+              <button className = "border-2 border-green-900 p-2 text-sm " type = "submit">upload</button>
               
             </form>
           </div>

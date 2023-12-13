@@ -17,15 +17,15 @@ module.exports = (io, socket) => {
         
 
         //update order to order confirmed!
-        const confirmHandler = (orderID, index, callback) => {
+        const confirmHandler = (orderID, index, newStatus,  callback) => {
            
-            confirmOrder(orderID, index)
+            confirmOrder(orderID, index, newStatus)
             .then(res => {
-                const {updatedStatus, index} = res;
+                const {updatedStatus, index, newStatus} = res;
                 console.log("order confirmed!");
                 //then call the vent of get:order to update the interface of customer in, her order page
                 console.log("confirm respones, ", res);
-                io.of("/customer").emit('order:update', index, updatedStatus);
+                io.of("/customer").emit('order:update', index, updatedStatus, newStatus);
 
                 
                 callback(res);

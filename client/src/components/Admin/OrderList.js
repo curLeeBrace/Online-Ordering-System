@@ -2,27 +2,31 @@
 import { useEffect, useState } from "react";
 import { api } from "../../customHooks/configAxios";
 import { io } from "socket.io-client"
+import { S_URL } from "../../customHooks/context/configSocket";
 const OrderList = ({thClass, orderDetails, index}) => {
 
 
     const [status, setStatus] = useState(0);
-    const sokcet = io("http://localhost:3001/admin");
+    const sokcet = io(`http://${S_URL}:3001/admin`);
    
     useEffect(()=>{
       setStatus(orderDetails.Status[index]);
  
     },[])
 
-    const confirmOrder = (e) => {
+    const confirmOrder = (e, newStatus) => {
         e.preventDefault();
 
-        sokcet.emit("order:confirmed", orderDetails._id, index, (res)=>{
+        sokcet.emit("order:confirmed", orderDetails._id, index, newStatus, (res)=>{
           if(res.succsess ){
             if(res.updatedStatus == 1){
               alert("Order Confirmed!");
               setStatus(res.updatedStatus);
   
-            } // and so on.... add more updated status...
+            } else {
+              alert("Order Completed!");
+              setStatus(res.updatedStatus);
+            }// and so on.... add more updated status...
 
           }
         })
@@ -45,7 +49,7 @@ const OrderList = ({thClass, orderDetails, index}) => {
           <td className={thClass}>
               {status === 0 ?
               <button
-                onClick={confirmOrder}
+                onClick={(e)=>confirmOrder(e, 1)}
                 className="mt-4 bg-lime-800 text-white px-4 py-2 rounded hover:bg-amber-900 focus:outline-none w-full"
               >
                 Confirm Order
@@ -54,16 +58,20 @@ const OrderList = ({thClass, orderDetails, index}) => {
                 "Order Confirmed!" 
               : status === 2 ? 
                 "Out for delivery!"
-              : <>
-                  <a href = "http://facebook.com">View Proof </a>
+              : status === 3 ?
+                <>
+                  <a href = {`http://localhost:3000/img/proof_of_delivery/${orderDetails.ProofOfDelivery[index]}`} target="_blank">
+                    View Proof
+                 </a>
                   <button  
                     className="mt-4 bg-lime-800 text-white px-4 py-2 rounded hover:bg-amber-900 focus:inline-none w-100%"
+                    onClick={(e)=>confirmOrder(e, 5)}
                    >
                       Complete
                   </button> 
                 </>
-              
-
+              : status === 4 ?
+                "Cancelled!" : "Completed"
               }
         
           </td>

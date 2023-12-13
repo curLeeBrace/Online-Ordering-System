@@ -1,18 +1,20 @@
 import { Fragment } from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
+
 import Orders from "./Orders";
-import { getCookie } from "../../customHooks/cookiesHandler";
+import { getCookie} from "../../customHooks/cookiesHandler";
 import { api } from "../../customHooks/configAxios";
 import {io} from "socket.io-client";
 
-
+import { S_URL } from "../../customHooks/context/configSocket";
 
  
 function OrderNavbar() {
   const [activeTab, setActiveTab] = useState(0);
   const [orders, getOrders] = useState(null);
-  const socket = io('http://localhost:3001/customer');
-
+  const socket = io(`http://${S_URL}:3001/customer`)
+  
   useEffect(() => {
  
 
@@ -110,6 +112,7 @@ function OrderNavbar() {
           >
             Shipped
           </button>
+          
         </nav>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 ml-4 mr-4 mt-4 mb-4">

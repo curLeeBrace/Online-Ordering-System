@@ -1,8 +1,12 @@
 const ProductSchema = require("../../database/schema/ProductSchema");
 
-let notif = "";
+const fs = require("fs");
+const path = require("path");
+
+
 
 const addProduct = async (req, res) => {
+  let notif = "";
   //check all Element in array then return boolean
   const checkElement = (array, newElement) => {
     let canAdd_newElement = true;
@@ -19,8 +23,6 @@ const addProduct = async (req, res) => {
       return error;
     }
   };
-
-
 
   const { Flavor, Size, Price, ImageName } = req.body;
   console.log("req Size = ", Size);
@@ -42,28 +44,21 @@ const addProduct = async (req, res) => {
           { Flavor: Flavor },
           { $push: { Price: Price } }
         );
-
-        
       } else {
         notif = "Already Had that size!";
       }
-
-    } 
-    else {
-      if(ImageName == null || ImageName == undefined){
+    } else {
+      if (ImageName == null || ImageName == undefined) {
         notif = "Please Add Image First!";
       } else {
-        
         notif = "Succsesfully Added! new Flavor";
         await ProductSchema.create({
           Flavor: Flavor,
           Size: [Size],
-          Price : [Price],
+          Price: [Price],
           ImageName: ImageName,
         });
       }
-
-   
     }
 
     return res.json({ notif: notif });
@@ -72,36 +67,43 @@ const addProduct = async (req, res) => {
   }
 };
 
+const deleteProduct = async (req, res) => {
+  try {
+    const { productID, imageName} = req.body;
+    const deleted_item = await ProductSchema.findByIdAndDelete(productID);
+    console.log(imageName)
+    // console.log(deleted_item);
+    
+    const imagePath = `../client/public/img/products/milktea/${imageName}`; // replace with the actual path to your image
 
+    // Check if the file exists before attempting to delete
+    if (fs.existsSync(imagePath)) {
+      // Delete the file
+      fs.unlinkSync(imagePath);
+      console.log("File deleted successfully.");
+    } else {
+      console.log("File not found.");
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const getAllProduct = async (req, res) => {
   try {
-    
     const allProduct = await ProductSchema.find({});
-    
+
     // console.log(allProduct);
     res.json(allProduct);
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 module.exports = {
   addProduct,
   getAllProduct,
+  deleteProduct,
 };

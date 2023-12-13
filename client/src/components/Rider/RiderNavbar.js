@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { UilBars, UilMultiply } from '@iconscout/react-unicons';
 import { Outlet } from "react-router-dom";
-import { getCookie } from '../../customHooks/cookiesHandler';
+import { getCookie, removeCookies} from '../../customHooks/cookiesHandler';
 import { useNavigate } from 'react-router-dom';
 // import { useFetchUsername } from "../../customHooks/useEffect/myUseFetchEffect";
 
@@ -81,8 +81,22 @@ function Navbar() {
           </Link>
         </li>
 
-            <button className="w-28 md:my-0 mt-2 bg-lime-900 rounded text-white md:hover:scale-110 rounded-l hover:bg-white transition duration-300 relative bg-amber-950 isolation-auto z-10 border-lime-500 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-lime-900 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700">
-             LogOut
+            <button className="w-28 md:my-0 mt-2 bg-lime-900 rounded text-white md:hover:scale-110 rounded-l hover:bg-white transition duration-300 relative bg-amber-950 isolation-auto z-10 border-lime-500 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-lime-900 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700"
+              onClick={(e)=>{
+                e.preventDefault();
+                
+                let result = window.confirm("Are you sure you want to logout?");
+
+                // Check the result
+                if (result) {
+                  removeCookies(["username","userType","accessToken"])
+                  navigate('/login',{replace : true})
+                } else {
+                   alert("Cancelled");
+                }
+              }}
+            >
+              LogOut
             </button>
           
       </ul>

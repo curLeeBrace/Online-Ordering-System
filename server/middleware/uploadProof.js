@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
     destination: function (req, file, cb) {
    
 
-        cb(null, '../client/public/img/products/milktea');
+        cb(null, '../client/public/img/proof_of_delivery');
       
     },
     filename: function (req, file, cb) {

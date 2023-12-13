@@ -24,9 +24,7 @@ const r_delivery = require('./route/raider/deliveryHandler');
 app.use(express.urlencoded({extended:false}))
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-  origin : "*",
-}));
+app.use(cors());
 
 
 

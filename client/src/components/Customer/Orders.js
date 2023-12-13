@@ -13,7 +13,7 @@ function Orders({index, orderDetails}) {
       const mod = orderDetails.MOD[index];
       const total_ammount = orderDetails.Total[index];
       console.log(pay_id);
-      if(pay_id !== "" && pay_id !== undefined){
+     
         api.post('/customer/cancel-order',{order_id, pay_id, mod, total_ammount, index})
         .then(res => {
           if(res.status === 200){
@@ -26,10 +26,10 @@ function Orders({index, orderDetails}) {
           }
         })
         .catch(err => console.error(err));
-      } else {
-        alert("Something Wrong, please try to refresh the page...");
+      
+        // alert("Something Wrong, please try to refresh the page...");
         // window.location.href = window.location.href;
-      }
+      
 
     }
     return (
@@ -58,7 +58,9 @@ function Orders({index, orderDetails}) {
             :  orderDetails.Status[index] === 2
             ? "To Ship" 
             : orderDetails.Status[index] === 3
-            ? "Dellivered" : "Cancelled"
+            ? "Dellivered" 
+            : orderDetails.Status[index] === 4
+            ?"Cancelled" : "Completed"
    
         }
          

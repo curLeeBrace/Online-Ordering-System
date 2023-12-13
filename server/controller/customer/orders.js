@@ -107,6 +107,9 @@ const saveOrder_toDB = async (body, customerData) => {
             Status: Status,
             COurl : checkout_url,
             Date: Date,
+            DeliveryUname : "",
+            ProofOfDelivery : ""
+            
           },
         });
       }
@@ -173,6 +176,7 @@ const placeOrder = async (req, res) => {
     
     if (MOD === "gcash") {
       // res.json(options);
+     
       axios
         .request(options)
         .then(async function (response) { 
@@ -180,7 +184,9 @@ const placeOrder = async (req, res) => {
            console.log(response.data.data.attributes);
            
            req.body['COurl'] = checkout_url; // add checkout attributes to req.body
-           req.body['Pay_ID'] = "empty";
+           req.body['Pay_ID'] = "";
+           req.body['DeliveryUname'] = "";
+           req.body['ProofOfDelivery'] = "";
            saveOrder_toDB(req.body, customerData);
 
            return res.json({checkout_url, MOD});
@@ -192,7 +198,9 @@ const placeOrder = async (req, res) => {
     } else { // MOD is COD -----> :)) 
        
         req.body['COurl'] = "";
-        req.body['Pay_ID'] = "empty";
+        req.body['Pay_ID'] = "";
+        req.body['DeliveryUname'] = ""; 
+        req.body['ProofOfDelivery'] = "";
         saveOrder_toDB(req.body, customerData);
         return res.json({MOD});
     }
@@ -212,14 +220,21 @@ const getCustomerOrders = async (username, orderID) => {
   // console.log(username);
   try {
 
-        
+    
     const customerData = await UserInfoSchema.aggregate([
       {$lookup : {from : 'orders', localField : 'OrderID', foreignField : '_id', as : 'Orders'}},
       {$unwind : '$Orders'},
       {$match: {$or : [{"Uname": username }, {'OrderID' : orderID}]} }
       ]).exec();
+
+      // console.log(customerData[0])
+      if(customerData[0] !== undefined) {
+        return customerData[0].Orders;
+
+      }
+
+      return;
       // console.log(customerData)
-    return customerData[0].Orders;
   } catch (error) {
     console.error(error);
   }

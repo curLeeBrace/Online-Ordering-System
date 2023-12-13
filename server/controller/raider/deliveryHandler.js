@@ -1,5 +1,6 @@
 const OrderSchema = require("../../database/schema/User/OrdersSchema");
 const DeliveriesSchema = require("../../database/schema/User/DeliveriesSchema");
+const { ObjectId } = require("mongodb");
 
 
 //===================================================================================
@@ -47,9 +48,7 @@ const filterOrders = (orders, status_value) => {
   return filter;
 };
 
-const filterUserInfo = (orders, status_value) => {
-  
-}
+
 //==================================================================================
 const getAllOrders = async (req, res) => {
   const { orderID } = req.body;
@@ -92,7 +91,7 @@ const acceptDeliver = async (req, res) => {
 
   }
 
-  const {raiderUname, userID, orderID, proof_ofDelivery, major_index} = req.body;
+  const {raiderUname, userID, orderID, major_index} = req.body;
   
   try {
     const query = await DeliveriesSchema.findOne({RaiderUname : raiderUname});
@@ -102,24 +101,55 @@ const acceptDeliver = async (req, res) => {
         RaiderUname : raiderUname,
         MajorIndex : major_index,
         MyDelivery : userID,
-        Proof_ofDelivery : proof_ofDelivery,
+        // Proof_ofDelivery : proof_ofDelivery, // this is form req.body
       });
       
       // console.log(createDeliver);
       // return res.json(createDeliver);
 
     } else { // just add/push or update the array of a collection
-      const addDeliver = await DeliveriesSchema.findOneAndUpdate({RaiderUname : raiderUname},
-          {
-            $push : {
-              MajorIndex : major_index,
-              MyDelivery : userID,
-              Proof_ofDelivery : proof_ofDelivery,
+
+      
+      
+      for (let i = 0; i < query.MyDelivery.length; i++) {
+        const userInfoID_db = query.MyDelivery[i];
+    
+        if(userInfoID_db.toString() === userID){
+          
+            for (let j = 0; j < major_index.length; j++) {
+              const newMajorIndex = major_index[j];
+              await DeliveriesSchema.findOneAndUpdate({RaiderUname : raiderUname},
+                {
+                  $push : {
+                    [`MajorIndex.${i}`]: major_index[j],
+                  
+                  }
+                } ,
+                {new : true}
+              
+              );
+              
+            
             }
-          } ,
-          {new : true}
+        } else {
+          await DeliveriesSchema.findOneAndUpdate({RaiderUname : raiderUname},
+            {
+              $push : {
+                MajorIndex : major_index,
+                MyDelivery : userID,
+                // Proof_ofDelivery : proof_ofDelivery,
+              }
+            } ,
+            {new : true}
+          
+          )
+          break;
+        }
         
-        )
+      }
+
+
+      
        
         // console.log(addDeliver);
         // return res.json(addDeliver);
@@ -156,6 +186,7 @@ const getAllDeliveries = async (req, res) => {
 
         if(status === 2){
           filteredData.push(data[i]);
+          break;
         }
         
       }
@@ -196,6 +227,7 @@ const getAllDeliveries = async (req, res) => {
       //okay na
 
       const orders = filterData(customerDatas[0].Orders, customerDatas[0].Orders);
+      // console.log(orders);
       const filteredOrders = orders.map((order) => {return filterOrders(order, 2)})
       const userInfo = filterData(customerDatas[0].Orders, customerDatas[0].MyDelivery);
       const address = filterData(customerDatas[0].Orders, customerDatas[0].Address)
@@ -215,11 +247,80 @@ const getAllDeliveries = async (req, res) => {
     console.error(error);
   }
 
- 
-  
-
 
 } 
 
 
-module.exports = {getAllOrders, acceptDeliver, getAllDeliveries}
+const uploadProof = async (req, res) => {
+  try {
+       const {raider_username, OrderID, MajorIndex, Image, ImageName} = req.body;
+        console.log("image_name : ",ImageName)
+       let modifiedMajorIndex = MajorIndex.split(',');
+
+       console.log(modifiedMajorIndex);
+
+       
+        //update tstatus and set DeliveryUname
+        for (let i = 0; i < modifiedMajorIndex.length; i++) {
+          const index = Number(modifiedMajorIndex[i]);
+
+          const order = await OrderSchema.findById(OrderID);
+
+          if(order){
+
+            if(order.MOD[index] === "cod"){
+              await OrderSchema.findByIdAndUpdate(OrderID, {
+                $set : {
+                  [`DeliveryUname.${index}`]: raider_username,
+                  [`Status.${index}`] : 3,
+                  [`Paid.${index}`] : true,
+                  [`ProofOfDelivery.${index}`] : ImageName
+                }
+              })
+
+            } else {
+              await OrderSchema.findByIdAndUpdate(OrderID, {
+                $set : {
+                  [`DeliveryUname.${index}`]: raider_username,
+                  [`Status.${index}`] : 3,
+                  [`ProofOfDelivery.${index}`] : ImageName  
+                }
+              })
+            }
+          }
+          
+        }
+
+
+        // const deliver_db = await DeliveriesSchema.find({RaiderUname : raider_username});
+
+
+        
+
+
+
+
+
+
+
+
+
+      //  const customerData = await UserInfoSchema.aggregate([
+      //   {$lookup : {from : 'orders', localField : 'OrderID', foreignField : '_id', as : 'Orders'}},
+      //   {$lookup : {from : 'accounts', localField : 'AccountID', foreignField : '_id', as : 'Account'}},
+      //   {$match: { "Account.Email": OrderID } }
+     
+      //   ]).exec();
+
+    return res.sendStatus(200);
+
+
+
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+module.exports = {getAllOrders, acceptDeliver, getAllDeliveries, uploadProof}

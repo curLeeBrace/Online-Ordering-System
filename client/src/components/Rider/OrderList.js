@@ -5,6 +5,7 @@ import { UilMultiply } from "@iconscout/react-unicons";
 import { api } from "../../customHooks/configAxios";
 
 import {getCookie} from "../../customHooks/cookiesHandler";
+import { S_URL } from "../../customHooks/context/configSocket";
 
 function OrderList() {
   let thClass = "border-2 border-amber-900 p-2 text-sm";
@@ -17,7 +18,7 @@ function OrderList() {
   const [userID, setUserID] = useState();
 
   useEffect(() => {
-    const socket = io("http://localhost:3001/raider");
+    const socket = io(`http://${S_URL}:3001/raider`);
     socket.on("delivery:get-avilable", (data) => {
       console.log(data); // can return userID or just get _id, for delivery purpose
       setCustomerDatas(data);
@@ -44,7 +45,7 @@ function OrderList() {
       raiderUname  : getCookie("username"),
       userID : userID,
       orderID : delivery.Orders.OrderID,
-      proof_ofDelivery : "empty",
+      // proof_ofDelivery : "empty",
       major_index : delivery.MajorIndex
     })
     .then(res => {

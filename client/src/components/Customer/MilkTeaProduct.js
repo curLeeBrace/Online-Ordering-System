@@ -4,8 +4,10 @@ import { getCookie } from "../../customHooks/cookiesHandler";
 import { api } from "../../customHooks/configAxios";
 import {io} from "socket.io-client";
 import format from 'date-fns/format';
+import { S_URL } from "../../customHooks/context/configSocket";
 
-let socket = io("http://localhost:3001/customer"); // connecting in sokcet event...
+let socket = io(`http://${S_URL}:3001/customer`);
+ // connecting in sokcet event...
 const MilkTeaProduct = ({ product }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [qty, setQty] = useState(1); // quantity

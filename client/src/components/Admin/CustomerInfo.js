@@ -25,6 +25,7 @@ const CustomerInfo = ({thClass, customerData, setIsOrderDetailsOpen}) => {
         //fetch orders data...
         api.post('/admin/get-customer-orders', {orderID : OrderID})
         .then(data => {
+          console.log(data.data);
           order.setOrder(data.data);
           setIsOrderDetailsOpen(true)
           
@@ -38,19 +39,21 @@ const CustomerInfo = ({thClass, customerData, setIsOrderDetailsOpen}) => {
 
     return (
     <>
-      <tr>
-        <td className={thClass}>{customerData.OrderID}</td>
-        <td className={thClass}>{`${customerData.Fname} ${customerData.Lname}`}</td>
-        <td className={thClass}>{`${Brgy} ${Street_N_House} ${Municipality}`}</td>
-        <td className={thClass}>
-          <button
-            className="bg-lime-900 font-bold text-white px-2 py-0 ml-0 mt-0 rounded hover:bg-lime-700 focus:outline-none"
-            onClick={seeOrders}
-          >
-            View Details
-          </button>
-        </td>
-      </tr>
+      { customerData !== null || customerData !== undefined ?
+        <tr>
+          <td className={thClass}>{customerData.OrderID}</td>
+          <td className={thClass}>{`${customerData.Fname} ${customerData.Lname}`}</td>
+          <td className={thClass}>{`${Brgy} ${Street_N_House} ${Municipality}`}</td>
+          <td className={thClass}>
+            <button
+              className="bg-lime-900 font-bold text-white px-2 py-0 ml-0 mt-0 rounded hover:bg-lime-700 focus:outline-none"
+              onClick={seeOrders}
+            >
+              View Details
+            </button>
+          </td>
+        </tr> : null
+      }
     </>
   );
 };

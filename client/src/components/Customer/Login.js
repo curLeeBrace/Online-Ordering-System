@@ -62,6 +62,8 @@ function Login() {
             navigate("/", {replace : true});
           } else if(userType === "raider"){
             navigate("/raider", {replace : true});
+          } else if (userType === "admin") {
+            navigate("/admin", {replace : true});
           }
 
         } else { // if account is not verified
@@ -72,9 +74,7 @@ function Login() {
 
         }
 
-        
-        //another user type raider or admin...
-
+     
 
       } else {
         alert("Invalid Credentials!")
