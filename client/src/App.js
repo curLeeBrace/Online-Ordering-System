@@ -19,6 +19,7 @@ const Login = React.lazy(() => import('./components/Customer/Login'))
 const Menu = React.lazy(() => import('./components/Customer/Menu'))
 const OrderNav = React.lazy(() => import('./components/Customer/OrderNav'))
 const About = React.lazy(() => import('./components/Customer/About'))
+const ChangeAddress = React.lazy(() => import('./components/Customer/ChangeAddress'))
 
 
 
@@ -82,6 +83,7 @@ function App() {
             <Route path = "menu" element={<React.Suspense fallback = {<LoadingPage/>}><Menu /></React.Suspense>} />
             <Route path = "orders" element = {<React.Suspense fallback = {<LoadingPage/>}><OrderNav/></React.Suspense>}/>
             <Route path = "about" element = {<React.Suspense fallback = {<LoadingPage/>}><About/></React.Suspense>}/>
+            <Route path = "change-address" element = {<React.Suspense fallback = {<LoadingPage/>}><ChangeAddress/></React.Suspense>}/>
           </Route>
 
      
