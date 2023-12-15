@@ -3,6 +3,7 @@ import { api } from '../../customHooks/configAxios';
 
 import {eachDayOfInterval, startOfWeek, format, startOfMonth} from 'date-fns'
 import LoadingPage from '../../Loading';
+import { UilMultiply } from '@iconscout/react-unicons';
 // import startOfWeek from 'date-fns/startOfWeek'
 // import format from 'date-fns/format'
 // import startOfMonth from 'date-fns/startOfMonth'
@@ -10,6 +11,15 @@ const SalesHistory = () => {
   const [selectedOption, setSelectedOption] = useState('All');
   const [completedOrders, setCompletedOrders] = useState(null);
   const [salesStorage, setSalesStorage] = useState(null);
+
+  const [isOrderDetailsOpen, setIsOrderDetailsOpen] = useState(false); 
+
+  const openOrderDetails = () => {
+    setIsOrderDetailsOpen(true);
+  };
+  const closeOrderDetails = () => {
+    setIsOrderDetailsOpen(false);
+  };
 
   useEffect(()=>{
       api.get('/admin/get-completed-orders')
@@ -273,6 +283,7 @@ const SalesHistory = () => {
                        <th className="border p-2">Price</th>
                        <th className="border p-2">Total</th>
                        <th className="border p-2">Payment Method</th>
+                       <th className="border p-2">Customer Feedback</th>
                      </tr>
                    </thead>
                    {/* rows */}
@@ -298,6 +309,12 @@ const SalesHistory = () => {
                              <td className="border p-2">{sale.Orders.Price[inner_index]}</td>
                              <td className="border p-2">{sale.Orders.Total[inner_index]}</td>
                              <td className="border p-2">{sale.Orders.MOD[inner_index]}</td>
+                             <td className="border p-2"><button
+              
+              className="w-24 bg-lime-800 text-white p-3 md:hover:scale-110 rounded-xl hover:bg-white transition duration-300 relative bg-amber-950 isolation-auto z-10 border-lime-500 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-amber-950 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700"
+              onClick={openOrderDetails}>
+              View Rate
+            </button></td>
            
                            </tr>
                            
@@ -313,7 +330,23 @@ const SalesHistory = () => {
          
          
          }
+      {isOrderDetailsOpen && (
+        <div className="fixed inset-0 flex items-center ml-4 mr-4 justify-center z-50 ">
+          <div className="bg-white rounded-lg mt-0 shadow-2xl border border-amber-950 p-4 w-full md:w-auto relative">
+            <button
+              onClick={closeOrderDetails}
+              className="absolute top-2 right-2 font-bold hover:text-gray-700 cursor-pointer hover:scale-150"
+            >
+              <UilMultiply size={20}/>
+            </button>
+           
+           <p>Name: Mark Angelo D. Figueroa</p>
+           <p>Flavor: Tarantado</p>
+           <p>Comment: Masarap naman sya, nagustuhan ko, sana gusto nya rin ako. </p>
 
+          </div>
+        </div>
+      )}
       
       </div>
       </div>
