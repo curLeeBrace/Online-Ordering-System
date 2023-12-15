@@ -6,18 +6,19 @@ import OrderList from "./OrderList";
 import {io} from "socket.io-client";
 import { useOrder } from "../../customHooks/context/order_context";
 import { S_URL } from "../../customHooks/context/configSocket";
+import LoadingPage from "../../Loading";
 function AdminOrders() {
   let thClass = "border-2 border-amber-900 p-2";
   
   const [isOrderDetailsOpen, setIsOrderDetailsOpen] = useState(false);
-  const [customerDatas, setCustomerDatas] = useState([]);
+  const [customerDatas, setCustomerDatas] = useState(null);
   const order = useOrder();
  
   useEffect(() => {
     const socket = io(`http://${S_URL}:3001/admin`);
     socket.on("order:list", (data)=>{
       setCustomerDatas(data);
-      // console.log(data);
+      console.log(data);
     });
 
     // console.log(customerDatas);
@@ -34,7 +35,8 @@ function AdminOrders() {
         <div className="bg-gray-200 h-screen bg-gray-200 ">
           <div className="overflow-x-auto ml-4 mr-4">
             <h1 className="font-bold text-3xl text-amber-900">Orders</h1>
-            <table className="min-w-full border border-gray-300 mb-2 text-sm whitespace-nowrap">
+            {customerDatas !== null ? 
+              <table className="min-w-full border border-gray-300 mb-2 text-sm whitespace-nowrap">
               <thead>
                 <tr>
                   <th className={thClass}>Order ID</th>
@@ -52,7 +54,9 @@ function AdminOrders() {
                   );
                 })}
               </tbody>
-            </table>
+            </table> : <LoadingPage/>
+            }
+            
           </div>
 
           {/*dapat andito yung div nung isa pang table para di nag coconflic sa DOM, nag kaka error*/}

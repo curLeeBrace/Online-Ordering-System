@@ -20,7 +20,7 @@ function HomePage() {
       navigate('/verification');
     }
 
-    if(getCookie("userType") === "raider" && getCookie("userType") !== null){
+    if(getCookie("userType") !== "customer" && getCookie("userType") !== null){
       navigate('/login', {replace:true});
     }
 

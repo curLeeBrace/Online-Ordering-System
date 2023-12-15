@@ -6,14 +6,14 @@ import { api } from "../../customHooks/configAxios";
 
 import {getCookie} from "../../customHooks/cookiesHandler";
 import { S_URL } from "../../customHooks/context/configSocket";
-
+import LoadingPage from "../../Loading";
 function OrderList() {
   let thClass = "border-2 border-amber-900 p-2 text-sm";
   let pCLass = "p-2 text-sm";
   let hClass = "p-2 font-bold text-sm";
 
   const [isOrderDetailsOpen, setIsOrderDetailsOpen] = useState(false);
-  const [customerDatas, setCustomerDatas] = useState([]);
+  const [customerDatas, setCustomerDatas] = useState(null);
   const [delivery, setDelivery] = useState();
   const [userID, setUserID] = useState();
 
@@ -68,50 +68,55 @@ function OrderList() {
       <div className="bg-gray-200 h-screen bg-gray-200 ">
         <div className="overflow-x-auto ml-4 mr-4">
           <h1 className="font-bold text-3xl text-amber-900">Orders</h1>
-          <table className="min-w-full border border-gray-300 mb-2 text-sm whitespace-nowrap">
-            <thead>
-              <tr>
-                <th className={thClass}>Order ID</th>
-                <th className={thClass}>Full Name</th>
-                <th className={thClass}>Address</th>
-                <th className={thClass}>Orders</th>
-              </tr>
-            </thead>
-            <tbody>
-              {customerDatas.map((customerData, index) => {
-                return (
-                  <Fragment key={customerData._id}>
-                    <tr>
-                      <td className={thClass}>{customerData.OrderID}</td>
-                      <td className={thClass}>
-                        {customerData.Fname + " " + customerData.Lname}
-                      </td>
-                      <td className={thClass}>
-                        {customerData.Address.Brgy +
-                          " " +
-                          customerData.Address.Municipality +
-                          " " +
-                          customerData.Address.Street_N_House}
-                      </td>
-                      <td className={thClass}>
-                        <button
-                          className="bg-lime-900 font-bold text-white px-2 py-0 ml-0 mt-0 rounded hover:bg-lime-700 focus:outline-none"
-                          onClick={() =>{
-                            // viewOrders(index);
-                            setUserID(customerDatas[index]._id);
-                            viewDelivery(customerData.OrderID);
-                            
-                          }}
-                        >
-                          View Details
-                        </button>
-                      </td>
-                    </tr>
-                  </Fragment>
-                );
-              })}
-            </tbody>
-          </table>
+          {customerDatas !== null ? 
+             <table className="min-w-full border border-gray-300 mb-2 text-sm whitespace-nowrap">
+             <thead>
+               <tr>
+                 <th className={thClass}>Order ID</th>
+                 <th className={thClass}>Full Name</th>
+                 <th className={thClass}>Address</th>
+                 <th className={thClass}>Orders</th>
+               </tr>
+             </thead>
+             <tbody>
+               {
+               customerDatas.map((customerData, index) => {
+                 return (
+                   <Fragment key={customerData._id}>
+                     <tr>
+                       <td className={thClass}>{customerData.OrderID}</td>
+                       <td className={thClass}>
+                         {customerData.Fname + " " + customerData.Lname}
+                       </td>
+                       <td className={thClass}>
+                         {customerData.Address.Brgy +
+                           " " +
+                           customerData.Address.Municipality +
+                           " " +
+                           customerData.Address.Street_N_House}
+                       </td>
+                       <td className={thClass}>
+                         <button
+                           className="bg-lime-900 font-bold text-white px-2 py-0 ml-0 mt-0 rounded hover:bg-lime-700 focus:outline-none"
+                           onClick={() =>{
+                             // viewOrders(index);
+                             setUserID(customerDatas[index]._id);
+                             viewDelivery(customerData.OrderID);
+                             
+                           }}
+                         >
+                           View Details
+                         </button>
+                       </td>
+                     </tr>
+                   </Fragment>
+                 );
+               })}
+             </tbody>
+           </table> : <LoadingPage/>
+        
+        }
+         
         </div>
       </div>
 

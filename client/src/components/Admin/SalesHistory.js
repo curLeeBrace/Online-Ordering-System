@@ -2,13 +2,14 @@ import React, { useState , useEffect} from 'react';
 import { api } from '../../customHooks/configAxios';
 
 import {eachDayOfInterval, startOfWeek, format, startOfMonth} from 'date-fns'
+import LoadingPage from '../../Loading';
 // import startOfWeek from 'date-fns/startOfWeek'
 // import format from 'date-fns/format'
 // import startOfMonth from 'date-fns/startOfMonth'
 const SalesHistory = () => {
   const [selectedOption, setSelectedOption] = useState('All');
-  const [completedOrders, setCompletedOrders] = useState([]);
-  const [salesStorage, setSalesStorage] = useState([]);
+  const [completedOrders, setCompletedOrders] = useState(null);
+  const [salesStorage, setSalesStorage] = useState(null);
 
   useEffect(()=>{
       api.get('/admin/get-completed-orders')
@@ -255,58 +256,64 @@ const SalesHistory = () => {
         <p>
           Displaying sales for: <strong>{selectedOption}</strong>
         </p>
+
          {/* Table to display sales data */}
-         <table className="min-w-full border border-gray-300 text-sm mt-4">
+         {completedOrders !== null ? 
+                   <table className="min-w-full border border-gray-300 text-sm mt-4">
 
-          {/* column */}
-          <thead>
-            <tr>
-              {/* <th className="border p-2">Customer Name</th> */}
-              <th className="border p-2">Date</th>
-              <th className="border p-2">Flavor</th>
-              <th className="border p-2">AddsOn</th>
-              <th className="border p-2">Quantity</th>
-              <th className="border p-2">Size</th>
-              <th className="border p-2">Price</th>
-              <th className="border p-2">Total</th>
-              <th className="border p-2">Payment Method</th>
-            </tr>
-          </thead>
-          {/* rows */}
-          <tbody>
-            {
-
+                   {/* column */}
+                   <thead>
+                     <tr>
+                       {/* <th className="border p-2">Customer Name</th> */}
+                       <th className="border p-2">Date</th>
+                       <th className="border p-2">Flavor</th>
+                       <th className="border p-2">AddsOn</th>
+                       <th className="border p-2">Quantity</th>
+                       <th className="border p-2">Size</th>
+                       <th className="border p-2">Price</th>
+                       <th className="border p-2">Total</th>
+                       <th className="border p-2">Payment Method</th>
+                     </tr>
+                   </thead>
+                   {/* rows */}
+                   <tbody>
+                     {
+         
+                    
+                     
+         
+         
+         
+                       salesStorage.map((sale, outer_index) => (
+                       // console.log("orders", completedOrder.Fname, " ", outer_index)
+                       sale.Orders.Status.map((_, inner_index)=>{
+                           return (
+                             <tr key={inner_index}>
+                             {/* <td className="border p-2">{sale.Fname + " " + sale.Lname}</td> */}
+                             <td className="border p-2">{sale.Orders.Date[inner_index]}</td>
+                             <td className="border p-2">{sale.Orders.MTname[inner_index]}</td>
+                             <td className="border p-2">{sale.Orders.AddsOn[inner_index]}</td>
+                             <td className="border p-2">{sale.Orders.Qty[inner_index]}</td>
+                             <td className="border p-2">{sale.Orders.Size[inner_index]}</td>
+                             <td className="border p-2">{sale.Orders.Price[inner_index]}</td>
+                             <td className="border p-2">{sale.Orders.Total[inner_index]}</td>
+                             <td className="border p-2">{sale.Orders.MOD[inner_index]}</td>
            
-            
+                           </tr>
+                           
+                           )
+               
+                         
+                       })
+         
+                       
+                     ))}
+                   </tbody>
+                 </table> :<LoadingPage/>
+         
+         
+         }
 
-
-
-              salesStorage.map((sale, outer_index) => (
-              // console.log("orders", completedOrder.Fname, " ", outer_index)
-              sale.Orders.Status.map((_, inner_index)=>{
-                  return (
-                    <tr key={inner_index}>
-                    {/* <td className="border p-2">{sale.Fname + " " + sale.Lname}</td> */}
-                    <td className="border p-2">{sale.Orders.Date[inner_index]}</td>
-                    <td className="border p-2">{sale.Orders.MTname[inner_index]}</td>
-                    <td className="border p-2">{sale.Orders.AddsOn[inner_index]}</td>
-                    <td className="border p-2">{sale.Orders.Qty[inner_index]}</td>
-                    <td className="border p-2">{sale.Orders.Size[inner_index]}</td>
-                    <td className="border p-2">{sale.Orders.Price[inner_index]}</td>
-                    <td className="border p-2">{sale.Orders.Total[inner_index]}</td>
-                    <td className="border p-2">{sale.Orders.MOD[inner_index]}</td>
-  
-                  </tr>
-                  
-                  )
-      
-                
-              })
-
-              
-            ))}
-          </tbody>
-        </table>
       
       </div>
       </div>

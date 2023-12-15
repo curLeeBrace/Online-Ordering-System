@@ -16,6 +16,7 @@ function AddProducts() {
   const addHandler = (e) => {
     e.preventDefault();
     try {
+      // alert("ad");
       const formData = new FormData();
       formData.append("Flavor", flavor);
       formData.append("Size", size);
@@ -27,15 +28,16 @@ function AddProducts() {
         formData.append("Image", image, imageName.replace("image/", "."));
       }
   
-      api
+       api
         .post("/product/add", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => {
-          const { notif } = res.data;
-          if (res.status === 200) {
+          const {notif, status} = res.data;
+          console.log(notif)
+          if (status === "ok") {
             alert(notif);
-            // alert("Succsessfully Added!");
+
           } else {
             alert("Error occured!");
           }

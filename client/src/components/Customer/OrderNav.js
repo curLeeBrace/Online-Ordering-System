@@ -8,6 +8,7 @@ import { api } from "../../customHooks/configAxios";
 import {io} from "socket.io-client";
 
 import { S_URL } from "../../customHooks/context/configSocket";
+import LoadingPage from "../../Loading";
 
  
 function OrderNavbar() {
@@ -149,7 +150,7 @@ function OrderNavbar() {
 
 
           })
-        : null}
+        : <LoadingPage/>}
         </div>
     </div>
   );

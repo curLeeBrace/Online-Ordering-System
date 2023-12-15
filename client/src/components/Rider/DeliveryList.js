@@ -3,6 +3,7 @@ import { UilMultiply } from "@iconscout/react-unicons";
 
 import { api } from "../../customHooks/configAxios";
 import {getCookie} from "../../customHooks/cookiesHandler";
+import LoadingPage from "../../Loading";
 
 function DeliveryList() {
   let thClass = "border-2 border-amber-900 p-2 text-sm";
@@ -61,6 +62,7 @@ function DeliveryList() {
       <div className="bg-gray-200 h-screen bg-gray-200 ">
         <div className="overflow-x-auto ml-4 mr-4">
           <h1 className="font-bold text-3xl text-amber-900">Orders</h1>
+          { customerDatas !== null ?
           <table className="min-w-full border border-gray-300 mb-2 text-sm whitespace-nowrap">
             <thead>
               <tr>
@@ -73,7 +75,7 @@ function DeliveryList() {
 
             <tbody>
 
-              {customerDatas !== null ? customerDatas.UserInfo.map((_, index) => {
+               {customerDatas.UserInfo.map((_, index) => {
                 return (
                   <Fragment key = {index}>
                     <tr>
@@ -98,18 +100,11 @@ function DeliveryList() {
                   </Fragment>
                 )
                 
-              }) : null
-              
-              
-              
-              
-              
-              
-              
+               }) 
               }
-              
             </tbody>
-          </table>
+          </table> : <LoadingPage/>
+          }
         </div>
       </div>
 

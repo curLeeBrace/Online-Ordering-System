@@ -15,9 +15,9 @@ function Navbar() {
   useEffect(()=>{
     const userType = getCookie("userType");
     console.log(userType);
-    if(userType === "customer" || userType == null){
-      navigate('/login', {replace : true});
-    } 
+    if(getCookie("userType") !== "raider" && getCookie("userType") !== null){
+      navigate('/login', {replace:true});
+    }
     
   },[])
   

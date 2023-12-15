@@ -18,9 +18,9 @@ function AdminNavbar() {
     const username = getCookie("username") 
     const type = getCookie("userType");
     const accessToken = getCookie("accessToken");
-   if(username === undefined || username === null && type !== "admin" && accessToken === undefined || accessToken === null){
-      navigate('/login', {replace : true});
-   }
+    if(getCookie("userType") !== "admin" && getCookie("userType") !== null){
+      navigate('/login', {replace:true});
+    }
 
 
 

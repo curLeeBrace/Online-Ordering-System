@@ -6,7 +6,6 @@ const path = require("path");
 
 
 const addProduct = async (req, res) => {
-  let notif = "";
   //check all Element in array then return boolean
   const checkElement = (array, newElement) => {
     let canAdd_newElement = true;
@@ -28,6 +27,9 @@ const addProduct = async (req, res) => {
   console.log("req Size = ", Size);
 
   try {
+    let notif = "";
+    
+
     const product = await ProductSchema.findOne({ Flavor: Flavor });
 
     //update either price or size or both if flavor is existing
@@ -60,8 +62,8 @@ const addProduct = async (req, res) => {
         });
       }
     }
-
-    return res.json({ notif: notif });
+    console.log(notif);
+    return res.json({notif : notif, status : "ok"});
   } catch (error) {
     console.log(error);
   }

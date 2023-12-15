@@ -6,14 +6,14 @@ const getAllCustomers = async () => {
 
 
   const filterData = (order, data) => {
-    let filteredData = [];
-    console.log("Inside Function : ", order)
+    let filteredData = null;
+    // console.log("Inside Function : ", order)
   
       for (let j = 0; j < order.Status.length; j++) {
         const status = order.Status[j];
 
         if(status !== 4 && status !==5){
-          filteredData.push(data);
+          filteredData = data;
           break;
         }
         
@@ -45,19 +45,19 @@ const getAllCustomers = async () => {
       return customerData.OrderID !== null && customerData.OrderID !== undefined;
 
     }))
-    // console.log(filtered_customerDatas);
+    // console.log("Filterded",filtered_customerDatas);
 
-    if(filtered_customerDatas){
+    if(filtered_customerDatas !== null){
       for (let i = 0; i < filtered_customerDatas.length; i++) {
         const filtered_customerData = filtered_customerDatas[i];
         
-        availableOrders = filterData(filtered_customerData.Orders, filtered_customerData);
+        availableOrders.push(filterData(filtered_customerData.Orders, filtered_customerData));
       }
     }
 
 
     console.log(availableOrders);
-    console.log("Length ", availableOrders.length);
+    // console.log("Length ", availableOrders.length);
 
     //  console.log("Filtered! Data!", filtered_customerDatas)
     //  console.log("Length is : ", filtered_customerDatas.length);

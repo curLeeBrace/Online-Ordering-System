@@ -4,7 +4,7 @@ const OrderContext = createContext(null);
 
 export const OrderProvider = ({children}) => {
     //marame pang data lalagay dito soon like, dlient orders.. pero eto muna hehe
-    const [orderList, setOrderList] = useState(["default"]);
+    const [orderList, setOrderList] = useState(null);
 
     const setOrder = (orderList) => {
         setOrderList(orderList);
