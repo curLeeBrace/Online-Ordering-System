@@ -9,61 +9,80 @@ const addProduct = async (req, res) => {
   //check all Element in array then return boolean
   const checkElement = (array, newElement) => {
     let canAdd_newElement = true;
-    try {
-      array.map((element) => {
-        if (element === newElement) {
-          console.log(element, " ", newElement);
-          canAdd_newElement = false;
-        }
-      });
 
-      return canAdd_newElement;
-    } catch (error) {
-      return error;
-    }
+      for (let i = 0; i < array.length; i++) {
+        const element = array[i];
+        if(element === newElement) {
+           canAdd_newElement = false;
+        }
+        
+      }
+
+      return canAdd_newElement
+      
   };
 
-  const { Flavor, Size, Price, ImageName } = req.body;
-  console.log("req Size = ", Size);
+  
+  // const { Flavor, Size, Price, ImageName } = req.body;
+  // // console.log("req Size = ", Size);
+  // // console.log("Image", ImageName)
 
   try {
-    let notif = "";
-    
-
+    // return res.json({notif : "You Already had that Flavor", status : "ok"})
+ 
     const product = await ProductSchema.findOne({ Flavor: Flavor });
+
+    
 
     //update either price or size or both if flavor is existing
     if (product != null) {
       // add new variation of Size if that size (client input), is not existing to database
-      if (checkElement(product.Size, Size)) {
-        notif = "Succsesfully Added new Size and Price!";
-        await ProductSchema.updateOne(
-          { Flavor: Flavor },
-          { $push: { Size: Size } }
-        );
-        // then add price for that Size
-        await ProductSchema.updateOne(
-          { Flavor: Flavor },
-          { $push: { Price: Price } }
-        );
+      if(ImageName !== undefined){
+    
+        return res.json({notif : "You Already had that Flavor", status : "ok"});
+
       } else {
-        notif = "Already Had that size!";
+        if (checkElement(product.Size, Size)) {
+          console.log("Size is Existing!")
+      
+          const result = await ProductSchema.updateOne(
+            { Flavor: Flavor },
+            { $push: { 
+              Size: Size,
+              Price : Price
+            
+            } }
+          );
+        return res.json({notif : "Succsesfully Added new Size and Price!", status : "ok"});
+      
+        }
+  
+      
+        return res.json({notif : "Already Had that size!", status : "ok"});
       }
-    } else {
-      if (ImageName == null || ImageName == undefined) {
-        notif = "Please Add Image First!";
-      } else {
-        notif = "Succsesfully Added! new Flavor";
-        await ProductSchema.create({
+      
+      
+    } 
+
+    else {
+      if (ImageName == undefined) {
+   
+        return res.json({notif : "Please Add Image First!", status : "ok"});
+      }
+        
+        const result = await ProductSchema.create({
           Flavor: Flavor,
           Size: [Size],
           Price: [Price],
           ImageName: ImageName,
         });
-      }
+        console.log("Created", result)
+        if(result) return res.json({notif : "Succsesfully Added! new Flavor", status : "ok"});
+       
+      
     }
-    console.log(notif);
-    return res.json({notif : notif, status : "ok"});
+
+   
   } catch (error) {
     console.log(error);
   }

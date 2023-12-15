@@ -7,13 +7,13 @@ function AddProducts() {
   const [flavor, setFlavor] = useState("");
   const [price, setPrice] = useState("");
   const [size, setSize] = useState("");
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(null);
   const [products, setProducts] = useState([]);
   let thClass = "border-2 border-amber-900 p-2";
   const [isOrderDetailsOpen, setIsOrderDetailsOpen] = useState(false);
 
   // add new Product
-  const addHandler = (e) => {
+  const addHandler = async(e) => {
     e.preventDefault();
     try {
       // alert("ad");
@@ -22,7 +22,7 @@ function AddProducts() {
       formData.append("Size", size);
       formData.append("Price", parseFloat(price));
   
-      if (image !== null || image !== undefined) {
+      if (image !== null) {
         const imageName = flavor + image.type;
         formData.append("ImageName", imageName.replace("image/", "."));
         formData.append("Image", image, imageName.replace("image/", "."));
@@ -47,7 +47,7 @@ function AddProducts() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }
 
   const seeAllProducts = () => {
     api
@@ -166,10 +166,11 @@ function AddProducts() {
               Image:
             </label>
             <input
-              type="file"
+              type = "file"
               id="image"
               name="image"
               accept="image/*"
+              
               className="w-full p-2 border rounded focus:outline-none"
               onChange={(e) => {
                 setImage(e.target.files[0]);
