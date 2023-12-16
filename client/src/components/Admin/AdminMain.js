@@ -13,19 +13,19 @@ function AdminNavbar() {
     //figs change
     let {pathname} = useLocation()
     let subpage = pathname.split('/')[2]
- 
+/*
   useEffect(()=>{
     const username = getCookie("username") 
     const type = getCookie("userType");
     const accessToken = getCookie("accessToken");
     if(getCookie("userType") !== "admin" && getCookie("userType") !== null){
       navigate('/login', {replace:true});
-    }
+    } 
 
 
 
   },[])
-
+*/
 
   function link (type = null){
     if(subpage === ''){
