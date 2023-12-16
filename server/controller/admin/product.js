@@ -39,6 +39,7 @@ const addProduct = async (req, res) => {
       // add new variation of Size if that size (client input), is not existing to database
       if(ImageName !== undefined){
     
+        
         return res.json({notif : "You Already had that Flavor", status : "ok"});
 
       } else {

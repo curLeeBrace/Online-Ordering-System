@@ -20,6 +20,7 @@ const c_order = require ('./route/customer/orders')
 const raider_acc = require('./route/admin/raider_acc');
 const sales_history = require('./route/admin/sales_history');
 const r_delivery = require('./route/raider/deliveryHandler');
+const address = require('./route/customer/address');
 
 app.use(express.urlencoded({extended:false}))
 app.use(express.json());
@@ -40,6 +41,8 @@ app.use('/api/admin', raider_acc);
 app.use('/api/admin', sales_history);
 
 app.use('/api/raider', r_delivery);
+
+app.use('/api/address', address);
 
 
 

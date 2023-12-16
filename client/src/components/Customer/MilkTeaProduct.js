@@ -14,7 +14,7 @@ const MilkTeaProduct = ({ product }) => {
   const [pro_size, setProSize] = useState(null); // size
   const [price, setPrice] = useState(0); // price
   const [addsOn, setAddsOn] = useState(null);
-  const [addPrice, setAddPrice] = useState(null); // addsOn price
+  const [addPrice, setAddPrice] = useState(0); // addsOn price
   const [mod, setMod] = useState(null); // mode of payment
   const [total, setTotal] = useState(0); // total
 
@@ -172,9 +172,12 @@ const MilkTeaProduct = ({ product }) => {
                 <input
                   type="radio"
                   name="addon"
-                  value="None"
+                  value=""
                   // checked={selectedAddons === "None"}
-                  // onChange={handleAddonChange}
+                  onChange={(e)=> {
+                    setAddsOn(e.target.value);
+                    setAddPrice(0);
+                  }}
                 />{" "}
                 None
               </label>

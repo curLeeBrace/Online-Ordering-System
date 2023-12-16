@@ -98,7 +98,7 @@ function Login() {
               type="text"
               id="user"
               className="w-full p-2 border rounded"
-              placeholder="Username"
+              // placeholder="ex. ham@gmail.com"
               value={email}
               onChange={(e) => setEmail (e.target.value)}
             />
@@ -111,7 +111,7 @@ function Login() {
               type="password"
               id="password"
               className="w-full p-2 border rounded mb-2"
-              placeholder="Password"
+              // placeholder="ex. 1234"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />

@@ -13,6 +13,7 @@ function HomePage() {
   const navigate = useNavigate();
   
   //check verificaiton cookie if available... if true proceed to verification Page
+  
   useEffect(()=>{
     const emailVerification = getCookie(ck_forE_verification);
 
@@ -27,6 +28,7 @@ function HomePage() {
    
 
   },[])
+  
 
  
 

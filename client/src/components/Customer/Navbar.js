@@ -12,6 +12,13 @@ function Navbar() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [username, setUsername] = useState(null);
+
+  const [isMenuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!isMenuOpen);
+  };
+
   
   let {pathname} = useLocation()
   let subpage = pathname.split('/')?.[1]
@@ -101,15 +108,17 @@ function Navbar() {
           <UilShoppingCartAlt className=" inline-flex whitespace-nowrap" />
           </Link>
         </li>
+            {/* DROPDOWNMENU SA USER NILIPAT KO NA RIN DITO LOG OUT BUTTON*/}
 
-        {username == null ? (
-            <button className="w-28 md:my-0 mt-2 bg-lime-900 rounded text-white md:hover:scale-110 rounded-l hover:bg-white transition duration-300 relative bg-amber-950 isolation-auto z-10 border-lime-500 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-lime-900 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700">
-              <Link to="/login">LogIn</Link>
-            </button>
-          ) : (
-            <>
-              {username} <br></br>
-              <button className="w-28 md:my-0 mt-2 bg-lime-900 rounded text-white md:hover:scale-110 rounded-l hover:bg-white transition duration-300 relative bg-amber-950 isolation-auto z-10 border-lime-500 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-lime-900 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700"
+        <li>
+          
+          <p className='text-white font-bold mr-2 cursor-pointer'onClick={toggleMenu} >{username}</p>
+        </li>
+        {isMenuOpen && (
+          <ul className="md:absolute md:block md:mt-32 right-2  bg-white text-black rounded shadow">
+            <li className="p-2 hover:bg-orange-200 cursor-pointer "> <Link to="/change-address" >Change Address</Link></li>
+            <li className="p-2 hover:bg-gray- cursor-pointer">
+            <button className="w-28 md:my-0 mt-2 bg-lime-900 rounded text-white md:hover:scale-110 rounded-l hover:bg-white transition duration-300 relative bg-amber-950 isolation-auto z-10 border-lime-500 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-lime-900 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700"
               onClick={(e)=>{
                 e.preventDefault();
                 
@@ -118,7 +127,7 @@ function Navbar() {
                 // Check the result
                 if (result) {
                   removeCookies(["username","userType","accessToken"])
-                  navigate('/login',{replace : true})
+                  navigate('/login',{replace : false})
                 } else {
                    alert("Cancelled");
                 }
@@ -126,10 +135,25 @@ function Navbar() {
             >
               LogOut
             </button>
+            {/* Add more settings as needed */}
+            </li>
+          </ul>
+        )}
+        
+
+        {/* {username == null ? (
+            <button className="w-28 md:my-0 mt-2 bg-lime-900 rounded text-white md:hover:scale-110 rounded-l hover:bg-white transition duration-300 relative bg-amber-950 isolation-auto z-10 border-lime-500 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-lime-900 before:-z-10 before:aspect-square before:hover:scale-150 overflow-hidden before:hover:duration-700">
+              <Link to="/login">LogIn</Link>
+            </button>
+          ) : (
+            <>
+              {username} <br></br>
+             
               
             </>
             
-          )}
+          )} */}
+          
       </ul>
     </nav>
     <Outlet/>
