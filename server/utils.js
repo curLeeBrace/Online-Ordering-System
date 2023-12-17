@@ -27,7 +27,10 @@ const verifyEmail = async (email, code) => {
             <div>Youre Code is : ${code}</div>
             `
         })
-        console.log("mail sucessfully")
+        console.log(info);
+        if(info){
+            console.log("mail sucessfully");
+        }
     } catch (error) {
         console.log(error, "mail failed to send")
     }

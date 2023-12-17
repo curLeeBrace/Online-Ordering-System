@@ -140,7 +140,7 @@ function Registration() {
 
                 alert("Redirecting to Email Confirmation");
                 //setCookie
-                // setCookie(cookieVerifyEmail, userData.Email);
+                setCookie(cookieVerifyEmail, userData.Email);
 
                 //useNavigate
                 navigate("/verification");

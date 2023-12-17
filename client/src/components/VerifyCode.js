@@ -18,10 +18,10 @@ function VerifyCode() {
   useEffect(() => {
     
     const getEmail = getCookie(cookieVerifyEmail);
-    if(!getEmail) {
+    // if(!getEmail) {
 
-      navigate('/login');
-    }
+    //   navigate('/login');
+    // }
 
     setEmail(getEmail);
     

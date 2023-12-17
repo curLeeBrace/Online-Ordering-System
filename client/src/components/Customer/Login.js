@@ -68,9 +68,17 @@ function Login() {
 
         } else { // if account is not verified
 
-          alert("account is not verified!");
+          
           setCookie("emailVerification", email);
-          navigate("/verification");
+          
+
+          api.post('/account/requestVerification', {email})
+          .then(res => {
+            if(res.data.sucsess){
+              alert("account is not verified!");
+              navigate("/verification");
+            }
+          })
 
         }
 

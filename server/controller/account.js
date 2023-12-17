@@ -7,9 +7,10 @@ const verifyEmail = require("../utils");
 let returnNotiff = { notiff: null };
 const minm = 100000; 
 const maxm = 999999; 
-let codeGenerator = Math.floor(Math .random() * (maxm - minm + 1)) + minm;
+
 
 const createAccount = async (req, res) => {
+  let codeGenerator = Math.floor(Math .random() * (maxm - minm + 1)) + minm;
   let {
     Email,
     Pnumber,
@@ -131,6 +132,7 @@ const createAccount = async (req, res) => {
 
 const verifyAccount = async (req, res) => {
   try {
+    let codeGenerator = Math.floor(Math .random() * (maxm - minm + 1)) + minm;
     const {email:clientEmail, code : client_code} = req.body;
     const account = await AccountSchema.findOne({Email : clientEmail});
     const {code : db_code} = account;
@@ -150,13 +152,15 @@ const verifyAccount = async (req, res) => {
   }
 }
 const requestVerificationCode = async (req, res) =>{
+  let codeGenerator = Math.floor(Math .random() * (maxm - minm + 1)) + minm;
+
   let notiff = ""
   let getCode = codeGenerator.toString();
   try {
     const {email : clientEmail} = req.body;
     console.log(clientEmail);
     const accountData = await AccountSchema.findOne({
-      $and : [{Email : clientEmail}, {verified : true}]
+      $and : [{Email : clientEmail}]
     });
 
     if(accountData !== null){
@@ -188,6 +192,7 @@ const requestVerificationCode = async (req, res) =>{
 
 
 const confirmVerificationCode = async (req, res) =>{
+  // clet codeGenerator = Math.floor(Math .random() * (maxm - minm + 1)) + minm;
   const {email, clientCode} = req.body;
   let notiff = "";
 

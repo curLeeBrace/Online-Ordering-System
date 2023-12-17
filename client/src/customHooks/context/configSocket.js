@@ -1,2 +1,2 @@
 
-export const S_URL = '192.168.0.151';
+export const S_URL = '192.168.1.23';
