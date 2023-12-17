@@ -24,6 +24,9 @@ function Registration() {
     code: "000000",
     verified: false,
   });
+
+  const [license, setLicense] = useState(null);
+
   // dont acess registration if state is null the "userType" is null
   useEffect(() => {
     const cookieVerifyEmail = "emailVerification";
@@ -96,21 +99,48 @@ function Registration() {
     const email_pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/; // "valid email example : test@gmail.com"
     const password_pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/; // text with numbers and other special characters
 
+
     if (userData.Email.match(email_pattern)) {
       
       if (userData.Password.match(password_pattern)) {
         //send request to server
         if (userData.Password === confirmPass) {
-          
+            
           setEnable(false);
+       
+
+
+
+
           api
             .post(`/account/create/${location.state.userType}`, userData)
             .then((res) => {
               // console.log(res);
               if (res.data.sucsess === true) {
+                  if(location.state.userType === "raider") {//post request for uploading lisence if userType is raider 
+              
+                
+                      const formData = new FormData();
+                      formData.append('userID', res.data.userID);
+                      formData.append('license', license, license.name);
+                      console.log(license.name);
+
+          
+                      api.post('/account/upload-license',formData,{
+                        headers : {"Content-Type": "multipart/form-data"}
+                      })
+                      .then(res => console.log(res.data))
+                      .catch(err => console.error(err))
+                  }
+
+
+
+
+
+
                 alert("Redirecting to Email Confirmation");
                 //setCookie
-                setCookie(cookieVerifyEmail, userData.Email);
+                // setCookie(cookieVerifyEmail, userData.Email);
 
                 //useNavigate
                 navigate("/verification");
@@ -181,6 +211,30 @@ function Registration() {
               value={userData.Pnumber}
             />
           </div>
+            { location.state.userType === "raider" ?
+              <div className="mb-4">
+              <label
+                htmlFor="Pnumber"
+                className="block text-sm font-medium text-gray-700"
+              >
+                License
+              </label>
+              <input
+                type="file"
+                id="liscense"
+                name="Pnumber"
+                className="mt-1 p-2 w-full border border-gray-300 rounded focus:outline-none focus:ring focus:ring-amber-950"
+                required
+                onChange={(e) => {
+                  setLicense(e.target.files[0]);
+                }}
+               
+                // onChange={handleChange}
+                // value={userData.Pnumber}
+              />
+            </div> : null
+          
+          }
           {/* Username */}
           <div className="mb-4">
             <label

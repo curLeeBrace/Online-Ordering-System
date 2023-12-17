@@ -17,7 +17,10 @@ function AdminOrders() {
   useEffect(() => {
     const socket = io(`http://${S_URL}:3001/admin`);
     socket.on("order:list", (data)=>{
-      setCustomerDatas(data);
+      if(data){
+        setCustomerDatas(data);
+
+      }
       console.log(data);
     });
 
@@ -27,7 +30,7 @@ function AdminOrders() {
  
   }, []);
   
-  
+  // console.log(customerDatas.length);
 
   return (
     
@@ -52,7 +55,8 @@ function AdminOrders() {
                       <CustomerInfo thClass={thClass} customerData={customerData} setIsOrderDetailsOpen = {setIsOrderDetailsOpen}/>
                     </Fragment>
                   );
-                })}
+                } 
+                )}
               </tbody>
             </table> : <LoadingPage/>
             }

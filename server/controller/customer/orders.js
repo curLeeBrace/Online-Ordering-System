@@ -108,7 +108,8 @@ const saveOrder_toDB = async (body, customerData) => {
             COurl : checkout_url,
             Date: Date,
             DeliveryUname : "",
-            ProofOfDelivery : ""
+            ProofOfDelivery : "",
+            FeedBack : "",
             
           },
         });
@@ -172,11 +173,12 @@ const placeOrder = async (req, res) => {
  // console.log("Date - ", Date);
 
   const options = gcashConfig(address, order, customer);
+
   try {
-    
+    req.body['FeedBack'] = "";
     if (MOD === "gcash") {
       // res.json(options);
-     
+    
       axios
         .request(options)
         .then(async function (response) { 
@@ -301,10 +303,28 @@ const cancelOrder = async (req, res) => {
 }
 
 
+const giveFeedBack = async (req, res) => {
+  const {customer_Fback, orderID, index} = req.body;
+  
+  try {
+    const setFeedBack = await OrdersSchema.findByIdAndUpdate(orderID, 
+      {
+        $set : {
+          [`FeedBack.${index}`] : customer_Fback
+        }
+      })
+      return res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+  }
+
+
+}
 
 module.exports = {
   placeOrder,
   gcash_webhook,
   getCustomerOrders,
   cancelOrder,
+  giveFeedBack
 };

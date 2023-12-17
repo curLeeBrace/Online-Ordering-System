@@ -6,7 +6,7 @@ const getAllCustomers = async () => {
 
 
   const filterData = (order, data) => {
-    let filteredData = null;
+    let filteredData;
     // console.log("Inside Function : ", order)
   
       for (let j = 0; j < order.Status.length; j++) {
@@ -20,7 +20,7 @@ const getAllCustomers = async () => {
       }
       
     
-
+      
     return filteredData;
   }
 
@@ -55,14 +55,13 @@ const getAllCustomers = async () => {
       }
     }
 
-
-    console.log(availableOrders);
+    const filter_availableOrders = availableOrders.filter(availableOrder => {
+      return availableOrder != null;
+    })
+    // console.log(filter_availableOrders);
     // console.log("Length ", availableOrders.length);
 
-    //  console.log("Filtered! Data!", filtered_customerDatas)
-    //  console.log("Length is : ", filtered_customerDatas.length);
-    //possible respnse is object of address and object of orders...
-    return availableOrders;
+    return filter_availableOrders;
 
   } catch (error) {
       console.error(error);

@@ -36,6 +36,7 @@ const createAccount = async (req, res) => {
     Mname,
     Lname,
     Pnumber,
+    DriverLicense : ""
   }
   //=======For AccountSchema==============
   const accountDataSchema = {
@@ -112,7 +113,7 @@ const createAccount = async (req, res) => {
           
         console.log(userInfo);
         
-        return res.status(200).json({ sucsess: true });
+        return res.status(200).json({ sucsess: true, userID : userInfo._id});
       } else {
         res.senStatus(400); // failed to send email
       }
@@ -278,7 +279,25 @@ const login = async (req, res) => {
 
 }
 
+const uploadLicense = async (req, res) => {
+    try {
+        const {userID} = req.body
+        console.log(userID);
+        // console.log("ReqFile - ", req.file);
+        const license = req.file.filename;
+        console.log(license);
 
+        console.log("Lisence : ", license);
+
+        await UserInfoSchema.findByIdAndUpdate(userID, {DriverLicense : license})
+
+
+        
+
+    } catch (error) {
+      console.error(error);
+    }
+}
 
 
 
@@ -289,4 +308,5 @@ module.exports = {
   confirmVerificationCode,
   updatePass,
   login,
+  uploadLicense
 };

@@ -13,6 +13,8 @@ function AdminNavbar() {
     //figs change
     let {pathname} = useLocation()
     let subpage = pathname.split('/')[2]
+
+    
 /*
   useEffect(()=>{
     const username = getCookie("username") 

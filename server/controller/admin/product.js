@@ -22,66 +22,160 @@ const addProduct = async (req, res) => {
       
   };
 
-  
-  // const { Flavor, Size, Price, ImageName } = req.body;
+  // console.log("REQUEST BODY File: ", req.file);
+  // console.log("REQUEST BODY : ", req.body)
+  const { Flavor, Size, Price, ImageName } = req.body;
   // // console.log("req Size = ", Size);
-  // // console.log("Image", ImageName)
+  // console.log("Image", ImageName)
 
   try {
+ 
     // return res.json({notif : "You Already had that Flavor", status : "ok"})
  
     const product = await ProductSchema.findOne({ Flavor: Flavor });
 
-    
+    if(product !== null) {
 
-    //update either price or size or both if flavor is existing
-    if (product != null) {
-      // add new variation of Size if that size (client input), is not existing to database
-      if(ImageName !== undefined){
-    
-        
-        return res.json({notif : "You Already had that Flavor", status : "ok"});
-
-      } else {
+      if(req.file !== undefined){
         if (checkElement(product.Size, Size)) {
-          console.log("Size is Existing!")
-      
-          const result = await ProductSchema.updateOne(
-            { Flavor: Flavor },
-            { $push: { 
-              Size: Size,
-              Price : Price
-            
-            } }
-          );
-        return res.json({notif : "Succsesfully Added new Size and Price!", status : "ok"});
-      
-        }
-  
-      
-        return res.json({notif : "Already Had that size!", status : "ok"});
-      }
-      
-      
-    } 
 
-    else {
-      if (ImageName == undefined) {
-   
-        return res.json({notif : "Please Add Image First!", status : "ok"});
-      }
+            await ProductSchema.updateOne(
+              { Flavor: Flavor },
+              { $push: { 
+                Size: Size,
+                Price : Price
+              
+               }
+              }
+          );
+        console.log("Succsesfully Added new Size and Price!")
+        return res.json({notif : "Succsesfully Added new Size and Price!", status : "ok"});
+
+        } else if (!checkElement(product.Size, Size)){
+          console.log("Already Had that size!")
+          return res.json({notif : "Already Had that size!", status : "!ok"});
+        } 
+
         
-        const result = await ProductSchema.create({
-          Flavor: Flavor,
-          Size: [Size],
-          Price: [Price],
-          ImageName: ImageName,
-        });
-        console.log("Created", result)
-        if(result) return res.json({notif : "Succsesfully Added! new Flavor", status : "ok"});
-       
-      
+
+  
+      } else {
+         
+          
+            if (checkElement(product.Size, Size)) {
+
+                await ProductSchema.updateOne(
+                  { Flavor: Flavor },
+                  { $push: { 
+                    Size: Size,
+                    Price : Price
+                  
+                  }
+                  }
+              );
+            console.log("Succsesfully Added new Size and Price!")
+            return res.json({notif : "Succsesfully Added new Size and Price!", status : "ok"});
+
+            } else if (!checkElement(product.Size, Size)){
+              return res.json({notif : "Already Had that size!", status : "!ok"});
+            }
+          
+      }
+
+    } else {
+
+        if (req.file === undefined) {
+          console.log("Please Add Image First!")
+          return res.json({notif : "Please Add Image First!", status : "!ok"});
+        } else {
+          const result = await ProductSchema.create({
+            Flavor: Flavor,
+            Size: [Size],
+            Price: [Price],
+            ImageName: ImageName,
+          });
+          // console.log("Created", result)
+          // console.log("Succsesfully Added! new Flavor");
+          if(result) {return res.json({notif : "Succsesfully Added! new Flavor", status : "ok"});}
+
+        }
+          
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      // //update either price or size or both if flavor is existing
+      // if (product != null) {
+      //   // add new variation of Size if that size (client input), is not existing to database
+      //   if(ImageName !== undefined && !checkElement(product.Size, Size)){
+      
+      //     console.log("You Already had that Flavor")
+      //     return res.json({notif : "You Already had that Flavor", status : "ok"});
+
+      //   } else if (ImageName !== undefined && checkElement(product.Size, Size)) {
+      //     return res.json({notif : "Updating Image", status : "ok"});
+      //   }else {
+      //     if (checkElement(product.Size, Size)) {
+          
+        
+      //       const result = await ProductSchema.updateOne(
+      //         { Flavor: Flavor },
+      //         { $push: { 
+      //           Size: Size,
+      //           Price : Price
+              
+      //         } }
+      //       );
+      //     console.log("Succsesfully Added new Size and Price!")
+      //     return res.json({notif : "Succsesfully Added new Size and Price!", status : "ok"});
+        
+      //     } else if (!checkElement(product.Size, Size)){
+      //       // if(Ima)
+      //       return res.json({notif : "Already Had that size!", status : "ok"});
+      //     }
+      //     console.log("Already Had that size! Only Image will be Update")
+      //     return res.json({notif : "Already Had that size! Only Image will be Update", status : "ok"});
+      //   }
+        
+        
+      // } 
+
+      // else {
+      //   if (ImageName == undefined) {
+      //     console.log("Please Add Image First!")
+      //     return res.json({notif : "Please Add Image First!", status : "ok"});
+      //   }
+          
+      //     const result = await ProductSchema.create({
+      //       Flavor: Flavor,
+      //       Size: [Size],
+      //       Price: [Price],
+      //       ImageName: ImageName,
+      //     });
+      //     // console.log("Created", result)
+      //     console.log("Succsesfully Added! new Flavor");
+      //     if(result) return res.json({notif : "Succsesfully Added! new Flavor", status : "ok"});
+        
+        
+      // }
+
+    // return res.json({notif : "Invalid Input!", status : "ok"});
 
    
   } catch (error) {

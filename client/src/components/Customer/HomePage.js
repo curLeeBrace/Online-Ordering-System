@@ -15,11 +15,11 @@ function HomePage() {
   //check verificaiton cookie if available... if true proceed to verification Page
   
   useEffect(()=>{
-    const emailVerification = getCookie(ck_forE_verification);
+    // const emailVerification = getCookie(ck_forE_verification);
 
-    if(emailVerification){
-      navigate('/verification');
-    }
+    // if(emailVerification){
+    //   navigate('/verification');
+    // }
 
     if(getCookie("userType") !== "customer" && getCookie("userType") !== null){
       navigate('/login', {replace:true});

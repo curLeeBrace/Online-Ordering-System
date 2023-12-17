@@ -25,6 +25,7 @@ try {
             Total : user.Orders.Total.filter((_, index) => user.Orders.Status[index] === 5),
             MOD : user.Orders.MOD.filter((_, index) => user.Orders.Status[index] === 5),
             Date : user.Orders.Date.filter((_, index) => user.Orders.Status[index] === 5),
+            FeedBack : user.Orders.FeedBack.filter((_, index) => user.Orders.Status[index] === 5)
         }
     }));
     

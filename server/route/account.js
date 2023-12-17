@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const upload = require('../middleware/uploadLicense')
 //controller
 const {
     createAccount, 
@@ -7,7 +8,8 @@ const {
     requestVerificationCode, 
     confirmVerificationCode,
     updatePass,
-    login
+    login,
+    uploadLicense
 } = require('../controller/account');
 
 //middleware
@@ -21,6 +23,7 @@ router.post('/requestVerification', requestVerificationCode);
 router.post('/confirmVerificationCode', confirmVerificationCode);
 router.post('/updatePass', updatePass);
 router.post('/login',authenticateToken,login);
+router.post('/upload-license', upload.single('license'), uploadLicense);
 
 
 

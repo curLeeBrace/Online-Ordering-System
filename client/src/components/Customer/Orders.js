@@ -1,11 +1,17 @@
 
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {api} from '../../customHooks/configAxios';
+import { UilMultiply } from "@iconscout/react-unicons";
+
 function Orders({index, orderDetails}) {
+  const [feedBack, setFeedBack] = useState("");
+  const [feedBox, setFeedBox] = useState(false);
     useEffect(()=>{
 
-      // console.log(orderDetails);
-    },[])
+      // console.log("Index : ", index);
+      console.log(orderDetails);
+      // console.log("FeedBack", feedBack)
+    },[feedBack])
 
     const cancelOrder = () => {
       const order_id = orderDetails._id;
@@ -32,6 +38,24 @@ function Orders({index, orderDetails}) {
       
 
     }
+
+
+    const submitFeedBack = () => {
+
+      api.post('/customer/submit-feedback',{
+        customer_Fback : feedBack,
+        orderID : orderDetails._id,
+        index : index
+      })
+      .then(res => {
+        if(res.status === 200){
+          alert("Thankyou For giving a feedback");
+          window.location.href = window.location.href;
+        }
+      })
+      .catch(err => console.log(err))
+    }
+
     return (
       <div>
 
@@ -60,8 +84,48 @@ function Orders({index, orderDetails}) {
             : orderDetails.Status[index] === 3
             ? "Dellivered" 
             : orderDetails.Status[index] === 4
-            ?"Cancelled" : "Completed"
+            ?"Cancelled" 
+            : orderDetails.FeedBack[index] === "" ?
+            <>
+            <span>Completed</span>
+            <button
+             className="mt-4 bg-lime-800 text-white px-4 py-2 rounded hover:bg-amber-900 focus:outline-none w-full"
+              onClick={()=> setFeedBox(true)}
+            >
+              
+              Give FeedBack
+            </button>
+              
+            
+            </> : <span>Completed</span>
    
+        }
+
+        {
+          feedBox === true ? 
+          <div className="fixed inset-0 flex items-center ml-4 mr-4 justify-center z-50 ">
+              <div className="bg-white rounded-lg mt-0 shadow-2xl border border-amber-950 p-4 w-full md:w-auto relative">
+                <button
+                  onClick={() => {setFeedBox(false); setFeedBack("")}}
+                  className="absolute top-2 right-2 font-bold hover:text-gray-700 cursor-pointer hover:scale-150"
+                >
+                  <UilMultiply size={20} />
+                </button>
+                  <p>Feed Back : </p>
+                  {/* maxlength = "75" */}
+                  <textarea className="w-full p-2 border rounded" rows="4" cols="30" value ={feedBack} onChange={(e)=> setFeedBack(e.target.value)}>
+                    
+                  </textarea> <br></br>
+                  <button
+                    className="mt-4 bg-lime-800 text-white px-4 py-2 rounded hover:bg-amber-900 focus:outline-none w-full"
+                      onClick={submitFeedBack}
+                    >
+                      
+                      Submit
+                  </button>
+              </div> 
+           
+            </div> : null
         }
          
         </div>

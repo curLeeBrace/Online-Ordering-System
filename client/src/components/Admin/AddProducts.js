@@ -36,10 +36,11 @@ function AddProducts() {
           const {notif, status} = res.data;
           console.log(notif)
           if (status === "ok") {
-            alert(notif);
+              alert(notif);
 
           } else {
-            alert("Error occured!");
+            alert(notif);
+
           }
         })
         .catch((err) => console.log(err));
@@ -71,7 +72,7 @@ function AddProducts() {
           window.location.href = window.location.href;
           
         } else {
-          alert("Error Occure Please Contact Mellanio!")
+          alert("Error Occured!")
         }
       })
 
@@ -90,21 +91,6 @@ function AddProducts() {
         <h2 className="text-2xl font-semibold mb-4">Add New Flavor/Product</h2>
 
         <form onSubmit={addHandler}>
-          {/* <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-semibold">
-              Name:
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Milk Tea"
-              className="w-full p-2 border rounded focus:outline-none"
-            />
-          </div> */}
-
-          {/* Falvor */}
-
           <div className="mb-4">
             <label
               htmlFor="description"
@@ -114,7 +100,7 @@ function AddProducts() {
             </label>
             <input
               id="description"
-              name="MTname"
+              name="Flavor"
               placeholder="Hokkaido"
               className="w-full p-2 border rounded focus:outline-none"
               required
@@ -130,7 +116,7 @@ function AddProducts() {
             <input
               type="text"
               id="price"
-              name="price"
+              name="Price"
               className="w-full p-2 border rounded focus:outline-none"
               required
               value={price}
@@ -143,7 +129,8 @@ function AddProducts() {
             <label>
               <input
                 type="radio"
-                name="payment"
+                name="Size"
+                required
                 value="Small"
                 onChange={(e) => setSize(e.target.value)}
               />
@@ -153,8 +140,9 @@ function AddProducts() {
             <label>
               <input
                 type="radio"
-                name="payment"
+                name="Size"
                 value="Medium"
+                required
                 onChange={(e) => setSize(e.target.value)}
               />
               Medium
@@ -168,7 +156,7 @@ function AddProducts() {
             <input
               type = "file"
               id="image"
-              name="image"
+              name="Image"
               accept="image/*"
               
               className="w-full p-2 border rounded focus:outline-none"

@@ -17,7 +17,8 @@ const OrdersShema = new mongoose.Schema({
     COurl : [{type : String, }],
     Date : [{type : String, required : true}],
     DeliveryUname : [{type : String,}],
-    ProofOfDelivery : [{type : String},]
+    ProofOfDelivery : [{type : String},],
+    FeedBack : [{type : String}]
 
 });
 

@@ -55,6 +55,7 @@ function RiderAccounts() {
                 <th className="border-2 border-amber-900 p-2">ID</th>
                 <th className="border-2 border-amber-900 p-2">Email</th>
                 <th className="border-2 border-amber-900 p-2">Phone Number</th>
+                <th className="border-2 border-amber-900 p-2">DriverLicense</th>
                 <th className="border-2 border-amber-900 p-2">Username</th>
                 <th className="border-2 border-amber-900 p-2">Firstname</th>
                 <th className="border-2 border-amber-900 p-2">
@@ -85,6 +86,9 @@ function RiderAccounts() {
                         </td>
                         <td className="border border-amber-900 p-2">
                           {raiderInfo.Pnumber}
+                        </td>
+                        <td className="border border-amber-900 p-2">
+                         <a className="text-green-900" href = {`http://localhost:3000/img/RaiderLisence/${raiderInfo.DriverLicense}`} target="_blank">View</a>
                         </td>
                         <td className="border border-amber-900 p-2">
                           {raiderInfo.Uname}

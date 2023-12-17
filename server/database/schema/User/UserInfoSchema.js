@@ -8,7 +8,7 @@ const UserInfoSchema = new mongoose.Schema({
     Mname : {type : String, required : true},
     Lname : {type : String, required : true},
     Pnumber : {type : String, required : true, unique : true},
-    
+    DriverLicense : {type : String},
     AccountID : {type : ObjectId, required : true},
     AddressID : {type : ObjectId, required : true},
     OrderID : {type : ObjectId, default : null}
