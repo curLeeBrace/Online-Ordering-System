@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { UilMultiply } from "@iconscout/react-unicons";
 import { isNum } from "../../customHooks/verifyInput";
 import { api } from "../../customHooks/configAxios";
@@ -69,7 +69,8 @@ function AddProducts() {
       .then(res => {
         if(res.status === 200){
           alert("Deleted  Sucsessfully!");
-          window.location.href = window.location.href;
+          let a = window.location.href;
+          window.location.href = a
           
         } else {
           alert("Error Occured!")

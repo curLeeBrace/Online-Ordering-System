@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { UilMultiply } from "@iconscout/react-unicons";
 import { getCookie } from "../../customHooks/cookiesHandler";
 import { api } from "../../customHooks/configAxios";

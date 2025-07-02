@@ -18,7 +18,7 @@ const OrderList = ({thClass, orderDetails, index}) => {
 
         sokcet.emit("order:confirmed", orderDetails._id, index, newStatus, (res)=>{
           if(res.succsess ){
-            if(res.updatedStatus == 1){
+            if(res.updatedStatus === 1){
               alert("Order Confirmed!");
               setStatus(res.updatedStatus);
   

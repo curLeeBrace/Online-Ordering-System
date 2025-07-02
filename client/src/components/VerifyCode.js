@@ -6,7 +6,7 @@ import { api } from "../customHooks/configAxios";
 
 
 function VerifyCode() {
-  const location = useLocation();
+
 
   const navigate = useNavigate();
   const [email, setEmail] = useState(null);

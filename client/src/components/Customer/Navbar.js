@@ -1,9 +1,9 @@
-import React, { useEffect, useState} from 'react';
+import { useEffect, useState} from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { UilBars, UilMultiply } from '@iconscout/react-unicons';
 import { Outlet } from "react-router-dom";
 import { UilShoppingCartAlt } from '@iconscout/react-unicons'
-import { getCookie , setCookie, removeCookies} from '../../customHooks/cookiesHandler';
+import { getCookie , removeCookies} from '../../customHooks/cookiesHandler';
 import { useNavigate } from 'react-router-dom';
 
 import { api } from '../../customHooks/configAxios';

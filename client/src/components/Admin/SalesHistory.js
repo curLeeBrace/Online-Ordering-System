@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { api } from "../../customHooks/configAxios";
 
 import { eachDayOfInterval, startOfWeek, format, startOfMonth } from "date-fns";

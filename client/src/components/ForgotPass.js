@@ -5,7 +5,6 @@ import { useState } from "react";
 
 import { getCookie , setCookie} from "../customHooks/cookiesHandler";
 import {api} from "../customHooks/configAxios";
-import { useVerificationRouteProtection } from "../customHooks/useEffect/myUseRouteEffect";
 function ForgotPass() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
