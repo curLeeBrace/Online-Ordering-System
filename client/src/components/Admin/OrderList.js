@@ -1,12 +1,12 @@
 
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client"
-import { S_URL } from "../../customHooks/context/configSocket";
+// import { S_URL } from "../../customHooks/context/configSocket";
 const OrderList = ({thClass, orderDetails, index}) => {
 
 
     const [status, setStatus] = useState(0);
-    const sokcet = io(`http://${S_URL}:3001/admin`);
+    const sokcet = io(`${process.env.REACT_APP_API_BASE_URL}/admin`);
    
     useEffect(()=>{
       setStatus(orderDetails.Status[index]);

@@ -7,14 +7,14 @@ import { getCookie} from "../../customHooks/cookiesHandler";
 import { api } from "../../customHooks/configAxios";
 import {io} from "socket.io-client";
 
-import { S_URL } from "../../customHooks/context/configSocket";
+// import { S_URL } from "../../customHooks/context/configSocket";
 import LoadingPage from "../../Loading";
 
  
 function OrderNavbar() {
   const [activeTab, setActiveTab] = useState(0);
   const [orders, getOrders] = useState(null);
-  const socket = io(`http://${S_URL}:3001/customer`)
+  const socket = io(`${process.env.REACT_APP_API_BASE_URL}/customer`)
   
   useEffect(() => {
  

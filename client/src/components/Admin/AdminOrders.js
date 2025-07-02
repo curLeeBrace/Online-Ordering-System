@@ -5,7 +5,7 @@ import { UilMultiply } from '@iconscout/react-unicons';
 import OrderList from "./OrderList";
 import {io} from "socket.io-client";
 import { useOrder } from "../../customHooks/context/order_context";
-import { S_URL } from "../../customHooks/context/configSocket";
+// import { S_URL } from "../../customHooks/context/configSocket";
 import LoadingPage from "../../Loading";
 function AdminOrders() {
   let thClass = "border-2 border-amber-900 p-2";
@@ -15,7 +15,7 @@ function AdminOrders() {
   const order = useOrder();
  
   useEffect(() => {
-    const socket = io(`http://${S_URL}:3001/admin`);
+    const socket = io(`${process.env.REACT_APP_API_BASE_URL}/admin`);
     socket.on("order:list", (data)=>{
       if(data){
         setCustomerDatas(data);

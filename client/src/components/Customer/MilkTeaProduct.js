@@ -4,9 +4,9 @@ import { getCookie } from "../../customHooks/cookiesHandler";
 import { api } from "../../customHooks/configAxios";
 import {io} from "socket.io-client";
 import format from 'date-fns/format';
-import { S_URL } from "../../customHooks/context/configSocket";
+// import { S_URL } from "../../customHooks/context/configSocket";
 
-let socket = io(`http://${S_URL}:3001/customer`);
+let socket = io(`${process.env.REACT_APP_API_BASE_URL}/customer`);
  // connecting in sokcet event...
 const MilkTeaProduct = ({ product }) => {
   const [isModalOpen, setModalOpen] = useState(false);
