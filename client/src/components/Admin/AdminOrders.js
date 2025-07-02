@@ -1,5 +1,5 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { api } from "../../customHooks/configAxios";
+import { useState, useEffect, Fragment } from "react";
+
 import CustomerInfo from "./CustomerInfo";
 import { UilMultiply } from '@iconscout/react-unicons';
 import OrderList from "./OrderList";

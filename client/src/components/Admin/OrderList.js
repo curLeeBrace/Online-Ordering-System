@@ -1,6 +1,5 @@
 
 import { useEffect, useState } from "react";
-import { api } from "../../customHooks/configAxios";
 import { io } from "socket.io-client"
 import { S_URL } from "../../customHooks/context/configSocket";
 const OrderList = ({thClass, orderDetails, index}) => {

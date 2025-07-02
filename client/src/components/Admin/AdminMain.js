@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import {useState } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { UilBars, UilMultiply } from "@iconscout/react-unicons";
 import { Outlet } from "react-router-dom";
-import { removeCookies, getCookie} from "../../customHooks/cookiesHandler";
+import { removeCookies, } from "../../customHooks/cookiesHandler";
 import { useNavigate } from "react-router-dom";
 
 function AdminNavbar() {
