@@ -1,13 +1,12 @@
 import axios from "axios";
 
-// let ipAddress = "http://192.168.0.151:3001/api"
-// const localIP = 
+const BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001/api';
+
+
 export const api = axios.create({
-      baseURL: 'http://localhost:3001/api',
+      baseURL: BASE_URL,
 
 
-      
-      
 })
 
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 
 const table = () => {
   let thClass = 'border-2 border-amber-900 p-2'
