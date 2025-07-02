@@ -6,6 +6,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 //initialize or setup - server
 const app = express();
+
 const httpServer = createServer(app);
 const io = new Server(httpServer, {cors :{origin : "*"}})
 
@@ -74,8 +75,9 @@ io.of("/raider").on("connection", raiderConnection);
 //starting a server
 const start = async () =>{ 
     try {
+        const PORT = process.env.PORT || 3001;
         await connectDB(process.env.MONGO_URI);
-        httpServer.listen(3001, () => console.log("server is listening in port 3001"))
+        httpServer.listen(PORT, () => console.log("server is listening in port 3001"))
 
     } catch (error) {
         console.log(error);
