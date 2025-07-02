@@ -45,7 +45,9 @@ app.use('/api/raider', r_delivery);
 
 app.use('/api/address', address);
 
-
+app.get('/', (req, res)=>{
+    return res.send("Server Confirmed!");
+})
 
 //socket controller
 const a_registerOrderHandler = require ('./socket/admin/orderHandler');
