@@ -6,7 +6,7 @@ import {io} from "socket.io-client";
 import format from 'date-fns/format';
 // import { S_URL } from "../../customHooks/context/configSocket";
 
-let socket = io(`${process.env.REACT_APP_API_BASE_URL}/customer`);
+let socket = io(`${process.env.REACT_APP_BACKEND_BASE_URL}/customer`);
  // connecting in sokcet event...
 const MilkTeaProduct = ({ product }) => {
   const [isModalOpen, setModalOpen] = useState(false);

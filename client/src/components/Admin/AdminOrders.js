@@ -15,7 +15,7 @@ function AdminOrders() {
   const order = useOrder();
  
   useEffect(() => {
-    const socket = io(`${process.env.REACT_APP_API_BASE_URL}/admin`);
+    const socket = io(`${process.env.REACT_APP_BACKEND_BASE_URL}/admin`);
     socket.on("order:list", (data)=>{
       if(data){
         setCustomerDatas(data);

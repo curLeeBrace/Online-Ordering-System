@@ -14,8 +14,14 @@ import LoadingPage from "../../Loading";
 function OrderNavbar() {
   const [activeTab, setActiveTab] = useState(0);
   const [orders, getOrders] = useState(null);
-  const socket = io(`${process.env.REACT_APP_API_BASE_URL}/customer`)
+  const socket = io(`${process.env.REACT_APP_BACKEND_BASE_URL}/customer`)
   
+
+  let test = process.env.REACT_APP_TESTING
+
+
+
+
   useEffect(() => {
  
 
@@ -75,6 +81,11 @@ function OrderNavbar() {
   // });
   // console.log("activeTab ", activeTab);
   // console.log(orders)
+
+
+
+
+
   return (
    
     <div>
@@ -145,9 +156,6 @@ function OrderNavbar() {
             } else {
               index++; // skip element
             }
-            
-           
-
 
           })
         : <LoadingPage/>}

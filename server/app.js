@@ -69,6 +69,10 @@ io.of("/admin").on("connection",adminConnection);
 io.of("/customer").on("connection", customerConnection);
 io.of("/raider").on("connection", raiderConnection);
 
+io.on("connection", (socket) => {
+  console.log("Client connected:", socket.id);
+});
+
 
 
 

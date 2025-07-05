@@ -18,7 +18,7 @@ function OrderList() {
   const [userID, setUserID] = useState();
 
   useEffect(() => {
-    const socket = io(`${process.env.REACT_APP_API_BASE_URL}/raider`);
+    const socket = io(`${process.env.REACT_APP_BACKEND_BASE_URL}/raider`);
     socket.on("delivery:get-avilable", (data) => {
       console.log(data); // can return userID or just get _id, for delivery purpose
       setCustomerDatas(data);

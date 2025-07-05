@@ -6,7 +6,7 @@ const OrderList = ({thClass, orderDetails, index}) => {
 
 
     const [status, setStatus] = useState(0);
-    const sokcet = io(`${process.env.REACT_APP_API_BASE_URL}/admin`);
+    const sokcet = io(`${process.env.REACT_APP_BACKEND_BASE_URL}/admin`);
    
     useEffect(()=>{
       setStatus(orderDetails.Status[index]);
