@@ -4,6 +4,10 @@ const gcashConfig = (address, order, customer) => {
     //address  - 3
     //order - 3
     //customer - 3
+
+
+    const BASE_URI = process.env.FRONT_END_URI ? process.env.FRONT_END_URI : "http://localhost:3000"
+
     let options = {
       method: 'POST',
       url: 'https://api.paymongo.com/v1/checkout_sessions',
@@ -31,21 +35,21 @@ const gcashConfig = (address, order, customer) => {
             send_email_receipt: false,
             show_description: true,
             show_line_items: true,
-            cancel_url: 'http://localhost:3000/menu',
+            cancel_url: `${BASE_URI}/menu`,
             description: order.name,
             line_items: [
               {
                 amount: parseInt(order.amount + "00"),
                 currency: 'PHP',
                 description: order.name + ' MilkTea',
-                images: [`http://localhost:3000/img/products/milktea/${order.img}`],
+                images: [`${BASE_URI}/img/products/milktea/${order.img}`],
                 name: order.name,
                 quantity: order.quantity
               }
             ],
             payment_method_types: ['gcash'],
             reference_number: uuid.v4(),
-            success_url: 'http://localhost:3000/orders',
+            success_url: `${BASE_URI}/orders`,
             statement_descriptor: 'string'
           }
         }
